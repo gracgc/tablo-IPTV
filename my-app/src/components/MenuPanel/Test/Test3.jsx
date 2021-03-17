@@ -8,17 +8,29 @@ import {tabloAPI} from "../../../api/api";
 
 const Test3 = (props) => {
 
-    let [a, setA] = useState(1)
+    let [start, setStart] = useState()
 
-    let random = () => {
-        setA(Math.random())
-    }
+    let [finish, setFinish] = useState()
+
+
+    // for (let i = 0; i < 10000; i++) {
+    //     setStart(1);
+    // }
+
+    // setFinish(new Date().getTime() - start);
+
+
 
 
     return (
-        <div style={{fontSize: 100}}>
-            {a} <br/>
-            <div onClick={e => random()} style={{border: '1px white solid'}}>random</div>
+        <div style={{fontSize: 50}}>
+            <div>
+                {start}
+            </div>
+            <br/>
+            <div>
+                {finish}
+            </div>
         </div>
     )
 }

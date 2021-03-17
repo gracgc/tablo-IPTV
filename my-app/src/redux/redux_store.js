@@ -8,10 +8,12 @@ import {reducer as formReducer} from "redux-form";
 import appReducer from "./app_reducer";
 import authReducer from "./auth_reducer";
 import videosReducer from "./videos_reducer";
+import difReducer from "./dif_reducer";
 
 
 let reducers = combineReducers({
     tabloPage: tabloReducer,
+    difPage: difReducer,
     teamsPage: teamsReducer,
     logPage: logReducer,
     gamesPage: gamesReducer,

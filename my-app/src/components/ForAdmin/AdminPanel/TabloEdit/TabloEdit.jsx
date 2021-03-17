@@ -12,6 +12,8 @@ import {withRouter} from "react-router-dom";
 import socket from "../../../../socket/socket";
 import {tabloAPI} from "../../../../api/api";
 import useInterval from "use-interval";
+import {setDifAC, setPingAC} from "../../../../redux/dif_reducer";
+import Dif from "../../../dif/Dif";
 
 
 const TabloEdit = (props) => {
@@ -21,6 +23,15 @@ const TabloEdit = (props) => {
     const dispatch = useDispatch();
 
     let width = window.innerWidth;
+
+    const dif = useSelector(
+        (state => state.difPage.dif)
+    );
+
+    const ping = useSelector(
+        (state => state.difPage.ping)
+    );
+
 
     const homeTeam = useSelector(
         (state => state.teamsPage.teams.find(t => t.teamType === 'home'))
@@ -59,10 +70,7 @@ const TabloEdit = (props) => {
 
     let [isRunningServerTimeout, setIsRunningServerTimeout] = useState(false);
 
-    let [dif, setDif] = useState();
 
-
-    let [ping, setPing] = useState();
     let [tick, setTick] = useState(1000);
 
 
@@ -103,8 +111,8 @@ const TabloEdit = (props) => {
             let serverPing = Math.round((Date.now() - r.dateClient) / 2);
             let timeSyncServer = r.dateServer - r.dateClient
 
-            setDif(timeSyncServer + serverPing);
-            setPing(serverPing);
+            dispatch(setDifAC(timeSyncServer + serverPing))
+            dispatch(setPingAC(serverPing))
             setIsRunningServer(r.isRunning);
             setIsRunningServerTimeout(r.timeoutData.isRunning);
             return r
@@ -179,21 +187,7 @@ const TabloEdit = (props) => {
         }, 5000)
     }, [gameTempLogDep.length]);
 
-    useInterval(() => {
-        tabloAPI.getTimerSync(gameNumber, Date.now()).then(r => {
 
-            let serverPing = Math.round((Date.now() - r.dateClient) / 2);
-            let timeSyncServer = r.dateServer - r.dateClient
-
-            if (serverPing < ping) {
-                setDif(timeSyncServer + serverPing);
-                setPing(serverPing);
-            }
-
-            console.log('admin' + dif + ' ' + ping);
-
-        })
-    }, tick);
 
 
     useEffect(() => {
@@ -350,6 +344,7 @@ const TabloEdit = (props) => {
                     <div className={width === 1920 ? c1920.beepButtons_beep : c.beepButtons_beep}>БИИИИИП</div>
                 </div>
             </div>}
+            <Dif/>
         </div>
     )
 };

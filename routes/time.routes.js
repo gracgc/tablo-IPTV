@@ -29,7 +29,7 @@ router.post('/:gameNumber', cors(), function (req, res) {
     }
 });
 
-router.post('/sync/:gameNumber', cors(), function (req, res) {
+router.post('/sync/sync', cors(), function (req, res) {
     try {
 
         let dateClient = req.body.dateClient;

@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react'
 import c from './TabloClient1.module.css'
 import {useState, useEffect} from 'react';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {compose} from "redux";
 import {withRouter} from "react-router-dom";
 import socket from "../../../socket/socket";
@@ -9,9 +9,19 @@ import {tabloAPI} from "../../../api/api";
 import useInterval from 'use-interval'
 import TabloEventClient from "./TabloEventClient";
 import STB from "./STB";
+import {setDifAC, setPingAC} from "../../../redux/dif_reducer";
+import Dif from "../../dif/Dif";
 
 
 const TabloTimer = (props) => {
+
+    const dif = useSelector(
+        (state => state.difPage.dif)
+    );
+
+
+
+    let dispatch = useDispatch();
 
     let [gameNumber, setGameNumber] = useState(props.gameNumber);
 
@@ -19,9 +29,6 @@ const TabloTimer = (props) => {
     let [isRunningServer, setIsRunningServer] = useState(false);
 
     let [isRunningServerTimeout, setIsRunningServerTimeout] = useState(false);
-
-    let [dif, setDif] = useState();
-    let [ping, setPing] = useState();
 
 
     let [startTime, setStartTime] = useState();
@@ -63,8 +70,10 @@ const TabloTimer = (props) => {
             let serverPing = Math.round((Date.now() - r.dateClient) / 2);
             let timeSyncServer = r.dateServer - r.dateClient
 
-            setDif(timeSyncServer + serverPing);
-            setPing(serverPing);
+            dispatch(setDifAC(timeSyncServer + serverPing))
+            dispatch(setPingAC(serverPing))
+            // setDif(timeSyncServer + serverPing);
+            // setPing(serverPing);
             setIsRunningServer(r.isRunning)
             setIsRunningServerTimeout(r.timeoutData.isRunning)
             return r
@@ -102,19 +111,7 @@ const TabloTimer = (props) => {
         )
     }, [gameNumber])
 
-    useInterval(() => {
-        tabloAPI.getTimerSync(gameNumber, Date.now()).then(r => {
 
-            let serverPing = Math.round((Date.now() - r.dateClient) / 2);
-            let timeSyncServer = r.dateServer - r.dateClient
-
-            if (serverPing < ping) {
-                setDif(timeSyncServer + serverPing);
-                setPing(serverPing);
-            }
-
-        })
-    }, 3000);
 
 
     useEffect(() => {
@@ -135,32 +132,20 @@ const TabloTimer = (props) => {
     //     return () => clearInterval(internal)
     // })
 
-    // useInterval(() => {
-    //     if (isRunningServer) {
-    //         setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif) - startTime)));
-    //     }
-    // }, ms + 10);
-    //
-    // useInterval(() => {
-    //     if (isRunningServerTimeout) {
-    //         setTimeMemTimerTimeout(deadLineTimeout - (timeMemTimeout + ((Date.now() + dif) - startTimeout)));
-    //     }
-    // }, ms + 10);
+
+
+    console.log(1)
+
 
     return (
         <div>
 
             <div>
                 {props.preset === 1 &&
-                <div style={{
-                    textAlign: 'center',
-                    position: 'absolute',
-                    right: '30px',
-                    color: 'green'
-                }}>Dif:{dif} Ping:{ping}</div>}
-                <STB gameNumber={props.gameNumber}/>
+                <Dif/>
+                }
             </div>
-
+            <STB gameNumber={props.gameNumber}/>
 
             <div className={c.time}>
                 {minutesTimer <= 0 ? 0 : minutesTimer}:{secondsTimer < 10 ? '0' : ''}

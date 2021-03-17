@@ -16,6 +16,11 @@ const Info = (props) => {
 
     let gameNumber = props.match.params.gameNumber;
 
+    const dif = useSelector(
+        (state => state.difPage.dif)
+    );
+
+
     const gameData = useSelector(
         state => state.gamesPage.gameData
     );
@@ -24,11 +29,7 @@ const Info = (props) => {
 
     let [isRunningServer, setIsRunningServer] = useState(false);
 
-    let [count, setCount] = useState(0);
 
-    let [dif, setDif] = useState();
-    let [ping, setPing] = useState();
-    let [tick, setTick] = useState(1500);
 
     let [period, setPeriod] = useState();
     let [smallOvertime, setSmallOvertime] = useState();
@@ -54,13 +55,7 @@ const Info = (props) => {
         });
 
         tabloAPI.getTimerStatus(gameNumber, Date.now()).then(r => {
-            let clientTime = Date.now()
 
-            let serverPing = Math.round((Date.now() - r.dateClient) / 2);
-            let timeSyncServer = r.dateServer - r.dateClient
-
-            setDif(timeSyncServer + serverPing);
-            setPing(serverPing);
             setIsRunningServer(r.isRunning);
             return r
         }).then(r => {
@@ -90,28 +85,6 @@ const Info = (props) => {
         )
 
     }, []);
-
-    useEffect(() => {
-
-        tabloAPI.getTimerStatus(gameNumber, Date.now()).then(r => {
-
-            let serverPing = Math.round((Date.now() - r.dateClient) / 2);
-            let timeSyncServer = r.dateServer - r.dateClient
-
-            if (serverPing < ping) {
-                setDif(timeSyncServer + serverPing);
-                setPing(serverPing);
-            }
-
-            setTimeout(() => {
-                setCount(count + 1);
-                if (tick < 5000) {
-                    setTick(tick + 500)
-                }
-            }, tick)
-        })
-
-    }, [count]);
 
 
 

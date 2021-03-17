@@ -158,8 +158,8 @@ export const tabloAPI = {
             return responce.data
         })
     },
-    getTimerSync(gameNumber, dateClient) {
-        return instance.post(`time/sync/${gameNumber}`, {dateClient}).then(responce => {
+    getTimerSync(dateClient) {
+        return instance.post(`time/sync/sync`, {dateClient}).then(responce => {
             return responce.data
         })
     },

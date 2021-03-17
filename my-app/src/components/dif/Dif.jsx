@@ -1,0 +1,47 @@
+import React, {useEffect, useState} from 'react'
+import {compose} from "redux";
+import {withRouter} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import useInterval from "use-interval";
+import {setDifAC, setPingAC} from "../../redux/dif_reducer";
+import {tabloAPI} from "../../api/api";
+
+const Dif = (props) => {
+
+    const dif = useSelector(
+        (state => state.difPage.dif)
+    );
+
+    const ping = useSelector(
+        (state => state.difPage.ping)
+    );
+
+    let dispatch = useDispatch();
+
+    useInterval(() => {
+        tabloAPI.getTimerSync(Date.now()).then(r => {
+
+            let serverPing = Math.round((Date.now() - r.dateClient) / 2);
+            let timeSyncServer = r.dateServer - r.dateClient
+
+            if (serverPing < ping) {
+                dispatch(setDifAC(timeSyncServer + serverPing))
+                dispatch(setPingAC(serverPing))
+            }
+
+        })
+    }, 3000);
+
+
+    return (
+
+        <div style={{
+            textAlign: 'center',
+            position: 'absolute',
+            right: '30px',
+            color: 'green'
+        }}>Dif:{dif} Ping:{ping}</div>
+    )
+};
+
+export default compose(withRouter)(Dif);

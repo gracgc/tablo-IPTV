@@ -2,16 +2,17 @@ import React, {useEffect, useState} from "react";
 
 import useInterval from 'use-interval'
 import Test2 from "./Test2";
+import Test3 from "./Test3";
 
 
 const Test = (props) => {
 
-    console.log(1)
+
 
     return (
         <div style={{background: 'black'}}>
             <div style={{color: 'white'}}>
-                <Test2/>
+                <Test3/>
             </div>
 
         </div>

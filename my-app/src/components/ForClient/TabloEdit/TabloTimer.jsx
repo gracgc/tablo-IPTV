@@ -11,13 +11,12 @@ import TabloEventClient from "./TabloEventClient";
 import STB from "./STB";
 import {setDifAC, setPingAC} from "../../../redux/dif_reducer";
 import Dif from "../../dif/Dif";
+import Cookies from "js-cookie";
 
 
 const TabloTimer = (props) => {
 
-    let localStorage = window.localStorage;
-
-    let tupit = +localStorage.getItem('tupit')
+    let tupit = +Cookies.get('tupit')
 
     const dif = useSelector(
         (state => state.difPage.dif)
@@ -155,7 +154,7 @@ const TabloTimer = (props) => {
             <div className={c.time}>
                 {minutesTimer <= 0 ? 0 : minutesTimer}:{secondsTimer < 10 ? '0' : ''}
                 {secondsTimer <= 0 ? 0 : secondsTimer}
-                :{ms}
+                {/*:{ms}*/}
             </div>
 
             {props.preset === 1 &&

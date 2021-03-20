@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Route, withRouter, Switch, Redirect} from "react-router-dom";
 import {compose} from "redux";
@@ -14,24 +14,42 @@ import {useDispatch, useSelector} from "react-redux";
 import {authFalseAC, setIdAC} from "./redux/auth_reducer";
 import Cookies from "js-cookie"
 import SetDevice from "./components/MenuPanel/SetDevice/SetDevice";
-import {setSocketIDAC} from "./redux/app_reducer";
+import {setSocketIDAC, setTupitAC} from "./redux/app_reducer";
 import {useHistory} from "react-router";
 import CustomGame from "./components/ForAdmin/AdminPanel/CustomGame/CustomGame";
 import Test from "./components/MenuPanel/Test/Test";
 import VideoAdmin from "./components/ForAdmin/VideoAdmin/VideoAdmin";
 
 
-
 function App(props) {
+
+    const dispatch = useDispatch();
+
+    let history = useHistory();
+
+
+
+    useEffect(() => {
+        if (Cookies.get('secretToken')) {
+
+        } else {
+            let time = Date.now()
+            for (var i = 0; i < 11000; i++) {
+                document.getElementById("a").innerHTML += Math.random()
+            }
+            Cookies.set('tupit', Math.round((Date.now() - time) / 1000), {expires: 2000000})
+        }
+
+
+    }, [])
+
+    console.log(1)
+
 
     const isAuth = useSelector(
         state => state.authPage.isAuth
     );
 
-
-    const dispatch = useDispatch();
-
-    let history = useHistory();
 
     socket.on("connect", () => {
         dispatch(setSocketIDAC(socket.id))
@@ -62,6 +80,8 @@ function App(props) {
 
     return (
         <ConfirmProvider>
+            <div id='a' style={{display: "none"}}></div>
+            {/*<div>{b}</div>*/}
             <div className='app'>
                 <Switch>
                     <Route exact path='/'

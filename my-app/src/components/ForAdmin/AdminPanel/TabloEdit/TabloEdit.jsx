@@ -14,13 +14,12 @@ import {tabloAPI} from "../../../../api/api";
 import useInterval from "use-interval";
 import {setDifAC, setPingAC} from "../../../../redux/dif_reducer";
 import Dif from "../../../dif/Dif";
+import Cookies from "js-cookie";
 
 
 const TabloEdit = (props) => {
 
-    let localStorage = window.localStorage;
-
-    let tupit = +localStorage.getItem('tupit')
+    let tupit = +Cookies.get('tupit')
 
     let gameNumber = props.match.params.gameNumber;
 

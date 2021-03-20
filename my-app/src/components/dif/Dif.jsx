@@ -5,12 +5,12 @@ import {useDispatch, useSelector} from "react-redux";
 import useInterval from "use-interval";
 import {setDifAC, setPingAC} from "../../redux/dif_reducer";
 import {tabloAPI} from "../../api/api";
+import Cookies from "js-cookie";
 
 const Dif = (props) => {
 
-    let localStorage = window.localStorage;
 
-    let tupit = +localStorage.getItem('tupit')
+    let tupit = +Cookies.get('tupit')
 
     const dif = useSelector(
         (state => state.difPage.dif)
@@ -44,7 +44,9 @@ const Dif = (props) => {
             position: 'absolute',
             right: '30px',
             color: 'green'
-        }}>Dif:{dif} Ping:{ping} Tupit:{tupit}</div>
+        }}>
+            {/*Dif:{dif} Ping:{ping} */}
+            Tupit:{tupit}</div>
     )
 };
 

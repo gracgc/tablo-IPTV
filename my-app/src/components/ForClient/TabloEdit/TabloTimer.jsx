@@ -74,7 +74,7 @@ const TabloTimer = (props) => {
             let serverPing = Math.round((Date.now() - r.dateClient) / 2);
             let timeSyncServer = r.dateServer - r.dateClient
 
-            dispatch(setDifAC(timeSyncServer + serverPing))
+            dispatch(setDifAC(timeSyncServer + serverPing + tupit))
             dispatch(setPingAC(serverPing))
             // setDif(timeSyncServer + serverPing);
             // setPing(serverPing);
@@ -123,7 +123,7 @@ const TabloTimer = (props) => {
             if (isRunningServer) {
                 setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif - tupit) - startTime)));
             }
-        }, ms)
+        }, 20)
         return () => clearInterval(internal)
     })
 
@@ -138,7 +138,6 @@ const TabloTimer = (props) => {
 
 
 
-    console.log(1)
 
 
     return (
@@ -147,7 +146,6 @@ const TabloTimer = (props) => {
             <div>
                 {props.preset === 1 &&
                 <div>
-                    {tupit}
                     <Dif/>
                 </div>
                 }

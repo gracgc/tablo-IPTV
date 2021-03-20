@@ -8,6 +8,10 @@ import {tabloAPI} from "../../api/api";
 
 const Dif = (props) => {
 
+    let localStorage = window.localStorage;
+
+    let tupit = +localStorage.getItem('tupit')
+
     const dif = useSelector(
         (state => state.difPage.dif)
     );
@@ -25,12 +29,12 @@ const Dif = (props) => {
             let timeSyncServer = r.dateServer - r.dateClient
 
             if (serverPing < ping) {
-                dispatch(setDifAC(timeSyncServer + serverPing))
+                dispatch(setDifAC(timeSyncServer + serverPing + tupit))
                 dispatch(setPingAC(serverPing))
             }
 
         })
-    }, 3000);
+    }, 1000);
 
 
     return (
@@ -40,7 +44,7 @@ const Dif = (props) => {
             position: 'absolute',
             right: '30px',
             color: 'green'
-        }}>Dif:{dif} Ping:{ping}</div>
+        }}>Dif:{dif} Ping:{ping} Tupit:{tupit}</div>
     )
 };
 

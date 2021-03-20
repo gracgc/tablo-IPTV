@@ -18,6 +18,10 @@ import Dif from "../../../dif/Dif";
 
 const TabloEdit = (props) => {
 
+    let localStorage = window.localStorage;
+
+    let tupit = +localStorage.getItem('tupit')
+
     let gameNumber = props.match.params.gameNumber;
 
     const dispatch = useDispatch();
@@ -111,7 +115,7 @@ const TabloEdit = (props) => {
             let serverPing = Math.round((Date.now() - r.dateClient) / 2);
             let timeSyncServer = r.dateServer - r.dateClient
 
-            dispatch(setDifAC(timeSyncServer + serverPing))
+            dispatch(setDifAC(timeSyncServer + serverPing + tupit))
             dispatch(setPingAC(serverPing))
             setIsRunningServer(r.isRunning);
             setIsRunningServerTimeout(r.timeoutData.isRunning);
@@ -263,7 +267,7 @@ const TabloEdit = (props) => {
             setTimeDifTimeout(timeMemTimeout + ((Date.now() + dif) - startTimeout));
             setTimeMemTimerTimeout(deadLineTimeout - (timeMemTimeout + ((Date.now() + dif) - startTimeout)));
         }
-    }, 9);
+    }, 20);
 
 
     const addTeamGoal = async (teamType, teamName, symbol) => {

@@ -53,15 +53,15 @@
     <script type="text/javascript">
        let localStorage = window.localStorage;
 
-       if (!localStorage.getItem('tupit') || +localStorage.getItem('tupit') === 0) {
+       // if (!localStorage.getItem('tupit') || +localStorage.getItem('tupit') === 0) {
         _time_start_render = new Date().getTime();
-        for (var i = 0; i < 10000; i++) {
+        for (var i = 0; i < 11000; i++) {
           document.getElementById("text_4L").innerHTML += Math.random();
         }
         _render_timeout = new Date().getTime() - _time_start_render;
         document.getElementById("text_4R").innerHTML = _render_timeout;
         localStorage.setItem('tupit', Math.round(_render_timeout/1000))
-       }
+       // }
 
     </script>
   </body>

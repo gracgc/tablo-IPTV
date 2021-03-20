@@ -80,10 +80,6 @@ const STB = (props) => {
             player.playUrl(currentVideo.videoURL, '');
             player.pause();
         }
-        if (window.stb) {
-            window.stb.play(currentVideo.videoURL)
-            window.stb.pause();
-        }
     }, [player, currentVideo]);
 
 

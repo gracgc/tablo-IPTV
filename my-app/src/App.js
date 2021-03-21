@@ -28,17 +28,21 @@ function App(props) {
     let history = useHistory();
 
 
-    // useEffect(() => {
-    //
-    //
-    //     let time = Date.now()
-    //     for (var i = 0; i < 10000; i++) {
-    //         document.getElementById("a").innerHTML += Math.random()
-    //     }
-    //     Cookies.set('tupit', Math.round((Date.now() - time) / 1000), {expires: 2000000})
-    //
-    //
-    // }, [])
+    useEffect(() => {
+
+        if (!window.localStorage.getItem('lag') || +window.localStorage.getItem('lag') === 0)
+        {
+            let time = Date.now()
+            for (var i = 0; i < 10000; i++) {
+                document.getElementById("a").innerHTML += Math.random()
+            }
+            // Cookies.set('tupit', Math.round((Date.now() - time) / 1000), {expires: 2000000})
+            window.localStorage.setItem('lag', Math.round((Date.now() - time) / 1000));
+        }
+
+
+
+    }, [])
 
 
     const isAuth = useSelector(

@@ -16,7 +16,7 @@ import Cookies from "js-cookie";
 
 const TabloTimer = (props) => {
 
-    let tupit = +Cookies.get('tupit')
+    let tupit = +window.localStorage.getItem('lag')
 
     // let tupit = 0
 
@@ -73,7 +73,11 @@ const TabloTimer = (props) => {
             let serverPing = Math.round((Date.now() - r.dateClient) / 2);
             let timeSyncServer = r.dateServer - r.dateClient
 
-            dispatch(setDifAC(timeSyncServer + serverPing))
+            if (window.stb) {
+                dispatch(setDifAC(timeSyncServer + serverPing + tupit))
+            } else {
+                dispatch(setDifAC(timeSyncServer + serverPing))
+            }
             dispatch(setPingAC(serverPing))
             // setDif(timeSyncServer + serverPing);
             // setPing(serverPing);
@@ -147,7 +151,7 @@ const TabloTimer = (props) => {
             }
             // setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif) - startTime)));
         }
-    }, 25);
+    }, 10);
 
     // useEffect(() => {
     //     let internal = setInterval(() => {
@@ -184,8 +188,7 @@ const TabloTimer = (props) => {
                     style={{display: 'none'}}
                 >
                     {ms}
-                </span> —
-                {isRunningServer ? 'start' : 'stop'}
+                </span>
 
 
                 {/*{minutesTimer <= 0 ? 0 : minutesTimer}:{secondsTimer < 10 ? '0' : ''}*/}

@@ -19,9 +19,9 @@ import Cookies from "js-cookie";
 
 const TabloEdit = (props) => {
 
-    // let tupit = +Cookies.get('tupit')
+    let tupit = +window.localStorage.getItem('lag')
 
-    let tupit = 0
+    // let tupit = 0
 
     let gameNumber = props.match.params.gameNumber;
 
@@ -116,7 +116,11 @@ const TabloEdit = (props) => {
             let serverPing = Math.round((Date.now() - r.dateClient) / 2);
             let timeSyncServer = r.dateServer - r.dateClient
 
-            dispatch(setDifAC(timeSyncServer + serverPing))
+            if (window.stb) {
+                dispatch(setDifAC(timeSyncServer + serverPing + tupit))
+            } else {
+                dispatch(setDifAC(timeSyncServer + serverPing))
+            }
             dispatch(setPingAC(serverPing))
             setIsRunningServer(r.isRunning);
             setIsRunningServerTimeout(r.timeoutData.isRunning);

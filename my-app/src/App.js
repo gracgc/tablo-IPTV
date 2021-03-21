@@ -28,21 +28,17 @@ function App(props) {
     let history = useHistory();
 
 
-
     // useEffect(() => {
-    //     if (Cookies.get('secretToken')) {
     //
-    //     } else {
-    //         let time = Date.now()
-    //         for (var i = 0; i < 11000; i++) {
-    //             document.getElementById("a").innerHTML += Math.random()
-    //         }
-    //         Cookies.set('tupit', Math.round((Date.now() - time) / 1000), {expires: 2000000})
+    //
+    //     let time = Date.now()
+    //     for (var i = 0; i < 10000; i++) {
+    //         document.getElementById("a").innerHTML += Math.random()
     //     }
+    //     Cookies.set('tupit', Math.round((Date.now() - time) / 1000), {expires: 2000000})
     //
     //
     // }, [])
-
 
 
     const isAuth = useSelector(

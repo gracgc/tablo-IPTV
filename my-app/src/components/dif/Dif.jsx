@@ -10,7 +10,7 @@ import Cookies from "js-cookie";
 const Dif = (props) => {
 
 
-    let tupit = +Cookies.get('tupit') - 10
+    let tupit = +Cookies.get('tupit')
 
     // let tupit = 0
 
@@ -25,22 +25,24 @@ const Dif = (props) => {
     let dispatch = useDispatch();
 
     useInterval(() => {
-        tabloAPI.getTimerSync(Date.now()).then(r => {
+        if (ping > 50) {
+            tabloAPI.getTimerSync(Date.now()).then(r => {
 
-            let serverPing = Math.round((Date.now() - r.dateClient) / 2);
-            let timeSyncServer = r.dateServer - r.dateClient
+                let serverPing = Math.round((Date.now() - r.dateClient) / 2);
+                let timeSyncServer = r.dateServer - r.dateClient
 
-            if (serverPing < ping) {
-                if (window.TvipPlayer) {
-                    dispatch(setDifAC(timeSyncServer + serverPing - tupit))
-                } else {
-                    dispatch(setDifAC(timeSyncServer + serverPing + tupit))
+                if (serverPing < ping) {
+                    // if (window.TvipPlayer) {
+                    //     dispatch(setDifAC(timeSyncServer + serverPing - tupit))
+                    // } else {
+                        dispatch(setDifAC(timeSyncServer + serverPing))
+                    // }
+
+                    dispatch(setPingAC(serverPing))
                 }
 
-                dispatch(setPingAC(serverPing))
-            }
-
-        })
+            })
+        }
     }, 1000);
 
 
@@ -52,8 +54,7 @@ const Dif = (props) => {
             right: '30px',
             color: 'green'
         }}>
-            Dif:{dif} Ping:{ping}
-            Tupit:{tupit}</div>
+            Dif:{dif} Ping:{ping} Tupit:{tupit}</div>
     )
 };
 

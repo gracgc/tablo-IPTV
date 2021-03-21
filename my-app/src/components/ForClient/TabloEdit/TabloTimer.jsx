@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react'
+import React, {createRef, useMemo, useRef} from 'react'
 import c from './TabloClient1.module.css'
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
@@ -18,6 +18,8 @@ const TabloTimer = (props) => {
 
     let tupit = +Cookies.get('tupit')
 
+    // let tupit = 0
+
     const dif = useSelector(
         (state => state.difPage.dif)
     );
@@ -33,20 +35,20 @@ const TabloTimer = (props) => {
     let [isRunningServerTimeout, setIsRunningServerTimeout] = useState(false);
 
 
-    let [startTime, setStartTime] = useState();
+    let [startTime, setStartTime] = useState(0);
 
-    let [startTimeout, setStartTimeout] = useState();
+    let [startTimeout, setStartTimeout] = useState(0);
 
-    let [deadLine, setDeadLine] = useState();
+    let [deadLine, setDeadLine] = useState(0);
 
-    let [deadLineTimeout, setDeadLineTimeout] = useState();
+    let [deadLineTimeout, setDeadLineTimeout] = useState(0);
 
-    let [timeMem, setTimeMem] = useState();
-    let [timeMemTimer, setTimeMemTimer] = useState();
+    let [timeMem, setTimeMem] = useState(0);
+    let [timeMemTimer, setTimeMemTimer] = useState(0);
 
 
-    let [timeMemTimeout, setTimeMemTimeout] = useState();
-    let [timeMemTimerTimeout, setTimeMemTimerTimeout] = useState();
+    let [timeMemTimeout, setTimeMemTimeout] = useState(0);
+    let [timeMemTimerTimeout, setTimeMemTimerTimeout] = useState(0);
 
     let minutesTimer = Math.floor(timeMemTimer / (1000 * 60));
     let secondsTimer = Math.floor(timeMemTimer / 1000) % 60;
@@ -71,7 +73,7 @@ const TabloTimer = (props) => {
             let serverPing = Math.round((Date.now() - r.dateClient) / 2);
             let timeSyncServer = r.dateServer - r.dateClient
 
-            dispatch(setDifAC(timeSyncServer + serverPing + tupit))
+            dispatch(setDifAC(timeSyncServer + serverPing))
             dispatch(setPingAC(serverPing))
             // setDif(timeSyncServer + serverPing);
             // setPing(serverPing);
@@ -113,23 +115,39 @@ const TabloTimer = (props) => {
     }, [gameNumber])
 
 
-    useEffect(() => {
-        let internal = setInterval(() => {
-            if (isRunningServer) {
-                // setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif) - startTime)));
-                document.getElementById("m").innerHTML = Math.floor((deadLine - (timeMem + ((Date.now() + dif) - startTime))) / (1000 * 60))
-                document.getElementById("s").innerHTML = Math.floor((deadLine - (timeMem + ((Date.now() + dif) - startTime))) / 1000) % 60
+
+
+
+
+    // useEffect(() => {
+    //     let internal = setInterval(() => {
+    //         if (isRunningServer) {
+    //             if (+document.getElementById("s").innerHTML !== Math.floor((deadLine - (timeMem + ((Date.now()) - startTime - dif))) / 1000) % 60) {
+    //                 if (+document.getElementById("m").innerHTML !== Math.floor((deadLine - (timeMem + ((Date.now()) - startTime - dif))) / (1000 * 60))) {
+    //                     document.getElementById("m").innerHTML = Math.floor((deadLine - (timeMem + ((Date.now()) - startTime - dif))) / (1000 * 60))
+    //                 }
+    //                 document.getElementById("s").innerHTML = Math.floor((deadLine - (timeMem + ((Date.now()) - startTime - dif))) / 1000) % 60
+    //                 // document.getElementById("ms").innerHTML = (deadLine - (timeMem + ((Date.now() + dif) - startTime))) % 1000
+    //             }
+    //             // setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif) - startTime)));
+    //         }
+    //     }, 9)
+    //     return () => clearInterval(internal)
+    // })
+
+
+    useInterval(() => {
+        if (isRunningServer) {
+            if (+document.getElementById("s").innerHTML !== Math.floor((deadLine - (timeMem + ((Date.now()) - startTime + dif))) / 1000) % 60) {
+                if (+document.getElementById("m").innerHTML !== Math.floor((deadLine - (timeMem + ((Date.now()) - startTime + dif))) / (1000 * 60))) {
+                    document.getElementById("m").innerHTML = Math.floor((deadLine - (timeMem + ((Date.now()) - startTime + dif))) / (1000 * 60))
+                }
+                document.getElementById("s").innerHTML = Math.floor((deadLine - (timeMem + ((Date.now()) - startTime + dif))) / 1000) % 60
                 // document.getElementById("ms").innerHTML = (deadLine - (timeMem + ((Date.now() + dif) - startTime))) % 1000
             }
-        }, 10)
-        return () => clearInterval(internal)
-    })
-
-    // useInterval(() => {
-    //     if (isRunningServer) {
-    //         setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif) - startTime)));
-    //     }
-    // }, 25);
+            // setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif) - startTime)));
+        }
+    }, 25);
 
     // useEffect(() => {
     //     let internal = setInterval(() => {
@@ -145,7 +163,6 @@ const TabloTimer = (props) => {
 
     return (
         <div>
-
             <div>
                 {props.preset === 1 &&
                 <div>
@@ -163,9 +180,12 @@ const TabloTimer = (props) => {
                 <span id='s'>
                     {secondsTimer}
                 </span>
-                <div id='ms' style={{display: 'none'}}>
-
-                </div>
+                <span id='ms'
+                    style={{display: 'none'}}
+                >
+                    {ms}
+                </span> —
+                {isRunningServer ? 'start' : 'stop'}
 
 
                 {/*{minutesTimer <= 0 ? 0 : minutesTimer}:{secondsTimer < 10 ? '0' : ''}*/}
@@ -178,11 +198,11 @@ const TabloTimer = (props) => {
                 {/*{props.isShowLog ? <div className={c.tempLog}>{props.gameTempLog}</div> :*/}
                 {/*    <div className={c.tempLog}></div>}*/}
 
-                <div className={secondsTimerTimeout < 6 ? c.timeout5sec : c.timeout}>
-                    {(timeMemTimerTimeout > 0) &&
-                    `Таймаут ${secondsTimerTimeout} секунд`
-                    }
-                </div>
+                {/*<div className={secondsTimerTimeout < 6 ? c.timeout5sec : c.timeout}>*/}
+                {/*    {(timeMemTimerTimeout > 0) &&*/}
+                {/*    `Таймаут ${secondsTimerTimeout} секунд`*/}
+                {/*    }*/}
+                {/*</div>*/}
 
 
                 {/*<div className={c.consLogHome}>*/}

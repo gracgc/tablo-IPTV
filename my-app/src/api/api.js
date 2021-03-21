@@ -154,12 +154,12 @@ export const gameAPI = {
 
 export const tabloAPI = {
     getTimerStatus(gameNumber, dateClient) {
-        return instance.post(`time/${gameNumber}`, {dateClient}).then(responce => {
+        return instance.get(`time/${gameNumber}/${dateClient}`).then(responce => {
             return responce.data
         })
     },
     getTimerSync(dateClient) {
-        return instance.post(`time/sync/sync`, {dateClient}).then(responce => {
+        return instance.get(`time/sync/sync/${dateClient}`).then(responce => {
             return responce.data
         })
     },

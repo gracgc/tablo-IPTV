@@ -19,7 +19,9 @@ import Cookies from "js-cookie";
 
 const TabloEdit = (props) => {
 
-    let tupit = +Cookies.get('tupit')
+    // let tupit = +Cookies.get('tupit')
+
+    let tupit = 0
 
     let gameNumber = props.match.params.gameNumber;
 
@@ -81,22 +83,22 @@ const TabloEdit = (props) => {
     let [smallOvertime, setSmallOvertime] = useState();
     let [bigOvertime, setBigOvertime] = useState();
 
-    let [startTime, setStartTime] = useState();
+    let [startTime, setStartTime] = useState(0);
 
-    let [startTimeout, setStartTimeout] = useState();
+    let [startTimeout, setStartTimeout] = useState(0);
 
-    let [deadLine, setDeadLine] = useState();
+    let [deadLine, setDeadLine] = useState(0);
 
-    let [deadLineTimeout, setDeadLineTimeout] = useState();
+    let [deadLineTimeout, setDeadLineTimeout] = useState(0);
 
-    let [timeDif, setTimeDif] = useState();
-    let [timeMem, setTimeMem] = useState();
-    let [timeMemTimer, setTimeMemTimer] = useState();
+    let [timeDif, setTimeDif] = useState(0);
+    let [timeMem, setTimeMem] = useState(0);
+    let [timeMemTimer, setTimeMemTimer] = useState(0);
 
 
-    let [timeDifTimeout, setTimeDifTimeout] = useState();
-    let [timeMemTimeout, setTimeMemTimeout] = useState();
-    let [timeMemTimerTimeout, setTimeMemTimerTimeout] = useState();
+    let [timeDifTimeout, setTimeDifTimeout] = useState(0);
+    let [timeMemTimeout, setTimeMemTimeout] = useState(0);
+    let [timeMemTimerTimeout, setTimeMemTimerTimeout] = useState(0);
 
     let secondsStopwatch = Math.floor(timeDif / 1000) % 60;
     let minutesStopwatch = Math.floor(timeDif / (1000 * 60)) + (period - 1) * 20 + (smallOvertime * 5) + (bigOvertime * 20);
@@ -114,7 +116,7 @@ const TabloEdit = (props) => {
             let serverPing = Math.round((Date.now() - r.dateClient) / 2);
             let timeSyncServer = r.dateServer - r.dateClient
 
-            dispatch(setDifAC(timeSyncServer + serverPing + tupit))
+            dispatch(setDifAC(timeSyncServer + serverPing))
             dispatch(setPingAC(serverPing))
             setIsRunningServer(r.isRunning);
             setIsRunningServerTimeout(r.timeoutData.isRunning);
@@ -152,18 +154,6 @@ const TabloEdit = (props) => {
             }
         );
 
-        socket.on(`getTimeSync${gameNumber}`, time => {
-                setIsRunningServer(time.isRunning);
-                setStartTime(time.runningTime);
-                setTimeMem(time.timeData.timeMem);
-                setTimeDif(time.timeData.timeMem);
-                setTimeMemTimer(time.timeData.timeMemTimer);
-                setDeadLine(time.timeData.deadLine);
-                setPeriod(time.period);
-                setSmallOvertime(time.smallOvertime);
-                setBigOvertime(time.bigOvertime);
-            }
-        );
 
         socket.on(`getTimeout${gameNumber}`, time => {
                 setIsRunningServerTimeout(time.isRunning);
@@ -259,14 +249,14 @@ const TabloEdit = (props) => {
 
     useInterval(() => {
         if (isRunningServer) {
-            setTimeDif(timeMem + ((Date.now() + dif) - startTime));
-            setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif) - startTime)));
+            setTimeDif(timeMem + ((Date.now()) - startTime + dif));
+            setTimeMemTimer(deadLine - (timeMem + ((Date.now()) - startTime + dif)));
         }
         if (isRunningServerTimeout) {
-            setTimeDifTimeout(timeMemTimeout + ((Date.now() + dif) - startTimeout));
-            setTimeMemTimerTimeout(deadLineTimeout - (timeMemTimeout + ((Date.now() + dif) - startTimeout)));
+            setTimeDifTimeout(timeMemTimeout + ((Date.now()) - startTimeout + dif));
+            setTimeMemTimerTimeout(deadLineTimeout - (timeMemTimeout + ((Date.now()) - startTimeout + dif)));
         }
-    }, 20);
+    }, 33);
 
 
     const addTeamGoal = async (teamType, teamName, symbol) => {

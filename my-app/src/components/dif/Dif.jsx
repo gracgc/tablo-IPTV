@@ -25,7 +25,7 @@ const Dif = (props) => {
     let dispatch = useDispatch();
 
     useInterval(() => {
-        if (ping > 50) {
+        if (ping > 20) {
             tabloAPI.getTimerSync(Date.now()).then(r => {
 
                 let serverPing = Math.round((Date.now() - r.dateClient) / 2);

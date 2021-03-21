@@ -12,7 +12,7 @@ router.get('/:gameNumber/:dateClient', cors(), function (req, res) {
     try {
         let gameNumber = req.params.gameNumber;
 
-        let dateClient = req.params.dateClient;
+        let dateClient = +req.params.dateClient;
 
         let data = fs.readFileSync(path.join(__dirname + `/DB/game_${gameNumber}.json`));
         let DB = JSON.parse(data);

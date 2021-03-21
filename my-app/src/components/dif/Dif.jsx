@@ -10,7 +10,9 @@ import Cookies from "js-cookie";
 const Dif = (props) => {
 
 
-    let tupit = +Cookies.get('tupit')
+    let tupit = +Cookies.get('tupit') - 10
+
+    // let tupit = 0
 
     const dif = useSelector(
         (state => state.difPage.dif)
@@ -29,7 +31,12 @@ const Dif = (props) => {
             let timeSyncServer = r.dateServer - r.dateClient
 
             if (serverPing < ping) {
-                dispatch(setDifAC(timeSyncServer + serverPing + tupit))
+                if (window.TvipPlayer) {
+                    dispatch(setDifAC(timeSyncServer + serverPing - tupit))
+                } else {
+                    dispatch(setDifAC(timeSyncServer + serverPing + tupit))
+                }
+
                 dispatch(setPingAC(serverPing))
             }
 
@@ -45,7 +52,7 @@ const Dif = (props) => {
             right: '30px',
             color: 'green'
         }}>
-            {/*Dif:{dif} Ping:{ping} */}
+            Dif:{dif} Ping:{ping}
             Tupit:{tupit}</div>
     )
 };

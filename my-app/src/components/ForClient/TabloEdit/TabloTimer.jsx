@@ -23,7 +23,6 @@ const TabloTimer = (props) => {
     );
 
 
-
     let dispatch = useDispatch();
 
     let [gameNumber, setGameNumber] = useState(props.gameNumber);
@@ -49,9 +48,8 @@ const TabloTimer = (props) => {
     let [timeMemTimeout, setTimeMemTimeout] = useState();
     let [timeMemTimerTimeout, setTimeMemTimerTimeout] = useState();
 
-
-    let secondsTimer = Math.floor(timeMemTimer / 1000) % 60;
     let minutesTimer = Math.floor(timeMemTimer / (1000 * 60));
+    let secondsTimer = Math.floor(timeMemTimer / 1000) % 60;
     let ms = timeMemTimer % 1000;
 
     let secondsTimerTimeout = Math.floor(timeMemTimerTimeout / 1000) % 60;
@@ -115,16 +113,23 @@ const TabloTimer = (props) => {
     }, [gameNumber])
 
 
-
-
     useEffect(() => {
         let internal = setInterval(() => {
             if (isRunningServer) {
-                setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif - tupit) - startTime)));
+                // setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif) - startTime)));
+                document.getElementById("m").innerHTML = Math.floor((deadLine - (timeMem + ((Date.now() + dif) - startTime))) / (1000 * 60))
+                document.getElementById("s").innerHTML = Math.floor((deadLine - (timeMem + ((Date.now() + dif) - startTime))) / 1000) % 60
+                // document.getElementById("ms").innerHTML = (deadLine - (timeMem + ((Date.now() + dif) - startTime))) % 1000
             }
-        }, 20)
+        }, 10)
         return () => clearInterval(internal)
     })
+
+    // useInterval(() => {
+    //     if (isRunningServer) {
+    //         setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif) - startTime)));
+    //     }
+    // }, 25);
 
     // useEffect(() => {
     //     let internal = setInterval(() => {
@@ -135,8 +140,7 @@ const TabloTimer = (props) => {
     //     return () => clearInterval(internal)
     // })
 
-
-
+    console.log(1)
 
 
     return (
@@ -152,8 +156,20 @@ const TabloTimer = (props) => {
             <STB gameNumber={props.gameNumber}/>
 
             <div className={c.time}>
-                {minutesTimer <= 0 ? 0 : minutesTimer}:{secondsTimer < 10 ? '0' : ''}
-                {secondsTimer <= 0 ? 0 : secondsTimer}
+
+                <span id='m'>
+                    {minutesTimer}
+                </span>:
+                <span id='s'>
+                    {secondsTimer}
+                </span>
+                <div id='ms' style={{display: 'none'}}>
+
+                </div>
+
+
+                {/*{minutesTimer <= 0 ? 0 : minutesTimer}:{secondsTimer < 10 ? '0' : ''}*/}
+                {/*{secondsTimer <= 0 ? 0 : secondsTimer}*/}
                 {/*:{ms}*/}
             </div>
 

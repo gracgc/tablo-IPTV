@@ -19,6 +19,7 @@ import {useHistory} from "react-router";
 import CustomGame from "./components/ForAdmin/AdminPanel/CustomGame/CustomGame";
 import Test from "./components/MenuPanel/Test/Test";
 import VideoAdmin from "./components/ForAdmin/VideoAdmin/VideoAdmin";
+import Lag from "./components/MenuPanel/Lag/Lag";
 
 
 function App(props) {
@@ -28,21 +29,21 @@ function App(props) {
     let history = useHistory();
 
 
-    useEffect(() => {
-
-        if (!window.localStorage.getItem('lag') || +window.localStorage.getItem('lag') === 0)
-        {
-            let time = Date.now()
-            for (var i = 0; i < 10000; i++) {
-                document.getElementById("a").innerHTML += Math.random()
-            }
-            // Cookies.set('tupit', Math.round((Date.now() - time) / 1000), {expires: 2000000})
-            window.localStorage.setItem('lag', Math.round((Date.now() - time) / 1000));
-        }
-
-
-
-    }, [])
+    // useEffect(() => {
+    //
+    //     if (!window.localStorage.getItem('lag') || +window.localStorage.getItem('lag') === 0)
+    //     {
+    //         let time = Date.now()
+    //         for (var i = 0; i < 10000; i++) {
+    //             document.getElementById("a").innerHTML += Math.random()
+    //         }
+    //         // Cookies.set('tupit', Math.round((Date.now() - time) / 1000), {expires: 2000000})
+    //         window.localStorage.setItem('lag', Math.round((Date.now() - time) / 1000));
+    //     }
+    //
+    //
+    //
+    // }, [])
 
 
     const isAuth = useSelector(
@@ -106,6 +107,7 @@ function App(props) {
                     <Route path='/auth' render={() => <Auth/>}/>
                     <Route path='/customGame/:gameNumber?' render={() => <CustomGame/>}/>
                     <Route path='/test' render={() => <Test/>}/>
+                    <Route path='/lag' render={() => <Lag/>}/>
                 </Switch>
             </div>
         </ConfirmProvider>

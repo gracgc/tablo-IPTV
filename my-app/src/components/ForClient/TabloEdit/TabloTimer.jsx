@@ -12,13 +12,15 @@ import STB from "./STB";
 import {setDifAC, setPingAC} from "../../../redux/dif_reducer";
 import Dif from "../../dif/Dif";
 import Cookies from "js-cookie";
+import {useHistory} from "react-router";
 
 
 const TabloTimer = (props) => {
 
+    let history = useHistory();
+
     let tupit = +window.localStorage.getItem('lag')
 
-    // let tupit = 0
 
     const dif = useSelector(
         (state => state.difPage.dif)
@@ -73,14 +75,9 @@ const TabloTimer = (props) => {
             let serverPing = Math.round((Date.now() - r.dateClient) / 2);
             let timeSyncServer = r.dateServer - r.dateClient
 
-            if (window.stb) {
-                dispatch(setDifAC(timeSyncServer + serverPing + tupit))
-            } else {
-                dispatch(setDifAC(timeSyncServer + serverPing))
-            }
+            dispatch(setDifAC(timeSyncServer + serverPing + tupit))
             dispatch(setPingAC(serverPing))
-            // setDif(timeSyncServer + serverPing);
-            // setPing(serverPing);
+
             setIsRunningServer(r.isRunning)
             setIsRunningServerTimeout(r.timeoutData.isRunning)
             return r
@@ -119,50 +116,30 @@ const TabloTimer = (props) => {
     }, [gameNumber])
 
 
-
-
-
-
-    // useEffect(() => {
-    //     let internal = setInterval(() => {
-    //         if (isRunningServer) {
-    //             if (+document.getElementById("s").innerHTML !== Math.floor((deadLine - (timeMem + ((Date.now()) - startTime - dif))) / 1000) % 60) {
-    //                 if (+document.getElementById("m").innerHTML !== Math.floor((deadLine - (timeMem + ((Date.now()) - startTime - dif))) / (1000 * 60))) {
-    //                     document.getElementById("m").innerHTML = Math.floor((deadLine - (timeMem + ((Date.now()) - startTime - dif))) / (1000 * 60))
-    //                 }
-    //                 document.getElementById("s").innerHTML = Math.floor((deadLine - (timeMem + ((Date.now()) - startTime - dif))) / 1000) % 60
-    //                 // document.getElementById("ms").innerHTML = (deadLine - (timeMem + ((Date.now() + dif) - startTime))) % 1000
-    //             }
-    //             // setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif) - startTime)));
-    //         }
-    //     }, 9)
-    //     return () => clearInterval(internal)
-    // })
-
-
     useInterval(() => {
         if (isRunningServer) {
-            if (+document.getElementById("s").innerHTML !== Math.floor((deadLine - (timeMem + ((Date.now()) - startTime + dif))) / 1000) % 60) {
-                if (+document.getElementById("m").innerHTML !== Math.floor((deadLine - (timeMem + ((Date.now()) - startTime + dif))) / (1000 * 60))) {
-                    document.getElementById("m").innerHTML = Math.floor((deadLine - (timeMem + ((Date.now()) - startTime + dif))) / (1000 * 60))
+            let time = deadLine - (timeMem + ((Date.now()) - startTime + dif))
+            if (+document.getElementById("s").innerHTML !== Math.floor(time / 1000) % 60) {
+                if (+document.getElementById("m").innerHTML !== Math.floor(time / (1000 * 60))) {
+                    document.getElementById("m").innerHTML = Math.floor(time / (1000 * 60))
                 }
-                document.getElementById("s").innerHTML = Math.floor((deadLine - (timeMem + ((Date.now()) - startTime + dif))) / 1000) % 60
-                // document.getElementById("ms").innerHTML = (deadLine - (timeMem + ((Date.now() + dif) - startTime))) % 1000
+                document.getElementById("s").innerHTML = Math.floor(time / 1000) % 60
+                // document.getElementById("ms").innerHTML = (deadLine - (timeMem + ((Date.now()) - startTime + dif))) % 1000
             }
             // setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif) - startTime)));
         }
     }, 10);
 
-    // useEffect(() => {
-    //     let internal = setInterval(() => {
-    //         if (isRunningServerTimeout) {
-    //             setTimeMemTimerTimeout(deadLineTimeout - (timeMemTimeout + ((Date.now() + dif) - startTimeout)));
-    //         }
-    //     }, ms)
-    //     return () => clearInterval(internal)
-    // })
 
     console.log(1)
+
+    let getLag = () => {
+        history.push('/lag');
+    }
+
+    let clearLag = () => {
+        window.localStorage.setItem('lag', '0');
+    }
 
 
     return (
@@ -171,6 +148,15 @@ const TabloTimer = (props) => {
                 {props.preset === 1 &&
                 <div>
                     <Dif/>
+                    <div style={{
+                        textAlign: 'center',
+                        position: 'absolute',
+                        left: '30px',
+                        backgroundColor: 'green'
+                    }}>
+                        <div onClick={e => getLag()}>GET LAG</div>
+                        <div onClick={e => clearLag()}>CLEAR LAG</div>
+                    </div>
                 </div>
                 }
             </div>
@@ -185,7 +171,7 @@ const TabloTimer = (props) => {
                     {secondsTimer}
                 </span>
                 <span id='ms'
-                    style={{display: 'none'}}
+                      style={{display: 'none'}}
                 >
                     {ms}
                 </span>

@@ -31,6 +31,8 @@ const TabloTimer = (props) => {
 
     let [gameNumber, setGameNumber] = useState(props.gameNumber);
 
+    // let [isNull, setIsNull] = useState()
+
 
     let [isRunningServer, setIsRunningServer] = useState(false);
 
@@ -57,6 +59,7 @@ const TabloTimer = (props) => {
     let ms = timeMemTimer % 1000;
 
     let secondsTimerTimeout = Math.floor(timeMemTimerTimeout / 1000) % 60;
+
 
     useEffect(() => {
         ////LOAD NEW DATA////
@@ -116,17 +119,28 @@ const TabloTimer = (props) => {
     }, [gameNumber])
 
 
+
+
     useInterval(() => {
         if (isRunningServer) {
             let time = deadLine - (timeMem + ((Date.now()) - startTime + dif))
-            if (+document.getElementById("s").innerHTML !== Math.floor(time / 1000) % 60) {
-                if (+document.getElementById("m").innerHTML !== Math.floor(time / (1000 * 60))) {
+            if (+document.getElementById("s").innerHTML !== Math.floor(time / 1000) % 60 &&  (Math.floor(time / 1000) % 60) >= 0) {
+                if (+document.getElementById("m").innerHTML !== Math.floor(time / (1000 * 60)) && (Math.floor(time / (1000 * 60))) >= 0) {
                     document.getElementById("m").innerHTML = Math.floor(time / (1000 * 60))
                 }
-                document.getElementById("s").innerHTML = Math.floor(time / 1000) % 60
+                document.getElementById("s").innerHTML = `${(Math.floor(time / 1000) % 60) < 10 ? 0 : ''}${Math.floor(time / 1000) % 60}`
+
                 // document.getElementById("ms").innerHTML = (deadLine - (timeMem + ((Date.now()) - startTime + dif))) % 1000
             }
-            // setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif) - startTime)));
+        }
+    }, 10);
+
+    useInterval(() => {
+        if (isRunningServerTimeout) {
+            let time = deadLineTimeout - (timeMemTimeout + ((Date.now()) - startTimeout + dif))
+            if (+document.getElementById("tm").innerHTML !== Math.floor(time / 1000) % 60 && (Math.floor(time / 1000) % 60) >= 0) {
+                document.getElementById("tm").innerHTML = Math.floor(time / 1000) % 60
+            }
         }
     }, 10);
 
@@ -176,22 +190,25 @@ const TabloTimer = (props) => {
                     {ms}
                 </span>
 
-
-                {/*{minutesTimer <= 0 ? 0 : minutesTimer}:{secondsTimer < 10 ? '0' : ''}*/}
-                {/*{secondsTimer <= 0 ? 0 : secondsTimer}*/}
-                {/*:{ms}*/}
             </div>
 
             {props.preset === 1 &&
             <div>
-                {/*{props.isShowLog ? <div className={c.tempLog}>{props.gameTempLog}</div> :*/}
-                {/*    <div className={c.tempLog}></div>}*/}
+                {props.isShowLog ? <div className={c.tempLog}>{props.gameTempLog}</div> :
+                    <div className={c.tempLog}></div>}
 
-                {/*<div className={secondsTimerTimeout < 6 ? c.timeout5sec : c.timeout}>*/}
-                {/*    {(timeMemTimerTimeout > 0) &&*/}
-                {/*    `Таймаут ${secondsTimerTimeout} секунд`*/}
-                {/*    }*/}
-                {/*</div>*/}
+                <div className={c.timeout}>
+                    {isRunningServerTimeout &&
+                        <div>
+                            Таймаут <span id='tm'>
+                    {secondsTimerTimeout}
+                        </span> секунд
+                        </div>
+
+                    }
+
+
+                </div>
 
 
                 {/*<div className={c.consLogHome}>*/}

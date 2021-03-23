@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router";
 
 import * as axios from "axios";
+import logo from "../../ForAdmin/AdminPanel/Info/logoIPTVPORTAL.png";
 
 
 const CreateGameForm = (props) => {
@@ -290,8 +291,19 @@ const CreateGame = (props) => {
 
     return (
         <div className={c.createGame}>
+            <div className={width === 1920 ? c1920.menuHeader : c.menuHeader}>
+                <div className={width === 1920 ? c1920.back : c.back}>
+                    <img src={logo} alt="" width={width === 1920 ? 70 : 50} height={width === 1920 ? 70 : 50}/>
+                    <NavLink to="/">
+                        <div className={width === 1920 ? c1920.backButton : c.backButton}>
+                            ВЕРНУТЬСЯ В МЕНЮ
+                        </div>
+                    </NavLink>
+                </div>
+                <div className={width === 1920 ? c1920.menuTitle : c.menuTitle}>Создать новую игру</div>
+                <div></div>
+            </div>
 
-            <span className={width === 1920 ? c1920.menuTitle : c.menuTitle}>Создать новую игру</span>
             <div className={width === 1920 ? c1920.createGamePanel : c.createGamePanel}>
                 <CreateGameReduxForm onSubmit={onSubmit}
                                      gameTypes={gameTypes}
@@ -305,11 +317,6 @@ const CreateGame = (props) => {
                                      setGuestsLogo={setGuestsLogo}
                 />
             </div>
-            <NavLink to="/">
-                <div className={width === 1920 ? c1920.navBackButton : c.navBackButton}>
-                    Вернуться в меню
-                </div>
-            </NavLink>
         </div>
     )
 };

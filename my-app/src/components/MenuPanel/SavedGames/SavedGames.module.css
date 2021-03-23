@@ -48,14 +48,14 @@ a {
 }
 
 .navbar {
-    width: 900px;
+    width: 1000px;
     height: 410px;
     overflow: auto;
 }
 
 .savedGamesMenu {
     display: grid;
-    grid-template-columns: 86% 10%;
+    grid-template-columns: 80% 16%;
     grid-column-gap: 4%;
 }
 
@@ -88,24 +88,6 @@ a {
 .devicesButton {
     position: absolute;
     right: 30px;
-    bottom: 140px;
-    width: 200px;
-    text-align: center;
-    padding: 20px;
-    font-weight: bold;
-    font-size: 20px;
-    border: solid 3px black;
-    background: #8cede5;
-}
-
-
-.devicesButton:hover {
-    background: #D5DEEF;
-}
-
-.navButtonClient {
-    position: absolute;
-    right: 30px;
     bottom: 30px;
     width: 200px;
     text-align: center;
@@ -117,9 +99,13 @@ a {
     color: white;
 }
 
-.navButtonClient:hover {
+
+.devicesButton:hover {
     background: #040e1c;
 }
+
+
+
 
 .createFastGameButton {
     position: absolute;
@@ -183,7 +169,7 @@ a {
 
 .tabloChose {
     display: grid;
-    grid-template-columns: 52% 35% 5%;
+    grid-template-columns: 40% 47% 5%;
     grid-column-gap: 4%;
     padding-top: 10px;
     border-top: 2px solid white;
@@ -214,6 +200,17 @@ a {
 .deleteButton {
     border: 2px solid black;
     background: red;
+    height: 26px;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.editButton {
+    margin-top: 5px;
+    border: 2px solid black;
+    background: green;
     height: 26px;
     color: white;
     text-align: center;

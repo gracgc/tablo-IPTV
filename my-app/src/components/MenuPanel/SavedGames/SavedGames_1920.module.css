@@ -35,14 +35,14 @@ a {
 }
 
 .navbar {
-    width: 1400px;
+    width: 1600px;
     height: 620px;
     overflow: auto;
 }
 
 .savedGamesMenu {
     display: grid;
-    grid-template-columns: 86% 10%;
+    grid-template-columns: 80% 12%;
     grid-column-gap: 4%;
 }
 
@@ -73,24 +73,6 @@ a {
 
 .devicesButton {
     position: absolute;
-    right: 30px;
-    bottom: 180px;
-    width: 280px;
-    text-align: center;
-    padding: 30px;
-    font-weight: bold;
-    font-size: 32px;
-    border: solid 3px black;
-    background: #8cede5;
-}
-
-
-.devicesButton:hover {
-    background: #D5DEEF;
-}
-
-.navButtonClient {
-    position: absolute;
     float: right;
     right: 30px;
     bottom: 30px;
@@ -104,7 +86,8 @@ a {
     color: white;
 }
 
-.navButtonClient:hover {
+
+.devicesButton:hover {
     background: #040e1c;
 }
 
@@ -198,8 +181,21 @@ a {
 }
 
 .deleteButton {
+    padding: 2px 0;
     border: 2px solid black;
     background: red;
+    height: 32px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 24px;
+    color: white;
+}
+
+.editButton {
+    margin-top: 5px;
+    padding: 2px 0;
+    border: 2px solid black;
+    background: green;
     height: 32px;
     text-align: center;
     cursor: pointer;

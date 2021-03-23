@@ -13,6 +13,7 @@ import {setDifAC, setPingAC} from "../../../redux/dif_reducer";
 import Dif from "../../dif/Dif";
 import Cookies from "js-cookie";
 import {useHistory} from "react-router";
+import {setTimeDataAC} from "../../../redux/tablo_reducer";
 
 
 const TabloTimer = (props) => {
@@ -95,6 +96,7 @@ const TabloTimer = (props) => {
             setTimeMem(r.timeData.timeMem);
             setTimeMemTimer(r.timeData.timeMemTimer);
             setDeadLine(r.timeData.deadLine);
+            dispatch(setTimeDataAC(r.timeData.timeMemTimer))
             ////TIMEOUT////
             setStartTimeout(r.timeoutData.runningTime);
             setTimeMemTimeout(r.timeoutData.timeData.timeMem);
@@ -110,6 +112,7 @@ const TabloTimer = (props) => {
                 setTimeMem(time.timeData.timeMem);
                 setTimeMemTimer(time.timeData.timeMemTimer);
                 setDeadLine(time.timeData.deadLine);
+            dispatch(setTimeDataAC(time.timeData.timeMemTimer))
             }
         );
 
@@ -124,6 +127,8 @@ const TabloTimer = (props) => {
     }, [gameNumber])
 
 
+
+
     useInterval(() => {
         if (isRunningServer) {
             let time = deadLine - (timeMem + ((Date.now()) - startTime + dif))
@@ -133,8 +138,10 @@ const TabloTimer = (props) => {
                 }
                 document.getElementById("s").innerHTML = `${(Math.floor(time / 1000) % 60) < 10 ? 0 : ''}${Math.floor(time / 1000) % 60}`
 
+                    //setTimeMemTimer(deadLine - (timeMem + ((Date.now()) - startTime + dif)))
                 // document.getElementById("ms").innerHTML = (deadLine - (timeMem + ((Date.now()) - startTime + dif))) % 1000
             }
+            dispatch(setTimeDataAC(deadLine - (timeMem + ((Date.now()) - startTime + dif))))
         }
     }, 10);
 
@@ -157,6 +164,9 @@ const TabloTimer = (props) => {
     let clearLag = () => {
         window.localStorage.setItem('lag', '0');
     }
+
+
+
 
 
 
@@ -186,13 +196,13 @@ const TabloTimer = (props) => {
                     {minutesTimer}
                 </span>:
                 <span id='s'>
-                    {secondsTimer < 10 && 0}{secondsTimer}
+                    {secondsTimer < 10 ? `0${secondsTimer}` : `${secondsTimer}`}
                 </span>
-                <span id='ms'
-                      style={{display: 'none'}}
-                >
-                    {ms}
-                </span>
+                {/*<span id='ms'*/}
+                {/*      style={{display: 'none'}}*/}
+                {/*>*/}
+
+                {/*</span>*/}
 
             </div>
 
@@ -223,7 +233,6 @@ const TabloTimer = (props) => {
                                               item={gcl.item}
                                               id={gcl.id}
                                               teamType={gcl.teamType}
-                                              timeMemTimer={timeMemTimer}
                                               gameNumber={props.gameNumber}
                             />)}
                 </div>
@@ -235,7 +244,6 @@ const TabloTimer = (props) => {
                                               item={gcl.item}
                                               id={gcl.id}
                                               teamType={gcl.teamType}
-                                              timeMemTimer={timeMemTimer}
                                               gameNumber={gameNumber}
                             />)}
                 </div>

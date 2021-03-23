@@ -142,6 +142,7 @@ router.post('/:gameNumber', authMW, cors(), function (req, res) {
         let newTeams = [
             {
                 "name": homeName,
+                "color": 'white',
                 "counter": 0,
                 "teamType": "home",
                 "timeOut": false,
@@ -149,6 +150,7 @@ router.post('/:gameNumber', authMW, cors(), function (req, res) {
             },
             {
                 "name": guestsName,
+                "color": 'white',
                 "counter": 0,
                 "teamType": "guests",
                 "timeOut": false,

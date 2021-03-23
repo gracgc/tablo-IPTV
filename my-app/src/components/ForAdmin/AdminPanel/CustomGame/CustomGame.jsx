@@ -13,6 +13,7 @@ import {maxTime, maxTime20, maxTime60, required, requiredShort} from "../../../.
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router";
 import {useConfirm} from "material-ui-confirm";
+import logo from "../Info/logoIPTVPORTAL.png";
 
 const axios = require('axios');
 
@@ -282,7 +283,7 @@ const CustomGame = (props) => {
 
     const guestsTeamGamers = teams.find(t => t.teamType === 'guests').gamers;
 
-    let uploadLogo = (teamType ,logo) => {
+    let uploadLogo = (teamType, logo) => {
 
         let logoFormData = new FormData;
 
@@ -297,9 +298,6 @@ const CustomGame = (props) => {
             })
         }
     }
-
-
-
 
 
     const onSubmit = (formData) => {
@@ -351,10 +349,12 @@ const CustomGame = (props) => {
     };
 
     let resetGame = async () => {
-        await confirm({description: 'Вы уверены, что хотете обнулить игру? Все параметры вернутся к изначальным значениям.',
+        await confirm({
+            description: 'Вы уверены, что хотете обнулить игру? Все параметры вернутся к изначальным значениям.',
             title: 'Вы уверены?',
             confirmationText: 'Хорошо',
-            cancellationText: 'Отменить'});
+            cancellationText: 'Отменить'
+        });
         gameAPI.resetGame(gameNumber)
         setTimeout(() => {
             history.push(`/adminPanel/${gameNumber}`);
@@ -364,7 +364,25 @@ const CustomGame = (props) => {
 
     return (
         <div className={c.customGame}>
-            <div className={c.menuTitle}>Задайте новые параметры</div>
+            <div className={width === 1920 ? c1920.menuHeader : c.menuHeader}>
+                <div className={width === 1920 ? c1920.back : c.back}>
+                    <img src={logo} alt="" width={width === 1920 ? 70 : 50} height={width === 1920 ? 70 : 50}/>
+                    <NavLink to="/">
+                        <div className={width === 1920 ? c1920.backButton : c.backButton}>
+                            Вернуться в меню
+                        </div>
+                    </NavLink>
+                </div>
+                <div className={width === 1920 ? c1920.menuTitle : c.menuTitle}>Задайте новые параметры</div>
+                <div></div>
+                <div className={width === 1920 ? c1920.back : c.back}>
+                    <NavLink to={`/adminPanel/${gameNumber}`}>
+                        <div className={width === 1920 ? c1920.backButton : c.backButton}>
+                            Назад в админ-панель
+                        </div>
+                    </NavLink>
+                </div>
+            </div>
             <div className={width === 1920 ? c1920.customGamePanel : c.customGamePanel}>
                 <CustomGameReduxForm onSubmit={onSubmit}
                                      gameNumber={gameNumber}
@@ -383,11 +401,7 @@ const CustomGame = (props) => {
             <div className={width === 1920 ? c1920.resetButton : c.resetButton} onClick={e => resetGame()}>
                 Cброс игры на нулевые значения
             </div>
-            <NavLink to={`/adminPanel/${gameNumber}`}>
-                <div className={width === 1920 ? c1920.navBackButton : c.navBackButton}>
-                    Назад
-                </div>
-            </NavLink>
+
         </div>
     )
 };

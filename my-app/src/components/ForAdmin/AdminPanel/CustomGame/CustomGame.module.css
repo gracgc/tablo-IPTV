@@ -5,9 +5,38 @@
     height: 100%;
 }
 
+.menuHeader {
+    position: absolute;
+    width: 100%;
+    height: 9vh;
+    display: grid;
+    grid-template-columns: 30% 40% 5% 25%;
+    border-bottom: 1px white solid;
+}
+
+.back {
+    margin-top: 10px;
+    margin-left: 40px;
+    display: inline-flex;
+}
+
+.backButton {
+    cursor: pointer;
+    margin-left: 20px;
+    color: #2079A3;
+    text-decoration-color: #2079A3;
+    text-decoration-line: underline;
+    font-size: 20px;
+}
+
 a {
     color: black;
     text-decoration: none;
+}
+
+.menuTitle {
+    text-align: center;
+    font-size: 40px;
 }
 
 
@@ -25,13 +54,7 @@ a {
     color: white;
 }
 
-.menuTitle {
-    position: absolute;
-    font-weight: bold;
-    font-size: 38px;
-    left: 150px;
-    top: 20px;
-}
+
 
 .panelName {
     margin-bottom: 7px;
@@ -42,7 +65,7 @@ a {
 
 .customGameForm {
     margin: auto;
-    padding-top: 100px;
+    padding-top: 80px;
     height: 500px;
     width: 1100px;
     display: grid;

@@ -13,6 +13,7 @@ let initialState = {
         {
             name: 'Name',
             logo: "",
+            color: 'white',
             counter: 0,
             teamType: 'home',
             timeOut: false,
@@ -272,6 +273,7 @@ let initialState = {
         {
             name: 'Name',
             logo: "",
+            color: 'white',
             counter: 0,
             teamType: 'guests',
             timeOut: false,

@@ -1,20 +1,27 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import c from './TabloClient1.module.css'
 import {useSelector} from "react-redux";
 
 
 const TabloEventClient = (props) => {
 
+    const timeMemTimer = useSelector(
+        (state => state.tabloPage.gameTime)
+    );
+
+
     const deletedGamer = useSelector(
         state => state.teamsPage.teams.find(t => t.teamType === props.teamType).gamers.find(g => g.id === props.id)
     );
 
-    let penaltyTimer = props.timeMemTimer - deletedGamer.whenWasPenalty + deletedGamer.timeOfPenalty;
+    let penaltyTimer = timeMemTimer - deletedGamer.whenWasPenalty + deletedGamer.timeOfPenalty;
 
     let secondsTimerOfDeletedGamer =
         Math.floor(penaltyTimer / 1000) % 60;
     let minutesTimerOfDeletedGamer =
         Math.floor(penaltyTimer / (1000 * 60));
+
+
 
 
     return (

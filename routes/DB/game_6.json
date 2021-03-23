@@ -52,6 +52,7 @@
   "teams": [
     {
       "name": "йцуйцу",
+      "color": "white",
       "counter": 0,
       "teamType": "home",
       "timeOut": false,
@@ -120,6 +121,7 @@
     },
     {
       "name": "йцуйцу",
+      "color": "white",
       "counter": 0,
       "teamType": "guests",
       "timeOut": false,

@@ -116,11 +116,7 @@ const SavedGames = (props) => {
                 </div>
 
             </div>
-            <NavLink to={'/tabloClient/'}>
-                <div className={width === 1920 ? c1920.navButtonClient : c.navButtonClient}>
-                    Табло
-                </div>
-            </NavLink>
+
 
             <NavLink to="/settings">
                 <div className={width === 1920 ? c1920.devicesButton : c.devicesButton}>

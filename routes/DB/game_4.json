@@ -72,6 +72,7 @@
   "teams": [
     {
       "name": "asdas",
+      "color": "white",
       "counter": 0,
       "teamType": "home",
       "timeOut": false,
@@ -220,6 +221,7 @@
     },
     {
       "name": "adsasd",
+      "color": "white",
       "counter": 0,
       "teamType": "guests",
       "timeOut": false,

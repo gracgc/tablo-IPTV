@@ -82,22 +82,22 @@ const TabloEdit = (props) => {
     let [smallOvertime, setSmallOvertime] = useState();
     let [bigOvertime, setBigOvertime] = useState();
 
-    let [startTime, setStartTime] = useState(0);
+    let [startTime, setStartTime] = useState();
 
-    let [startTimeout, setStartTimeout] = useState(0);
+    let [startTimeout, setStartTimeout] = useState();
 
-    let [deadLine, setDeadLine] = useState(0);
+    let [deadLine, setDeadLine] = useState();
 
-    let [deadLineTimeout, setDeadLineTimeout] = useState(0);
+    let [deadLineTimeout, setDeadLineTimeout] = useState();
 
-    let [timeDif, setTimeDif] = useState(0);
-    let [timeMem, setTimeMem] = useState(0);
-    let [timeMemTimer, setTimeMemTimer] = useState(0);
+    let [timeDif, setTimeDif] = useState();
+    let [timeMem, setTimeMem] = useState();
+    let [timeMemTimer, setTimeMemTimer] = useState();
 
 
-    let [timeDifTimeout, setTimeDifTimeout] = useState(0);
-    let [timeMemTimeout, setTimeMemTimeout] = useState(0);
-    let [timeMemTimerTimeout, setTimeMemTimerTimeout] = useState(0);
+    let [timeDifTimeout, setTimeDifTimeout] = useState();
+    let [timeMemTimeout, setTimeMemTimeout] = useState();
+    let [timeMemTimerTimeout, setTimeMemTimerTimeout] = useState();
 
     let secondsStopwatch = Math.floor(timeDif / 1000) % 60;
     let minutesStopwatch = Math.floor(timeDif / (1000 * 60)) + (period - 1) * 20 + (smallOvertime * 5) + (bigOvertime * 20);

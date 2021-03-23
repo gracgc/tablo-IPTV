@@ -71,7 +71,11 @@ const TabloTimer = (props) => {
     }, [])
 
 
+
+
     useEffect(() => {
+
+
 
         ////TIME LOAD////
         tabloAPI.getTimerStatus(gameNumber, Date.now()).then(r => {
@@ -85,6 +89,7 @@ const TabloTimer = (props) => {
             setIsRunningServerTimeout(r.timeoutData.isRunning)
             return r
         }).then(r => {
+
             ////TIMER////
             setStartTime(r.runningTime)
             setTimeMem(r.timeData.timeMem);
@@ -119,12 +124,10 @@ const TabloTimer = (props) => {
     }, [gameNumber])
 
 
-
-
     useInterval(() => {
         if (isRunningServer) {
             let time = deadLine - (timeMem + ((Date.now()) - startTime + dif))
-            if (+document.getElementById("s").innerHTML !== Math.floor(time / 1000) % 60 &&  (Math.floor(time / 1000) % 60) >= 0) {
+            if (+document.getElementById("s").innerHTML !== Math.floor(time / 1000) % 60 && (Math.floor(time / 1000) % 60) >= 0) {
                 if (+document.getElementById("m").innerHTML !== Math.floor(time / (1000 * 60)) && (Math.floor(time / (1000 * 60))) >= 0) {
                     document.getElementById("m").innerHTML = Math.floor(time / (1000 * 60))
                 }
@@ -156,6 +159,7 @@ const TabloTimer = (props) => {
     }
 
 
+
     return (
         <div>
             <div>
@@ -182,7 +186,7 @@ const TabloTimer = (props) => {
                     {minutesTimer}
                 </span>:
                 <span id='s'>
-                    {secondsTimer}
+                    {secondsTimer < 10 && 0}{secondsTimer}
                 </span>
                 <span id='ms'
                       style={{display: 'none'}}
@@ -199,11 +203,11 @@ const TabloTimer = (props) => {
 
                 <div className={c.timeout}>
                     {isRunningServerTimeout &&
-                        <div>
-                            Таймаут <span id='tm'>
+                    <div>
+                        Таймаут <span id='tm'>
                     {secondsTimerTimeout}
                         </span> секунд
-                        </div>
+                    </div>
 
                     }
 
@@ -211,30 +215,30 @@ const TabloTimer = (props) => {
                 </div>
 
 
-                {/*<div className={c.consLogHome}>*/}
-                {/*    {props.gameConsLog && props.gameConsLog.filter(gcl => (gcl.item !== '' && gcl.teamType === 'home'))*/}
-                {/*        .map((gcl, index) =>*/}
-                {/*            <TabloEventClient key={gcl.id}*/}
-                {/*                              index={index}*/}
-                {/*                              item={gcl.item}*/}
-                {/*                              id={gcl.id}*/}
-                {/*                              teamType={gcl.teamType}*/}
-                {/*                              timeMemTimer={timeMemTimer}*/}
-                {/*                              gameNumber={props.gameNumber}*/}
-                {/*            />)}*/}
-                {/*</div>*/}
-                {/*<div className={c.consLogGuests}>*/}
-                {/*    {props.gameConsLog && props.gameConsLog.filter(gcl => (gcl.item !== '' && gcl.teamType === 'guests'))*/}
-                {/*        .map((gcl, index) =>*/}
-                {/*            <TabloEventClient key={gcl.id}*/}
-                {/*                              index={index}*/}
-                {/*                              item={gcl.item}*/}
-                {/*                              id={gcl.id}*/}
-                {/*                              teamType={gcl.teamType}*/}
-                {/*                              timeMemTimer={timeMemTimer}*/}
-                {/*                              gameNumber={gameNumber}*/}
-                {/*            />)}*/}
-                {/*</div>*/}
+                <div className={c.consLogHome}>
+                    {props.gameConsLog && props.gameConsLog.filter(gcl => (gcl.item !== '' && gcl.teamType === 'home'))
+                        .map((gcl, index) =>
+                            <TabloEventClient key={gcl.id}
+                                              index={index}
+                                              item={gcl.item}
+                                              id={gcl.id}
+                                              teamType={gcl.teamType}
+                                              timeMemTimer={timeMemTimer}
+                                              gameNumber={props.gameNumber}
+                            />)}
+                </div>
+                <div className={c.consLogGuests}>
+                    {props.gameConsLog && props.gameConsLog.filter(gcl => (gcl.item !== '' && gcl.teamType === 'guests'))
+                        .map((gcl, index) =>
+                            <TabloEventClient key={gcl.id}
+                                              index={index}
+                                              item={gcl.item}
+                                              id={gcl.id}
+                                              teamType={gcl.teamType}
+                                              timeMemTimer={timeMemTimer}
+                                              gameNumber={gameNumber}
+                            />)}
+                </div>
             </div>
             }
         </div>

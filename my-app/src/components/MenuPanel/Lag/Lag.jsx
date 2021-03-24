@@ -20,9 +20,13 @@ const Lag = (props) => {
 
 
     return (
-        <div id='a' style={{display: "none"}}>
+        <div>
+            <div id='a' style={{display: "none"}}>
 
+            </div>
+            КАЛИБРОВКА
         </div>
+
     )
 }
 

@@ -77,13 +77,6 @@ const AdminPanel = (props) => {
     }, []);
 
 
-    let resetGame = async () => {
-        await confirm({description: 'Вы уверены, что хотете обнулить игру? Все параметры вернутся к изначальным значениям.',
-            title: 'Вы уверены?',
-            confirmationText: 'Хорошо',
-            cancellationText: 'Отменить'});
-        gameAPI.resetGame(gameNumber)
-    }
 
 
     return (

@@ -57,8 +57,10 @@ const SavedGames = (props) => {
         let responseTeam = await teamsAPI.createTeams(
             lastGameNumber + 1,
             'Команда 1',
+            'white',
             [],
             'Команда 2',
+            'white',
             []);
 
         return {responseGame, responseTeam}

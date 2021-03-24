@@ -23,7 +23,6 @@ router.get('/:gameNumber', function (req, res) {
         }
 
 
-
         DB.teams.resultCode = 0;
 
         res.send(DB.teams)

@@ -141,8 +141,10 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
         let period = req.body.period;
         let time = req.body.time;
         let homeName = req.body.homeName;
+        let homeColor = req.body.homeColor;
         let homeGamers = req.body.homeGamers;
         let guestsName = req.body.guestsName;
+        let guestsColor = req.body.guestsColor;
         let guestsGamers = req.body.guestsGamers;
         let additionalHomeGamers = req.body.additionalHomeGamers;
         let additionalGuestsGamers = req.body.additionalGuestsGamers;
@@ -160,7 +162,9 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
         DB.gameInfo.gameTime.timeData.timeDif = 1200000 - time
         DB.gameInfo.gameTime.timeData.timeMem = 1200000 - time
         DB.teams.find(t => t.teamType === 'home').name = homeName
+        DB.teams.find(t => t.teamType === 'home').color = homeColor
         DB.teams.find(t => t.teamType === 'guests').name = guestsName
+        DB.teams.find(t => t.teamType === 'guests').color = guestsColor
 
         homeGamers.map(g => {
             DB.teams.find(t => t.teamType === 'home').gamers.find(gamer => gamer.id === g.id).fullName = g.fullName

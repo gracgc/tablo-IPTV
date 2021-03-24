@@ -20,12 +20,12 @@ const PickColor = (props) => {
     return (
         <div>
             {isShowColors
-                ? <div style={{position: 'absolute', zIndex: 1000, left: width === 1920 ? 280 : 120}}>
+                ? <div style={{position: 'relative', zIndex: 1000, left: -150}}>
                     <GithubPicker
                         color={props.color}
                         onChange={color => changeColor(color.hex)}/>
                 </div>
-                : <div onClick={e => setIsShowColors(true)} style={{width: '100%', height: 36, backgroundColor: props.color}}>
+                : <div onClick={e => setIsShowColors(true)} style={{width: '100%', height: 36, backgroundColor: props.color, cursor: 'pointer'}}>
 
                 </div>
             }

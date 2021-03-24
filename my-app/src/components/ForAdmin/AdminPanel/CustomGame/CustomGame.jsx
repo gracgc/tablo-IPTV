@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router";
 import {useConfirm} from "material-ui-confirm";
 import logo from "../Info/logoIPTVPORTAL.png";
+import PickColor from "../../../PickColor/PickColor";
 
 const axios = require('axios');
 
@@ -124,9 +125,13 @@ const CustomGameForm = (props) => {
                         </div>
                     </div>
                     <div className={width === 1920 ? c1920.customGamers : c.customGamers}>
-                        <div className={width === 1920 ? c1920.teamPanel : c.teamPanel}>
-                            <Field placeholder={'Название команды'} name={`homeName`}
-                                   component={Input}/>
+                        <div>
+                            <div className={width === 1920 ? c1920.colorAndName : c.colorAndName}>
+                                <Field placeholder={'Название команды'} name={`homeName`}
+                                       component={Input}/>
+                                <PickColor setColor={props.setColorHome} color={props.colorHome}/>
+                            </div>
+
 
                             <Button
                                 variant="contained"
@@ -143,47 +148,54 @@ const CustomGameForm = (props) => {
                             {props.homeLogo &&
                             <span style={{marginLeft: '10px', color: 'green'}}>Лого загружен</span>}
                             <div className={width === 1920 ? c1920.panelName : c.panelName}>Игроки</div>
-                            {homeTeamGamers.map(g => <div className={width === 1920 ? c1920.team : c.team}>
-                                <div>
-                                    <Field placeholder={'Имя игрока'} name={`homeGamerName${g.id}`}
-                                           component={Input}/>
-                                </div>
-                                <div>
-                                    <Field placeholder={'№'} name={`homeGamerNumber${g.id}`}
-                                           component={Input}/>
-                                </div>
-                            </div>)}
-                            {props.numberOfAdditionalHomePlayers.map(n => <div
-                                className={width === 1920 ? c1920.team : c.team}>
-                                <div>
-                                    <Field placeholder={'Дополнительный игрок'}
-                                           name={`additionalHomeGamer${n}`}
-                                           validate={[required]}
-                                           component={Input}/>
-                                </div>
-                                <div>
-                                    <Field placeholder={`№`} name={`additionalHomeNumber${n}`}
-                                           validate={[requiredShort]}
-                                           component={Input}/>
-                                </div>
-                            </div>)}
-                            <div className={width === 1920 ? c1920.addDeleteGamerButtons : c.addDeleteGamerButtons}>
-                                <div className={width === 1920 ? c1920.addGamerButton : c.addGamerButton}
-                                     onClick={(e) =>
-                                         addPlayer(props.numberOfAdditionalHomePlayers, props.setNumberOfAdditionalHomePlayers)}>
-                                    +
-                                </div>
-                                <div className={width === 1920 ? c1920.deleteGamerButton : c.deleteGamerButton}
-                                     onClick={(e) =>
-                                         deletePlayer(props.numberOfAdditionalHomePlayers, props.setNumberOfAdditionalHomePlayers)}>
-                                    -
+
+
+                            <div className={width === 1920 ? c1920.teamPanel : c.teamPanel}>
+                                {homeTeamGamers.map(g => <div className={width === 1920 ? c1920.team : c.team}>
+                                    <div>
+                                        <Field placeholder={'Имя игрока'} name={`homeGamerName${g.id}`}
+                                               component={Input}/>
+                                    </div>
+                                    <div>
+                                        <Field placeholder={'№'} name={`homeGamerNumber${g.id}`}
+                                               component={Input}/>
+                                    </div>
+                                </div>)}
+                                {props.numberOfAdditionalHomePlayers.map(n => <div
+                                    className={width === 1920 ? c1920.team : c.team}>
+                                    <div>
+                                        <Field placeholder={'Дополнительный игрок'}
+                                               name={`additionalHomeGamer${n}`}
+                                               validate={[required]}
+                                               component={Input}/>
+                                    </div>
+                                    <div>
+                                        <Field placeholder={`№`} name={`additionalHomeNumber${n}`}
+                                               validate={[requiredShort]}
+                                               component={Input}/>
+                                    </div>
+                                </div>)}
+                                <div className={width === 1920 ? c1920.addDeleteGamerButtons : c.addDeleteGamerButtons}>
+                                    <div className={width === 1920 ? c1920.addGamerButton : c.addGamerButton}
+                                         onClick={(e) =>
+                                             addPlayer(props.numberOfAdditionalHomePlayers, props.setNumberOfAdditionalHomePlayers)}>
+                                        +
+                                    </div>
+                                    <div className={width === 1920 ? c1920.deleteGamerButton : c.deleteGamerButton}
+                                         onClick={(e) =>
+                                             deletePlayer(props.numberOfAdditionalHomePlayers, props.setNumberOfAdditionalHomePlayers)}>
+                                        -
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div className={width === 1920 ? c1920.teamPanel : c.teamPanel}>
 
-                            <Field placeholder={'Название команды'} name={`guestsName`}
-                                   component={Input}/>
+                        <div>
+                            <div className={width === 1920 ? c1920.colorAndName : c.colorAndName}>
+                                <Field placeholder={'Название команды'} name={`guestsName`}
+                                       component={Input}/>
+                                <PickColor setColor={props.setColorGuests} color={props.colorGuests}/>
+                            </div>
 
                             <Button
                                 variant="contained"
@@ -200,40 +212,45 @@ const CustomGameForm = (props) => {
                             {props.guestsLogo &&
                             <span style={{marginLeft: '10px', color: 'green'}}>Лого загружен</span>}
                             <div className={width === 1920 ? c1920.panelName : c.panelName}>Игроки</div>
-                            {guestsTeamGamers.map(g => <div className={width === 1920 ? c1920.team : c.team}>
-                                <div>
-                                    <Field placeholder={'Имя игрока'} name={`guestsGamerName${g.id}`}
-                                           component={Input}/>
-                                </div>
-                                <div>
-                                    <Field placeholder={'№'} name={`guestsGamerNumber${g.id}`}
-                                           component={Input}/>
-                                </div>
-                            </div>)}
-                            {props.numberOfAdditionalGuestsPlayers.map(n => <div
-                                className={width === 1920 ? c1920.team : c.team}>
-                                <div>
-                                    <Field placeholder={'Дополнительный игрок'}
-                                           name={`additionalGuestsGamer${n}`}
-                                           validate={[required]}
-                                           component={Input}/>
-                                </div>
-                                <div>
-                                    <Field placeholder={`№`} name={`additionalGuestsNumber${n}`}
-                                           validate={[requiredShort]}
-                                           component={Input}/>
-                                </div>
-                            </div>)}
-                            <div className={width === 1920 ? c1920.addDeleteGamerButtons : c.addDeleteGamerButtons}>
-                                <div className={width === 1920 ? c1920.addGamerButton : c.addGamerButton}
-                                     onClick={(e) =>
-                                         addPlayer(props.numberOfAdditionalGuestsPlayers, props.setNumberOfAdditionalGuestsPlayers)}>
-                                    +
-                                </div>
-                                <div className={width === 1920 ? c1920.deleteGamerButton : c.deleteGamerButton}
-                                     onClick={(e) =>
-                                         deletePlayer(props.numberOfAdditionalGuestsPlayers, props.setNumberOfAdditionalGuestsPlayers)}>
-                                    -
+
+
+                            <div className={width === 1920 ? c1920.teamPanel : c.teamPanel}>
+
+                                {guestsTeamGamers.map(g => <div className={width === 1920 ? c1920.team : c.team}>
+                                    <div>
+                                        <Field placeholder={'Имя игрока'} name={`guestsGamerName${g.id}`}
+                                               component={Input}/>
+                                    </div>
+                                    <div>
+                                        <Field placeholder={'№'} name={`guestsGamerNumber${g.id}`}
+                                               component={Input}/>
+                                    </div>
+                                </div>)}
+                                {props.numberOfAdditionalGuestsPlayers.map(n => <div
+                                    className={width === 1920 ? c1920.team : c.team}>
+                                    <div>
+                                        <Field placeholder={'Дополнительный игрок'}
+                                               name={`additionalGuestsGamer${n}`}
+                                               validate={[required]}
+                                               component={Input}/>
+                                    </div>
+                                    <div>
+                                        <Field placeholder={`№`} name={`additionalGuestsNumber${n}`}
+                                               validate={[requiredShort]}
+                                               component={Input}/>
+                                    </div>
+                                </div>)}
+                                <div className={width === 1920 ? c1920.addDeleteGamerButtons : c.addDeleteGamerButtons}>
+                                    <div className={width === 1920 ? c1920.addGamerButton : c.addGamerButton}
+                                         onClick={(e) =>
+                                             addPlayer(props.numberOfAdditionalGuestsPlayers, props.setNumberOfAdditionalGuestsPlayers)}>
+                                        +
+                                    </div>
+                                    <div className={width === 1920 ? c1920.deleteGamerButton : c.deleteGamerButton}
+                                         onClick={(e) =>
+                                             deletePlayer(props.numberOfAdditionalGuestsPlayers, props.setNumberOfAdditionalGuestsPlayers)}>
+                                        -
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -266,6 +283,18 @@ const CustomGame = (props) => {
 
     let gameNumber = props.match.params.gameNumber;
 
+    const teams = useSelector(
+        state => state.teamsPage.teams
+    );
+
+    const homeTeam = teams.find(t => t.teamType === 'home');
+
+    const guestsTeam = teams.find(t => t.teamType === 'guests');
+
+    const homeTeamGamers = teams.find(t => t.teamType === 'home').gamers;
+
+    const guestsTeamGamers = teams.find(t => t.teamType === 'guests').gamers;
+
     let [successSave, setSuccessSave] = useState(false);
 
     let [numberOfAdditionalHomePlayers, setNumberOfAdditionalHomePlayers] = useState([]);
@@ -274,14 +303,12 @@ const CustomGame = (props) => {
     let [homeLogo, setHomeLogo] = useState()
     let [guestsLogo, setGuestsLogo] = useState()
 
+    let [colorHome, setColorHome] = useState(homeTeam.color)
+    let [colorGuests, setColorGuests] = useState(guestsTeam.color)
 
-    const teams = useSelector(
-        state => state.teamsPage.teams
-    );
 
-    const homeTeamGamers = teams.find(t => t.teamType === 'home').gamers;
 
-    const guestsTeamGamers = teams.find(t => t.teamType === 'guests').gamers;
+
 
     let uploadLogo = (teamType, logo) => {
 
@@ -303,13 +330,14 @@ const CustomGame = (props) => {
     const onSubmit = (formData) => {
 
 
-        dispatch(customGame(gameNumber, formData.period, (formData.min * 60000 + formData.sec * 1000), formData.homeName,
+        dispatch(customGame(gameNumber, formData.period, (formData.min * 60000 + formData.sec * 1000),
+            formData.homeName, colorHome,
             homeTeamGamers.map(g => ({
                 id: g.id,
                 fullName: eval(`formData.homeGamerName${g.id}`),
                 gamerNumber: eval(`formData.homeGamerNumber${g.id}`)
             })),
-            formData.guestsName,
+            formData.guestsName, colorGuests,
             guestsTeamGamers.map(g => ({
                 id: g.id,
                 fullName: eval(`formData.guestsGamerName${g.id}`),
@@ -369,7 +397,7 @@ const CustomGame = (props) => {
                     <img src={logo} alt="" width={width === 1920 ? 70 : 50} height={width === 1920 ? 70 : 50}/>
                     <NavLink to="/">
                         <div className={width === 1920 ? c1920.backButton : c.backButton}>
-                            Вернуться в меню
+                            ВЕРНУТЬСЯ В МЕНЮ
                         </div>
                     </NavLink>
                 </div>
@@ -378,7 +406,7 @@ const CustomGame = (props) => {
                 <div className={width === 1920 ? c1920.back : c.back}>
                     <NavLink to={`/adminPanel/${gameNumber}`}>
                         <div className={width === 1920 ? c1920.backButton : c.backButton}>
-                            Назад в админ-панель
+                            НАЗАД В АДМИН ПАНЕЛЬ
                         </div>
                     </NavLink>
                 </div>
@@ -395,6 +423,10 @@ const CustomGame = (props) => {
                                      setHomeLogo={setHomeLogo}
                                      guestsLogo={guestsLogo}
                                      setGuestsLogo={setGuestsLogo}
+                                     colorHome={colorHome}
+                                     setColorHome={setColorHome}
+                                     colorGuests={colorGuests}
+                                     setColorGuests={setColorGuests}
                 />
             </div>
 

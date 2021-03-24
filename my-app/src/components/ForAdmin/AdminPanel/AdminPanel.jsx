@@ -99,6 +99,8 @@ const AdminPanel = (props) => {
                               teamGamers={homeTeamGamers} teamCounter={homeTeamInfo.counter}
                               name={homeTeamInfo.name} timeOut={homeTeamInfo.timeOut} teamType={homeTeamInfo.teamType}
                               gameNumber={gameNumber} isRunningServerTimeout={isRunningServerTimeout} logo={homeTeamInfo.logo}
+                              color={homeTeamInfo.color}
+
                     />
                 </div>
                 <div className={c.addPanel}>
@@ -120,6 +122,7 @@ const AdminPanel = (props) => {
                               teamType={guestsTeamInfo.teamType}
                               gameNumber={gameNumber} isRunningServerTimeout={isRunningServerTimeout}
                               logo={guestsTeamInfo.logo}
+                              color={guestsTeamInfo.color}
                     />
                 </div>
             </div>

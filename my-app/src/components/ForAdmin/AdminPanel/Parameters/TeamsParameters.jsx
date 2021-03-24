@@ -76,13 +76,16 @@ const TeamsParameters = (props) => {
     }
 
 
+
     return (
         <div className={c.parameters}>
             <div>
                 <TeamInfo period={period} timeMem={timeMem} timeMemTimer={timeMemTimer}
                           isRunningServer={isRunningServer}
                           teamGamers={homeTeamGamers} teamCounter={homeTeamInfo.counter}
-                          name={homeTeamInfo.name} timeOut={homeTeamInfo.timeOut} teamType={homeTeamInfo.teamType}
+                          name={homeTeamInfo.name} timeOut={homeTeamInfo.timeOut}
+                          teamType={homeTeamInfo.teamType}
+                          color={homeTeamInfo.color}
                           gameNumber={gameNumber}
                 />
             </div>
@@ -92,6 +95,7 @@ const TeamsParameters = (props) => {
                           teamGamers={guestsTeamGamers} teamCounter={guestsTeamInfo.counter}
                           name={guestsTeamInfo.name} timeOut={guestsTeamInfo.timeOut}
                           teamType={guestsTeamInfo.teamType}
+                          color={guestsTeamInfo.color}
                           gameNumber={gameNumber}
                 />
             </div>

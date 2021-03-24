@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {createNewGame, getSavedGames} from "../../../redux/games_reducer";
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router";
-import { SketchPicker } from 'react-color'
+import {SketchPicker} from 'react-color'
 
 import * as axios from "axios";
 import logo from "../../ForAdmin/AdminPanel/Info/logoIPTVPORTAL.png";
@@ -19,7 +19,6 @@ import PickColor from "../../PickColor/PickColor";
 const CreateGameForm = (props) => {
 
     let width = window.innerWidth;
-
 
 
     let [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -89,7 +88,10 @@ const CreateGameForm = (props) => {
                                     <Field placeholder={'Название команды'} name={'homeTeamName'}
                                            validate={[required]}
                                            component={Input}/>
+
                                     <PickColor setColor={props.setColorHome} color={props.colorHome}/>
+
+
                                 </div>
 
                             </div>
@@ -142,7 +144,9 @@ const CreateGameForm = (props) => {
                                     <Field placeholder={'Название команды'} name={'guestsTeamName'}
                                            validate={[required]}
                                            component={Input}/>
+
                                     <PickColor setColor={props.setColorGuests} color={props.colorGuests}/>
+
                                 </div>
                             </div>
                             <Button

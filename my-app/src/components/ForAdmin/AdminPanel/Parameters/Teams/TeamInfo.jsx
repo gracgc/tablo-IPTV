@@ -56,7 +56,7 @@ const TeamInfo = (props) => {
                     }
 
                     <div style={{marginLeft: 30, marginRight: 30, textAlign: props.teamType === 'guests' && 'right'}}>
-                        <div>
+                        <div style={{color: props.color}}>
                             {props.name}
                         </div>
                         <div className={width === 1920 ? c1920.points : c.points}>

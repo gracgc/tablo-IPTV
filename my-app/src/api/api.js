@@ -17,9 +17,9 @@ export const teamsAPI = {
                 return responce.data
             })
     },
-    createTeams(gameNumber, homeName, homeGamers, guestsName, guestsGamers) {
+    createTeams(gameNumber, homeName, homeColor, homeGamers, guestsName, guestsColor, guestsGamers) {
         return instance.post(`teams/${gameNumber}`,
-            {homeName, homeGamers, guestsName, guestsGamers})
+            {homeName, homeColor, homeGamers, guestsName, guestsColor, guestsGamers})
             .then(responce => {
                 return responce.data
             })

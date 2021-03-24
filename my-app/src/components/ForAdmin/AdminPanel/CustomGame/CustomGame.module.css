@@ -120,19 +120,7 @@ a {
     grid-template-columns: 85% 10%;
 }
 
-.customGameButton {
-    position: absolute;
-    float: right;
-    left: 100px;
-    bottom: 30px;
-    width: 300px;
-    text-align: center;
-    padding: 20px;
-    font-weight: bold;
-    font-size: 22px;
-    border: solid 2px black;
-    cursor: pointer;
-}
+
 
 .successSave {
     color: green;
@@ -170,6 +158,20 @@ a {
     box-sizing: border-box;
     border: 2px solid black;
     font-size: 22px;
+    cursor: pointer;
+}
+
+.customGameButton {
+    position: absolute;
+    float: right;
+    left: 100px;
+    bottom: 30px;
+    width: 300px;
+    text-align: center;
+    padding: 20px;
+    font-weight: bold;
+    font-size: 22px;
+    border: solid 2px black;
     cursor: pointer;
 }
 

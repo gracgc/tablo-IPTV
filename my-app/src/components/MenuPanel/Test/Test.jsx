@@ -12,7 +12,7 @@ const Test = (props) => {
     return (
         <div style={{background: 'black'}}>
             <div style={{color: 'white'}}>
-                <Test3/>
+                <Test2/>
             </div>
 
         </div>

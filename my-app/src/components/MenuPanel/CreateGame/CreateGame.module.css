@@ -38,6 +38,12 @@ a {
     font-size: 40px;
 }
 
+.colorAndName {
+    position: relative;
+    display: grid;
+    grid-template-columns: 90% 10%;
+}
+
 .navBackButton {
     position: absolute;
     float: right;

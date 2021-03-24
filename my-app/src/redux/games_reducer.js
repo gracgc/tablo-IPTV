@@ -99,9 +99,9 @@ export const deleteGame = (gameNumber) => async (dispatch) => {
 };
 
 export const createNewGame =
-    (gameName, gameNumber, gameType, homeName, homeGamers, guestsName, guestsGamers) => async (dispatch) => {
+    (gameName, gameNumber, gameType, homeName, homeColor, homeGamers, guestsName, guestsColor, guestsGamers) => async (dispatch) => {
     let responseGame = await gameAPI.createNewGame(gameName, gameNumber, gameType);
-    let responseTeam = await teamsAPI.createTeams(gameNumber, homeName, homeGamers, guestsName, guestsGamers);
+    let responseTeam = await teamsAPI.createTeams(gameNumber, homeName, homeColor, homeGamers, guestsName, guestsColor, guestsGamers);
 
     // if (responseGame.resultCode === 0 && responseTeam.resultCode === 0) {
     //     dispatch(createNewGameAC(gameName, gameNumber, gameType));

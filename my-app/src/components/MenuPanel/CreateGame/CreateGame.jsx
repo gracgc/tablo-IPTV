@@ -9,14 +9,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {createNewGame, getSavedGames} from "../../../redux/games_reducer";
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router";
+import { SketchPicker } from 'react-color'
 
 import * as axios from "axios";
 import logo from "../../ForAdmin/AdminPanel/Info/logoIPTVPORTAL.png";
+import PickColor from "../../PickColor/PickColor";
 
 
 const CreateGameForm = (props) => {
 
     let width = window.innerWidth;
+
+
 
     let [menuIsOpen, setMenuIsOpen] = useState(false);
 
@@ -81,9 +85,13 @@ const CreateGameForm = (props) => {
                         <div>
                             <div className={width === 1920 ? c1920.homeTeam : c.homeTeam}>
                                 <div className={width === 1920 ? c1920.formTitle : c.formTitle}>Название команды</div>
-                                <Field placeholder={'Название команды'} name={'homeTeamName'}
-                                       validate={[required]}
-                                       component={Input}/>
+                                <div className={width === 1920 ? c1920.colorAndName : c.colorAndName}>
+                                    <Field placeholder={'Название команды'} name={'homeTeamName'}
+                                           validate={[required]}
+                                           component={Input}/>
+                                    <PickColor setColor={props.setColorHome} color={props.colorHome}/>
+                                </div>
+
                             </div>
                             <Button
                                 variant="contained"
@@ -130,9 +138,12 @@ const CreateGameForm = (props) => {
                         <div className={width === 1920 ? c1920.guestsTeam : c.guestsTeam}>
                             <div className={width === 1920 ? c1920.homeTeam : c.homeTeam}>
                                 <div className={width === 1920 ? c1920.formTitle : c.formTitle}>Название команды</div>
-                                <Field placeholder={'Название команды'} name={'guestsTeamName'}
-                                       validate={[required]}
-                                       component={Input}/>
+                                <div className={width === 1920 ? c1920.colorAndName : c.colorAndName}>
+                                    <Field placeholder={'Название команды'} name={'guestsTeamName'}
+                                           validate={[required]}
+                                           component={Input}/>
+                                    <PickColor setColor={props.setColorGuests} color={props.colorGuests}/>
+                                </div>
                             </div>
                             <Button
                                 variant="contained"
@@ -201,6 +212,9 @@ const CreateGame = (props) => {
     let [homeLogo, setHomeLogo] = useState()
     let [guestsLogo, setGuestsLogo] = useState()
 
+    let [colorHome, setColorHome] = useState('#ffffff')
+    let [colorGuests, setColorGuests] = useState('#ffffff')
+
     let gameTypes = ['Классический хоккей'];
 
     let [successMessage, setSuccessMessage] = useState(false);
@@ -245,6 +259,7 @@ const CreateGame = (props) => {
         } else {
             dispatch(createNewGame(formData.gameName, lastGameNumber + 1, formData.gameType,
                 formData.homeTeamName,
+                colorHome,
                 numberOfHomePlayers.map(n => ({
                     id: n,
                     fullName: eval(`formData.homeGamer${n}`),
@@ -256,6 +271,7 @@ const CreateGame = (props) => {
                     whenWasPenalty: 0
                 })),
                 formData.guestsTeamName,
+                colorGuests,
                 numberOfGuestsPlayers.map(n => ({
                     id: n,
                     fullName: eval(`formData.guestsGamer${n}`),
@@ -315,6 +331,10 @@ const CreateGame = (props) => {
                                      guestsLogo={guestsLogo}
                                      setHomeLogo={setHomeLogo}
                                      setGuestsLogo={setGuestsLogo}
+                                     colorHome={colorHome}
+                                     setColorHome={setColorHome}
+                                     colorGuests={colorGuests}
+                                     setColorGuests={setColorGuests}
                 />
             </div>
         </div>

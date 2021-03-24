@@ -1,110 +1,29 @@
 import React, {useEffect, useState} from "react";
-import c from './Video.module.css'
-import c1920 from './Video_1920.module.css'
-import useInterval from "use-interval";
-import socket from "../../../socket/socket";
-import {tabloAPI} from "../../../api/api";
-
+import {useHistory} from "react-router";
+import {GithubPicker} from 'react-color'
 
 const Test2 = (props) => {
 
-    let [load, setLoad] = useState(0)
+    let [color, setColor] = useState('#ffffff')
 
-    let [a, setA] = useState(true)
+    let [isShowColors, setIsShowColors] = useState(false)
 
-
-    let [isRunningServer, setIsRunningServer] = useState(false);
-
-    let [dif, setDif] = useState(0);
-    let [ping, setPing] = useState(0);
-    let tick = 1000;
-
-    let [startTime, setStartTime] = useState();
-
-
-    let [deadLine, setDeadLine] = useState();
-
-
-    let [timeMem, setTimeMem] = useState();
-    let [timeMemTimer, setTimeMemTimer] = useState();
-
-
-    let secondsTimer = Math.floor(timeMemTimer / 1000) % 60;
-    let minutesTimer = Math.floor(timeMemTimer / (1000 * 60));
-    let ms = timeMemTimer % 1000;
-
-
-
-
-
-
-    useEffect(() => {
-
-        ////TIME LOAD////
-        tabloAPI.getTimerStatus(3, Date.now()).then(r => {
-            let serverPing = Math.round((Date.now() - r.dateClient) / 2);
-            let timeSyncServer = r.dateServer - r.dateClient
-
-            setDif(timeSyncServer + serverPing);
-            setPing(serverPing);
-            setIsRunningServer(r.isRunning)
-            return r
-        }).then(r => {
-            ////TIMER////
-            setStartTime(r.runningTime)
-            setTimeMem(r.timeData.timeMem);
-            setTimeMemTimer(r.timeData.timeMemTimer);
-            setDeadLine(r.timeData.deadLine);
-        })
-
-
-        ////Socket IO////
-        socket.on(`getTime${3}`, time => {
-                setIsRunningServer(time.isRunning);
-                setStartTime(time.runningTime)
-                setTimeMem(time.timeData.timeMem);
-                setTimeMemTimer(time.timeData.timeMemTimer);
-                setDeadLine(time.timeData.deadLine);
-            }
-        );
-
-    }, [3])
-
-    useInterval(() => {
-        tabloAPI.getTimerSync(3, Date.now()).then(r => {
-
-            let serverPing = Math.round((Date.now() - r.dateClient) / 2);
-            let timeSyncServer = r.dateServer - r.dateClient
-
-            if (serverPing < ping) {
-                setDif(timeSyncServer + serverPing);
-                setPing(serverPing);
-            }
-
-        })
-    }, 1000);
-
-
-    useInterval(() => {
-        if (isRunningServer) {
-            setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif) - startTime)));
-        }
-    }, 1000);
-
-
-
-    let seconds = Math.floor(load / 1000) % 60;
+    let changeColor = (color) => {
+        setColor(color)
+        setIsShowColors(false)
+    }
 
 
     return (
-        <div style={{background: 'black'}}>
-            <div style={{color: 'white', fontSize: 400}}>
-                {secondsTimer}:{ms.length === 2 ? '0' : ms.length === 1 ? '00' : ''}{ms} <br/>
-
-                <button onClick={e => setA(true)}>Go</button>
-                <button onClick={e => setA(false)}>Stop</button>
-            </div>
-
+        <div>
+            {isShowColors
+                ? <GithubPicker
+                    color={color}
+                    onChange={color => changeColor(color.hex)}/>
+                : <div onClick={e => setIsShowColors(true)}>
+                    {color}
+                </div>
+            }
         </div>
     )
 }

@@ -127,6 +127,7 @@ router.post('/guestslogo/:gameNumber', function (req, res) {
 });
 
 
+
 router.post('/:gameNumber', authMW, cors(), function (req, res) {
     try {
         let gameNumber = req.params.gameNumber;
@@ -135,14 +136,16 @@ router.post('/:gameNumber', authMW, cors(), function (req, res) {
         let DB = JSON.parse(data);
 
         let homeName = req.body.homeName;
+        let homeColor = req.body.homeColor;
         let homeGamers = req.body.homeGamers;
         let guestsName = req.body.guestsName;
+        let guestsColor = req.body.guestsColor;
         let guestsGamers = req.body.guestsGamers;
 
         let newTeams = [
             {
                 "name": homeName,
-                "color": 'white',
+                "color": homeColor,
                 "counter": 0,
                 "teamType": "home",
                 "timeOut": false,
@@ -150,7 +153,7 @@ router.post('/:gameNumber', authMW, cors(), function (req, res) {
             },
             {
                 "name": guestsName,
-                "color": 'white',
+                "color": guestsColor,
                 "counter": 0,
                 "teamType": "guests",
                 "timeOut": false,

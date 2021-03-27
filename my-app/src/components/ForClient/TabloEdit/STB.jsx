@@ -47,47 +47,68 @@ const STB = (props) => {
             console.log(currentVideo)
         });
 
-
     }, []);
 
     let player = window.TvipPlayer;
 
-    let stb = window.stb;
+    // if (window.stb) {
+    //     window.stb.play('http://test_stream.iptvportal.cloud/karusel/mono.m3u8?token=ares')
+    //
+    // }
+
+
+
 
     useEffect(() => {
         socket.on(`getPlayerStatus`, isRunning => {
 
-            if (player || stb) {
+            if (player) {
                 if (isRunning) {
                     player.unpause();
-                    stb.continue()
+                    // stb.continue()
                 } else {
                     player.pause();
-                    stb.pause()
+                    // stb.pause()
                 }
             }
+            // if (stb) {
+            //     if (isRunning) {
+            //         stb.continue()
+            //     } else {
+            //         stb.pause()
+            //     }
+            // }
         });
     }, [player])
 
 
     useEffect(() => {
-        if (player || stb) {
+        if (player) {
             setTimeout(() => {
                 player.unpause();
-                stb.continue()
             }, 2000)
         }
+        // if (window.stb) {
+        //     setTimeout(() => {
+        //         window.stb.continue()
+        //     }, 2000)
+        // }
     }, [])
 
 
     useEffect(() => {
-        if (player || stb) {
-            player.playUrl(currentVideo.videoURL, '');
-            player.pause();
-            stb.play(currentVideo.videoURL)
-            stb.pause()
+        if (window.stb) {
+            window.stb.play(currentVideo.videoURL)
+            window.stb.stb.pause()
         }
-    }, [player, currentVideo]);
+    }, [currentVideo]);
+
+    useEffect(() => {
+        if (window.stb) {
+            window.stb.play(currentVideo.videoURL)
+            window.stb.stb.pause()
+        }
+    }, [currentVideo]);
 
 
 
@@ -96,10 +117,12 @@ const STB = (props) => {
             setPad('Переход');
         } else {
             setPad('');
-            if (player || stb) {
+            if (player) {
                 player.unpause()
-                stb.continue()
             }
+            // if (stb) {
+            //     stb.continue()
+            // }
         }
     }, [padding]);
 

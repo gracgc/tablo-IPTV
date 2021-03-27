@@ -38,7 +38,6 @@ const TabloClient = (props) => {
         <div className={c.tablo}>
             {preset === 1 &&
             <div className={c.tablo1}>
-                <div style={{position: 'absolute', zIndex: -50, width: 1280, height: 720}}><img src={tabloIMG} alt="" width={1280} height={720}/></div>
 
                 <div>
                     <TabloTimer gameNumber={props.gameNumber} gameConsLog={props.gameConsLog} isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={preset}/>
@@ -47,23 +46,23 @@ const TabloClient = (props) => {
                 <div>
                     <div className={classNames(c.logo, c.homeLogo)}>
                         {props.homeTeam.logo &&
-                        <img src={props.homeTeam.logo} style={{width: '500px', height: '500px'}} alt=""/>
+                        <img src={props.homeTeam.logo} style={{width: '200px', height: '200px'}} alt=""/>
                         }
                     </div>
                     <div className={classNames(c.logo, c.guestsLogo)}>
                         {props.guestsTeam.logo &&
-                        <img src={props.guestsTeam.logo} style={{width: '500px', height: '500px'}} alt=""/>
+                        <img src={props.guestsTeam.logo} style={{width: '200px', height: '200px'}} alt=""/>
                         }
                     </div>
                 </div>
                 <div>
                     <div className={classNames(c.counter, c.homeTeam)}>
                         {props.homeCounter} <br/>
-                        {props.homeTeam.name.slice(0, 3).toUpperCase()}
+                        {props.homeTeam.name}
                     </div>
                     <div className={classNames(c.counter, c.guestsTeam)}>
                         {props.guestsCounter} <br/>
-                        {props.guestsTeam.name.slice(0, 3).toUpperCase()}
+                        {props.guestsTeam.name}
                     </div>
                 </div>
             </div>

@@ -52,14 +52,18 @@ const STB = (props) => {
 
     let player = window.TvipPlayer;
 
+    let stb = window.stb;
+
     useEffect(() => {
         socket.on(`getPlayerStatus`, isRunning => {
 
-            if (player) {
+            if (player || stb) {
                 if (isRunning) {
                     player.unpause();
+                    stb.continue()
                 } else {
                     player.pause();
+                    stb.pause()
                 }
             }
         });
@@ -67,18 +71,21 @@ const STB = (props) => {
 
 
     useEffect(() => {
-        if (player) {
+        if (player || stb) {
             setTimeout(() => {
                 player.unpause();
+                stb.continue()
             }, 2000)
         }
     }, [])
 
 
     useEffect(() => {
-        if (player) {
+        if (player || stb) {
             player.playUrl(currentVideo.videoURL, '');
             player.pause();
+            stb.play(currentVideo.videoURL)
+            stb.pause()
         }
     }, [player, currentVideo]);
 
@@ -89,8 +96,9 @@ const STB = (props) => {
             setPad('Переход');
         } else {
             setPad('');
-            if (player) {
+            if (player || stb) {
                 player.unpause()
+                stb.continue()
             }
         }
     }, [padding]);

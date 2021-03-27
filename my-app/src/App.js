@@ -29,23 +29,6 @@ function App(props) {
     let history = useHistory();
 
 
-    // useEffect(() => {
-    //
-    //     if (!window.localStorage.getItem('lag') || +window.localStorage.getItem('lag') === 0)
-    //     {
-    //         let time = Date.now()
-    //         for (var i = 0; i < 10000; i++) {
-    //             document.getElementById("a").innerHTML += Math.random()
-    //         }
-    //         // Cookies.set('tupit', Math.round((Date.now() - time) / 1000), {expires: 2000000})
-    //         window.localStorage.setItem('lag', Math.round((Date.now() - time) / 1000));
-    //     }
-    //
-    //
-    //
-    // }, [])
-
-
     const isAuth = useSelector(
         state => state.authPage.isAuth
     );
@@ -80,8 +63,6 @@ function App(props) {
 
     return (
         <ConfirmProvider>
-            <div id='a' style={{display: "none"}}></div>
-            {/*<div>{b}</div>*/}
             <div className='app'>
                 <Switch>
                     <Route exact path='/'

@@ -51,35 +51,38 @@ const STB = (props) => {
 
     let player = window.TvipPlayer;
 
+    let stb = window.stb;
+
     // if (window.stb) {
     //     window.stb.play('http://test_stream.iptvportal.cloud/karusel/mono.m3u8?token=ares')
     //
     // }
 
 
-
-
     useEffect(() => {
         socket.on(`getPlayerStatus`, isRunning => {
-
             if (player) {
                 if (isRunning) {
                     player.unpause();
-                    // stb.continue()
                 } else {
                     player.pause();
-                    // stb.pause()
                 }
             }
-            // if (stb) {
-            //     if (isRunning) {
-            //         stb.continue()
-            //     } else {
-            //         stb.pause()
-            //     }
-            // }
         });
-    }, [player])
+    }, [])
+
+    // useEffect(() => {
+    //     socket.on(`getPlayerStatus`, isRunning => {
+    //
+    //         if (stb) {
+    //             if (isRunning) {
+    //                 stb.continuePlay()
+    //             } else {
+    //                 stb.pause()
+    //             }
+    //         }
+    //     });
+    // }, [])
 
 
     useEffect(() => {
@@ -88,28 +91,30 @@ const STB = (props) => {
                 player.unpause();
             }, 2000)
         }
-        // if (window.stb) {
-        //     setTimeout(() => {
-        //         window.stb.continue()
-        //     }, 2000)
-        // }
     }, [])
 
+    // useEffect(() => {
+    //     if (stb) {
+    //         setTimeout(() => {
+    //             stb.continuePlay()
+    //         }, 2000)
+    //     }
+    // }, [])
+
 
     useEffect(() => {
-        if (window.stb) {
-            window.stb.play(currentVideo.videoURL)
-            window.stb.stb.pause()
+        if (player) {
+            player.playUrl(currentVideo.videoURL, '');
+            player.pause();
         }
     }, [currentVideo]);
 
-    useEffect(() => {
-        if (window.stb) {
-            window.stb.play(currentVideo.videoURL)
-            window.stb.stb.pause()
-        }
-    }, [currentVideo]);
-
+    // useEffect(() => {
+    //     if (stb && currentVideo.videoURL !== '') {
+    //         stb.play(currentVideo.videoURL)
+    //         // stb.stop()
+    //     }
+    // }, [currentVideo]);
 
 
     useEffect(() => {
@@ -121,7 +126,7 @@ const STB = (props) => {
                 player.unpause()
             }
             // if (stb) {
-            //     stb.continue()
+            //     stb.continuePlay()
             // }
         }
     }, [padding]);

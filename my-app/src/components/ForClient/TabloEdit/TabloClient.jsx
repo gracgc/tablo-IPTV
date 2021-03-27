@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import c from './TabloClient1.module.css'
 import c2 from './TabloClient2.module.css'
 import c3 from './TabloClient3.module.css'
@@ -6,13 +6,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {getGame, setPresetAC} from "../../../redux/games_reducer";
 import socket from "../../../socket/socket";
 import classNames from 'classnames'
-import {
-    getCurrentVideo,
-    getVideoEditor,
-    setCurrentVideoDataAC, setCurrentVideoEditorDataAC,
-} from "../../../redux/videos_reducer";
 import TabloTimer from "./TabloTimer";
 import STB from "./STB";
+import tabloIMG from "../../../content/img/TABLO-1.png"
 
 
 const TabloClient = (props) => {
@@ -40,9 +36,10 @@ const TabloClient = (props) => {
 
     return (
         <div className={c.tablo}>
-
             {preset === 1 &&
             <div className={c.tablo1}>
+                <div style={{position: 'absolute', zIndex: -50, width: 1280, height: 720}}><img src={tabloIMG} alt="" width={1280} height={720}/></div>
+
                 <div>
                     <TabloTimer gameNumber={props.gameNumber} gameConsLog={props.gameConsLog} isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={preset}/>
                 </div>

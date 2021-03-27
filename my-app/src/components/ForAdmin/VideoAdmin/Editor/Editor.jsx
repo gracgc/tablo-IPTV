@@ -186,6 +186,7 @@ const Editor = (props) => {
             if ((currentDuration < duration0
                 && duration1 < currentDuration)) {
                 //videoSTART
+                setCurrentVideo(allVideos[n])
                 videosAPI.putCurrentVideoEditor(gameNumber);
             }
         }
@@ -194,8 +195,10 @@ const Editor = (props) => {
 
     useEffect(() => {
 
-        if (isRunningServer && allVideos[n + 1]) {
-            videosAPI.resetCurrentVideo();
+        if (isRunningServer) {
+            if (allVideos[n + 1]) {
+                videosAPI.resetCurrentVideo();
+            }
         }
 
     }, [isRunningServer]);

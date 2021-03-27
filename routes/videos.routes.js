@@ -154,7 +154,7 @@ router.put('/editor/current/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getCurrentVideoEditor${gameNumber}`, DB.currentVideo)
+        io.emit(`getCurrentVideo${gameNumber}`, DB.currentVideo)
 
     } catch (e) {
         console.log(e)

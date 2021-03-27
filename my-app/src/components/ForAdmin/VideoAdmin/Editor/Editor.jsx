@@ -57,7 +57,7 @@ const Editor = (props) => {
 
     let allVideos = videoEditor.videos;
 
-    let videos = allVideos.slice(deletedN * 2, allVideos.length);
+    let videos = allVideos.slice(deletedN, allVideos.length);
 
 
     useEffect(() => {
@@ -125,7 +125,7 @@ const Editor = (props) => {
 
 
         socket.on(`getVideosEditor${gameNumber}`, videos => {
-                dispatch(setVideosEditorAC(videos));
+            dispatch(setVideosEditorAC(videos));
         });
 
         socket.on(`getCurrentVideo`, currentVideo => {
@@ -144,7 +144,7 @@ const Editor = (props) => {
 
     let totalDuration = videoEditor.editorData.duration;
 
-    let deletedDuration = allVideos.slice(0, deletedN * 2).map(v => v.duration).reduce((sum, current) => sum + current, 0);
+    let deletedDuration = allVideos.slice(0, deletedN).map(v => v.duration).reduce((sum, current) => sum + current, 0);
 
 
     let scale = duration / (width === 1920 ? 1000 : 660);
@@ -162,13 +162,10 @@ const Editor = (props) => {
     let minutes = Math.floor(currentDuration / (1000 * 60));
 
 
-    let duration0 = totalDuration - allVideos.slice(0, 2 * n).map(v => v.duration)
+    let duration0 = totalDuration - allVideos.slice(0, n).map(v => v.duration)
         .reduce((sum, current) => sum + current, 0);
 
-    let duration1 = totalDuration - allVideos.slice(0, 2 * n + 1).map(v => v.duration)
-        .reduce((sum, current) => sum + current, 0);
-
-    let duration2 = totalDuration - allVideos.slice(0, 2 * n + 2).map(v => v.duration)
+    let duration1 = totalDuration - allVideos.slice(0, n + 1).map(v => v.duration)
         .reduce((sum, current) => sum + current, 0);
 
 
@@ -184,37 +181,24 @@ const Editor = (props) => {
     }, [totalDuration && timeDif >= totalDuration]);
 
 
-
     useEffect(() => {
-        if (isRunningServer) {
-            if ((currentDuration < duration1
-                && duration2 < currentDuration)) {
-                //videoSTART
-                videosAPI.putPaddingVideoEditor(gameNumber);
-                videosAPI.putCurrentVideoEditor(gameNumber);
-            }
-        }
-    }, [currentDuration < duration1, duration2 < currentDuration, isRunningServer]);
-
-    useEffect(() => {
-
         if (isRunningServer) {
             if ((currentDuration < duration0
                 && duration1 < currentDuration)) {
-                if (allVideos[2 * n + 1]) {
-                    setCurrentVideo(allVideos[2 * n + 1]); //stop
-                    if (n !== 0) {
-                        videosAPI.deleteVideoFromEditor(gameNumber, 0, true)
-                    }
-                } else {
-                    videosAPI.resetCurrentVideo();
-                }
-
-                videosAPI.putPaddingVideoEditor(gameNumber);
-
+                //videoSTART
+                videosAPI.putCurrentVideoEditor(gameNumber);
             }
         }
     }, [currentDuration < duration0, duration1 < currentDuration, isRunningServer]);
+
+
+    useEffect(() => {
+
+        if (isRunningServer && allVideos[n + 1]) {
+            videosAPI.resetCurrentVideo();
+        }
+
+    }, [isRunningServer]);
 
 
     const startVideo = () => {
@@ -255,39 +239,9 @@ const Editor = (props) => {
 
         let videos = allVideos.slice()
 
-
-        if (videos.length === 0) {
-
-            videos.splice(
-                videos.length,
-                0,
-                {
-                    "videoName": "|",
-                    "videoURL": "",
-                    "duration": 3000
-                },
-                video,
-                {
-                    "videoName": "|",
-                    "videoURL": "",
-                    "duration": 3000
-                })
-        } else {
-
-            videos.splice(
-                videos.length,
-                0,
-                video,
-                {
-                    "videoName": "|",
-                    "videoURL": "",
-                    "duration": 3000
-                }
-            )
-        }
+        videos.push(video)
 
         videosAPI.addVideoEditor(gameNumber, videos)
-
     };
 
 
@@ -298,7 +252,7 @@ const Editor = (props) => {
                 <div style={{display: 'inline-flex'}}>
                     <div>
                         <div style={{display: 'inline-flex'}}>
-                            {allVideos.map((v, index) => index >= deletedN * 2 && <EditorLine v={v} index={index}
+                            {allVideos.map((v, index) => index >= deletedN && <EditorLine v={v} index={index}
                                                                                               videoEditor={videoEditor}
                                                                                               scale={scale}
                                                                                               isRunningServer={isRunningServer}
@@ -311,14 +265,16 @@ const Editor = (props) => {
                                                                                               timedif={timeDif}
 
                             />)}
-                            <div className={width === 1920 ? c1920.editorLine : c.editorLine} style={currentDuration !== 0
-                                ? {width: editorStyle.msWidth, height: (width === 1920 ? 200 : 140)}
-                                : {display: "none"}}>
+                            <div className={width === 1920 ? c1920.editorLine : c.editorLine}
+                                 style={currentDuration !== 0
+                                     ? {width: editorStyle.msWidth, height: (width === 1920 ? 200 : 140)}
+                                     : {display: "none"}}>
                             </div>
                         </div>
                     </div>
                     {currentDuration <= 3500 && currentDuration !== 0
-                        ? <div className={width === 1920 ? c1920.droppableVideo : c.droppableVideo} style={{opacity: 0.5}}>Перетаскивать сюда из
+                        ? <div className={width === 1920 ? c1920.droppableVideo : c.droppableVideo}
+                               style={{opacity: 0.5}}>Перетаскивать сюда из
                             видеоматериалов</div>
 
                         : <Droppable
@@ -341,31 +297,38 @@ const Editor = (props) => {
                 <div className={width === 1920 ? c1920.playerButtons : c.playerButtons}>
                     {isRunningServer
                         ? <div style={{display: 'inline-flex'}}>
-                            <div className={width === 1920 ? c1920.playerButton : c.playerButton} style={{opacity: 0.5}}>
+                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                                 style={{opacity: 0.5}}>
                                 Старт
                             </div>
                             {(currentDuration < duration0
                                 && duration1 < currentDuration)
                                 ?
                                 <div style={{display: 'inline-flex'}}>
-                                    <div className={width === 1920 ? c1920.playerButton : c.playerButton} style={{opacity: 0.5}}>
+                                    <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                                         style={{opacity: 0.5}}>
                                         Стоп
                                     </div>
-                                    <div className={width === 1920 ? c1920.playerButton : c.playerButton} style={{opacity: 0.5}}>
+                                    <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                                         style={{opacity: 0.5}}>
                                         Очистить
                                     </div>
-                                    <div className={width === 1920 ? c1920.playerButton : c.playerButton} style={{opacity: 0.5}}>
+                                    <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                                         style={{opacity: 0.5}}>
                                         След. видео
                                     </div>
                                 </div>
                                 : <div style={{display: 'inline-flex'}}>
-                                    <div className={width === 1920 ? c1920.playerButton : c.playerButton} onClick={(e) => stopVideo()}>
+                                    <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                                         onClick={(e) => stopVideo()}>
                                         Стоп
                                     </div>
-                                    <div className={width === 1920 ? c1920.playerButton : c.playerButton} onClick={(e) => clearVideo()}>
+                                    <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                                         onClick={(e) => clearVideo()}>
                                         Очистить
                                     </div>
-                                    <div className={width === 1920 ? c1920.playerButton : c.playerButton} onClick={(e) => nextVideo()}>
+                                    <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                                         onClick={(e) => nextVideo()}>
                                         След. видео
                                     </div>
                                 </div>
@@ -373,16 +336,20 @@ const Editor = (props) => {
 
                         </div>
                         : <div style={{display: 'inline-flex'}}>
-                            <div className={width === 1920 ? c1920.playerButton : c.playerButton} onClick={(e) => startVideo()}>
+                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                                 onClick={(e) => startVideo()}>
                                 Старт
                             </div>
-                            <div className={width === 1920 ? c1920.playerButton : c.playerButton} style={{opacity: 0.5}}>
+                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                                 style={{opacity: 0.5}}>
                                 Стоп
                             </div>
-                            <div className={width === 1920 ? c1920.playerButton : c.playerButton} onClick={(e) => clearVideo()}>
+                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                                 onClick={(e) => clearVideo()}>
                                 Очистить
                             </div>
-                            <div className={width === 1920 ? c1920.playerButton : c.playerButton} style={{opacity: 0.5}}>
+                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                                 style={{opacity: 0.5}}>
                                 След. видео
                             </div>
                         </div>

@@ -179,12 +179,7 @@ router.put('/editor/delete/:gameNumber', authMW, cors(), function (req, res) {
         if (isAuto) {
             DB.currentVideo.deletedN += 1
         } else {
-            if (DB.videos.length === 3) {
-                DB.videos = []
-            } else {
-                DB.videos.splice(index, 2);
-            }
-
+            DB.videos.splice(index, 1);
         }
 
         let json = JSON.stringify(DB);
@@ -196,32 +191,6 @@ router.put('/editor/delete/:gameNumber', authMW, cors(), function (req, res) {
         const io = req.app.locals.io;
 
         io.emit(`getVideosEditor${gameNumber}`, DB.videos)
-
-        io.emit(`getCurrentVideoEditor${gameNumber}`, DB.currentVideo)
-
-    } catch (e) {
-        console.log(e)
-    }
-});
-
-
-router.put('/editor/padding/:gameNumber', authMW, cors(), function (req, res) {
-    try {
-
-        let gameNumber = req.params.gameNumber;
-
-        let data = fs.readFileSync(path.join(__dirname, `/DB/video_${gameNumber}.json`));
-        let DB = JSON.parse(data);
-
-        DB.currentVideo.padding = !DB.currentVideo.padding;
-
-        let json = JSON.stringify(DB);
-
-        fs.writeFileSync(path.join(__dirname, `/DB/video_${gameNumber}.json`), json, 'utf8');
-
-        res.send({resultCode: 0});
-
-        const io = req.app.locals.io;
 
         io.emit(`getCurrentVideoEditor${gameNumber}`, DB.currentVideo)
 
@@ -244,9 +213,6 @@ router.put('/editor/clear/:gameNumber', authMW, cors(), function (req, res) {
 
 
         DB.videos = [];
-
-
-        DB.currentVideo.padding = false;
 
         DB.currentVideo.n = 0;
 
@@ -290,7 +256,7 @@ router.put('/editor/nextVideo/:gameNumber', authMW, cors(), function (req, res) 
 
         let n = DB.currentVideo.n;
 
-        let cut = DB.videos.slice(0, 2 * n).map(v => v.duration)
+        let cut = DB.videos.slice(0, n).map(v => v.duration)
             .reduce((sum, current) => sum + current, 0)
 
         DB.timeData.timeDif = cut - 100;
@@ -344,31 +310,11 @@ router.put('/current/:gameNumber', authMW, cors(), function (req, res) {
         let data2 = fs.readFileSync(path.join(__dirname, `/DB/video_${gameNumber}.json`));
         let DB2 = JSON.parse(data2);
 
-        let playVideoWithPadding = () => {
-            DB2.currentVideo.padding = true;
-
-            let json1 = JSON.stringify(DB2);
-
-            fs.writeFileSync(path.join(__dirname, `/DB/video_${gameNumber}.json`), json1, 'utf8');
-
-            io.emit(`getCurrentVideoEditor${gameNumber}`, DB2.currentVideo);
-
-            setTimeout(() => {
-                DB2.currentVideo.padding = false;
-
-                let json2 = JSON.stringify(DB2);
-
-                fs.writeFileSync(path.join(__dirname, `/DB/video_${gameNumber}.json`), json2, 'utf8');
-
-                io.emit(`getCurrentVideoEditor${gameNumber}`, DB2.currentVideo)
-            }, 3000);
-        };
 
         if (!DB2.timeData.isRunning && DB2.timeData.timeMem === 0) {
             DB.currentVideo = currentVideo;
             DB.currentVideoStream = currentVideo;
 
-            playVideoWithPadding();
 
             let json = JSON.stringify(DB);
 

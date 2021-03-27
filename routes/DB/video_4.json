@@ -1,7 +1,7 @@
 {
   "currentVideo": {
     "n": 0,
-    "padding": false
+    "deletedN": 0
   },
   "timeData": {
     "timeMem": 0,
@@ -10,40 +10,6 @@
     "runningTime": 1613236903171
   },
   "videos": [
-    {
-      "videoName": "|",
-      "videoURL": "",
-      "duration": 3000
-    },
-    {
-      "videoName": "1",
-      "videoURL": "http://tablo-beta-v191220.f247.iptvportal.ru:3000/api/videos/mp4/1",
-      "duration": 11010
-    },
-    {
-      "videoName": "|",
-      "videoURL": "",
-      "duration": 3000
-    },
-    {
-      "videoName": "2",
-      "videoURL": "http://tablo-beta-v191220.f247.iptvportal.ru:3000/api/videos/mp4/2",
-      "duration": 23680
-    },
-    {
-      "videoName": "|",
-      "videoURL": "",
-      "duration": 3000
-    },
-    {
-      "videoName": "3",
-      "videoURL": "http://tablo-beta-v191220.f247.iptvportal.ru:3000/api/videos/mp4/3",
-      "duration": 14330
-    },
-    {
-      "videoName": "|",
-      "videoURL": "",
-      "duration": 3000
-    }
+
   ]
 }

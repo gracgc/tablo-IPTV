@@ -20,55 +20,28 @@ const EditorLine = (props) => {
         videosAPI.deleteVideoFromEditor(gameNumber, index, false)
     };
 
-    let isDroppable = props.isMouseDownOverDrop && props.v.videoName === '|' && props.index !== props.deletedN * 2
+    let isDroppable = props.isMouseDownOverDrop && props.v.videoName === '|' && props.index !== props.deletedN
 
     let onDrop = (data) => {
 
-        if (isDroppable) {
+            if (isDroppable) {
 
-            let key = Object.keys(data);
+                let key = Object.keys(data);
 
-            let firstKey = key[0];
+                let firstKey = key[0];
 
-            let video = props.videosMP4.find(d => d.videoName === data[firstKey])
+                let video = props.videosMP4.find(d => d.videoName === data[firstKey])
 
-            let videos = props.allVideos.slice()
+                let videos = props.allVideos.slice()
 
 
-            if (videos.length === 0) {
+                videos.push(video)
 
-                videos.splice(
-                    props.index + 1,
-                    0,
-                    {
-                        "videoName": "|",
-                        "videoURL": "",
-                        "duration": 3000
-                    },
-                    video,
-                    {
-                        "videoName": "|",
-                        "videoURL": "",
-                        "duration": 3000
-                    })
-            } else {
+                videosAPI.addVideoEditor(gameNumber, videos)
 
-                videos.splice(
-                    props.index + 1,
-                    0,
-                    video,
-                    {
-                        "videoName": "|",
-                        "videoURL": "",
-                        "duration": 3000
-                    }
-                )
             }
-
-            videosAPI.addVideoEditor(gameNumber, videos)
         }
-
-    };
+    ;
 
 
     return (
@@ -102,7 +75,7 @@ const EditorLine = (props) => {
                     }
 
                     {props.v.videoName !== '|' && showDeleteButton
-                    && (props.index !== props.deletedN * 2 + 1 || props.timedif === 0)
+                    && (props.index !== props.deletedN + 1 || props.timedif === 0)
 
                         ? <div className={width === 1920 ? c1920.exitForm : c.exitForm}
                                onClick={e => deleteVideoFromEditor(props.index)}>

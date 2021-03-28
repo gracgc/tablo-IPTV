@@ -20,28 +20,31 @@ const EditorLine = (props) => {
         videosAPI.deleteVideoFromEditor(gameNumber, index, false)
     };
 
-    let isDroppable = props.isMouseDownOverDrop && props.v.videoName === '|' && props.index !== props.deletedN
+    let isDroppable = props.isMouseDownOverDrop
 
     let onDrop = (data) => {
 
-            if (isDroppable) {
+        if (isDroppable) {
 
-                let key = Object.keys(data);
+            let key = Object.keys(data);
 
-                let firstKey = key[0];
+            let firstKey = key[0];
 
-                let video = props.videosMP4.find(d => d.videoName === data[firstKey])
+            let video = props.videosMP4.find(d => d.videoName === data[firstKey])
 
-                let videos = props.allVideos.slice()
+            let videos = props.allVideos.slice()
+
+            videos.splice(
+                props.index + 1,
+                0,
+                video
+            )
 
 
-                videos.push(video)
+            videosAPI.addVideoEditor(gameNumber, videos)
 
-                videosAPI.addVideoEditor(gameNumber, videos)
-
-            }
         }
-    ;
+    };
 
 
     return (
@@ -74,8 +77,8 @@ const EditorLine = (props) => {
                             : {width: 155, margin: 'auto'}}/>
                     }
 
-                    {props.v.videoName !== '|' && showDeleteButton
-                    && (props.index !== props.deletedN + 1 || props.timedif === 0)
+                    {showDeleteButton
+                    && (props.index !== props.deletedN || props.timedif === 0)
 
                         ? <div className={width === 1920 ? c1920.exitForm : c.exitForm}
                                onClick={e => deleteVideoFromEditor(props.index)}>

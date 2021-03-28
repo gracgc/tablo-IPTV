@@ -98,7 +98,7 @@ const videosReducer = (state = initialState, action) => {
                     },
                     currentVideo: {
                         ...state.videoEditor.currentVideo, n: action.videosData.currentVideo.n,
-                        deletedN: action.videosData.currentVideo.deleted
+                        deletedN: action.videosData.currentVideo.deletedN
                     }
                 },
             };

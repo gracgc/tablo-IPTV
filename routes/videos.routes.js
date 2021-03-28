@@ -259,8 +259,8 @@ router.put('/editor/nextVideo/:gameNumber', authMW, cors(), function (req, res) 
         let cut = DB.videos.slice(0, n).map(v => v.duration)
             .reduce((sum, current) => sum + current, 0)
 
-        DB.timeData.timeDif = cut - 100;
-        DB.timeData.timeMem = cut - 100;
+        DB.timeData.timeDif = cut - 200;
+        DB.timeData.timeMem = cut - 200;
 
         DB.timeData.runningTime = Date.now();
 

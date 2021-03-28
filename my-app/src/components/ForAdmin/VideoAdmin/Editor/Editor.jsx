@@ -160,6 +160,8 @@ const Editor = (props) => {
     let seconds = Math.floor(currentDuration / 1000) % 60;
     let minutes = Math.floor(currentDuration / (1000 * 60));
 
+    let duration00 = totalDuration - allVideos.slice(0, n - 1).map(v => v.duration)
+        .reduce((sum, current) => sum + current, 0);
 
     let duration0 = totalDuration - allVideos.slice(0, n).map(v => v.duration)
         .reduce((sum, current) => sum + current, 0);
@@ -302,10 +304,10 @@ const Editor = (props) => {
                                 Старт
                             </div>
 
-                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
-                                 onClick={(e) => stopVideo()}>
-                                Стоп
-                            </div>
+                            {/*<div className={width === 1920 ? c1920.playerButton : c.playerButton}*/}
+                            {/*     onClick={(e) => stopVideo()}>*/}
+                            {/*    Стоп*/}
+                            {/*</div>*/}
                             <div className={width === 1920 ? c1920.playerButton : c.playerButton}
                                  onClick={(e) => clearVideo()}>
                                 Очистить
@@ -320,10 +322,10 @@ const Editor = (props) => {
                                  onClick={(e) => startVideo()}>
                                 Старт
                             </div>
-                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
-                                 style={{opacity: 0.5}}>
-                                Стоп
-                            </div>
+                            {/*<div className={width === 1920 ? c1920.playerButton : c.playerButton}*/}
+                            {/*     style={{opacity: 0.5}}>*/}
+                            {/*    Стоп*/}
+                            {/*</div>*/}
                             <div className={width === 1920 ? c1920.playerButton : c.playerButton}
                                  onClick={(e) => clearVideo()}>
                                 Очистить

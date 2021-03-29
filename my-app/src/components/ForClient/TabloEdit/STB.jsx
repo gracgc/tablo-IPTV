@@ -45,8 +45,22 @@ const STB = (props) => {
     }, []);
 
 
+    let player = window.TvipPlayer;
+
     let stb = window.stb;
 
+
+    useEffect(() => {
+        socket.on(`getPlayerStatus`, isRunning => {
+            if (player) {
+                if (isRunning) {
+                    player.unpause();
+                } else {
+                    player.pause();
+                }
+            }
+        });
+    }, [])
 
 
     useEffect(() => {
@@ -61,6 +75,12 @@ const STB = (props) => {
             }
         });
     }, [])
+
+    useEffect(() => {
+        if (player) {
+            player.playUrl(currentVideo.videoURL, '');
+        }
+    }, [currentVideo]);
 
 
 

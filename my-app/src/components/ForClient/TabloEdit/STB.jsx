@@ -77,7 +77,7 @@ const STB = (props) => {
     }, [])
 
     useEffect(() => {
-        if (player) {
+        if (player && currentVideo.videoURL !== '') {
             player.playUrl(currentVideo.videoURL, '');
         }
     }, [currentVideo]);

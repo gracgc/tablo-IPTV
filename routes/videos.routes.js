@@ -179,7 +179,6 @@ router.put('/editor/delete/:gameNumber', authMW, cors(), function (req, res) {
 
         if (isAuto) {
             DB.currentVideo.deletedN += 1
-            DB.currentVideo.n += 1;
         } else {
             DB.videos.splice(index, 1);
         }
@@ -210,21 +209,19 @@ router.put('/editor/clear/:gameNumber', authMW, cors(), function (req, res) {
         let gameNumber = req.params.gameNumber;
 
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB/video_${gameNumber}.json`));
-        let DB = JSON.parse(data);
-
-
-        DB.videos = [];
-
-        DB.currentVideo.n = 0;
-
-        DB.currentVideo.deletedN = 0;
-
-        DB.timeData.isRunning = false;
-        DB.timeData.timeDif = 0;
-        DB.timeData.timeMem = 0;
-
-        DB.timeData.runningTime = Date.now();
+        let DB = {
+            currentVideo: {
+                n: 0,
+                deletedN: 0
+            },
+            timeData: {
+                timeMem: 0,
+                timeDif: 0,
+                isRunning: false,
+                runningTime: Date.now()
+            },
+            videos: []
+        }
 
 
         let json = JSON.stringify(DB);

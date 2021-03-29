@@ -166,6 +166,7 @@ const Editor = (props) => {
                 0);
 
             videosAPI.clearEditorVideos(gameNumber, timeDif)
+            videosAPI.resetCurrentVideo();
 
         }
     }, [totalDuration && timeDif >= totalDuration]);
@@ -177,26 +178,17 @@ const Editor = (props) => {
             //videoSTART
             setCurrentVideo(allVideos[n])
 
-            // if (duration0 !== totalDuration) {
-            //     videosAPI.putCurrentVideoEditor(gameNumber);
-            // }
+            videosAPI.putCurrentVideoEditor(gameNumber);
 
+            if (n > 0) {
+                videosAPI.deleteVideoFromEditor(gameNumber, 0, true)
+            }
         }
 
     }, [currentDuration < duration0, duration1 < currentDuration]);
 
 
-    useEffect(() => {
 
-        if (currentDuration < duration1 && duration2 < currentDuration) {
-            videosAPI.deleteVideoFromEditor(gameNumber, 0, true)
-            if (!allVideos[n + 1]) {
-                videosAPI.clearEditorVideos(gameNumber, timeDif)
-                videosAPI.resetCurrentVideo();
-            }
-        }
-
-    }, [currentDuration < duration1, duration2 < currentDuration]);
 
 
     const startVideo = () => {
@@ -245,7 +237,7 @@ const Editor = (props) => {
 
     return (
         <div className={c.editor}>
-            {currentDuration} {duration0} {duration1} {duration2} {totalDuration} {n}
+            {/*{currentDuration} {duration0} {duration1} {duration2} {totalDuration} {n}*/}
             <div className={width === 1920 ? c1920.title : c.title}>Редактор</div>
             <div className={width === 1920 ? c1920.editorPlayer : c.editorPlayer}>
                 <div style={{display: 'inline-flex'}}>

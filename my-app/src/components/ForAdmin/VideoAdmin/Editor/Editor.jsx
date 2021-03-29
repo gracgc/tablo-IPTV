@@ -184,15 +184,15 @@ const Editor = (props) => {
 
 
     useEffect(() => {
-        if (isRunningServer) {
+
             if ((currentDuration < duration0
                 && duration1 < currentDuration)) {
                 //videoSTART
                 setCurrentVideo(allVideos[n])
                 videosAPI.putCurrentVideoEditor(gameNumber);
             }
-        }
-    }, [currentDuration < duration0, duration1 < currentDuration, isRunningServer]);
+
+    }, [currentDuration < duration0, duration1 < currentDuration]);
 
 
     useEffect(() => {
@@ -304,10 +304,10 @@ const Editor = (props) => {
                                 Старт
                             </div>
 
-                            {/*<div className={width === 1920 ? c1920.playerButton : c.playerButton}*/}
-                            {/*     onClick={(e) => stopVideo()}>*/}
-                            {/*    Стоп*/}
-                            {/*</div>*/}
+                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                                 onClick={(e) => stopVideo()}>
+                                Стоп
+                            </div>
                             <div className={width === 1920 ? c1920.playerButton : c.playerButton}
                                  onClick={(e) => clearVideo()}>
                                 Очистить
@@ -322,10 +322,10 @@ const Editor = (props) => {
                                  onClick={(e) => startVideo()}>
                                 Старт
                             </div>
-                            {/*<div className={width === 1920 ? c1920.playerButton : c.playerButton}*/}
-                            {/*     style={{opacity: 0.5}}>*/}
-                            {/*    Стоп*/}
-                            {/*</div>*/}
+                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                                 style={{opacity: 0.5}}>
+                                Стоп
+                            </div>
                             <div className={width === 1920 ? c1920.playerButton : c.playerButton}
                                  onClick={(e) => clearVideo()}>
                                 Очистить

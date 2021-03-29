@@ -32,9 +32,6 @@ const TabloEdit = (props) => {
         (state => state.difPage.dif)
     );
 
-    const ping = useSelector(
-        (state => state.difPage.ping)
-    );
 
 
     const homeTeam = useSelector(
@@ -116,9 +113,9 @@ const TabloEdit = (props) => {
             let timeSyncServer = r.dateServer - r.dateClient
 
 
-                dispatch(setDifAC(timeSyncServer + serverPing + tupit))
-
+            dispatch(setDifAC(timeSyncServer + serverPing + tupit))
             dispatch(setPingAC(serverPing))
+
             setIsRunningServer(r.isRunning);
             setIsRunningServerTimeout(r.timeoutData.isRunning);
             return r
@@ -250,7 +247,7 @@ const TabloEdit = (props) => {
 
     useInterval(() => {
         if (isRunningServer) {
-            setTimeDif(timeMem + ((Date.now()) - startTime + dif));
+            setTimeDif(timeMem + (Date.now() - startTime + dif));
             setTimeMemTimer(deadLine - (timeMem + ((Date.now()) - startTime + dif)));
         }
         if (isRunningServerTimeout) {

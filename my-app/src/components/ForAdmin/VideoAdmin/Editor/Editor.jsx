@@ -13,9 +13,12 @@ import {
     setVideosEditorAC
 } from "../../../../redux/videos_reducer";
 import EditorLine from "./EditorLine";
+import {setDifAC, setPingAC} from "../../../../redux/dif_reducer";
 
 
 const Editor = (props) => {
+
+    let tupit = +window.localStorage.getItem('lag')
 
     let width = window.innerWidth;
 
@@ -24,11 +27,9 @@ const Editor = (props) => {
     const dispatch = useDispatch();
 
 
-    let [dif, setDif] = useState();
-    let [ping, setPing] = useState();
-
-    let [tick, setTick] = useState(1500);
-    let [count, setCount] = useState(0);
+    const dif = useSelector(
+        (state => state.difPage.dif)
+    );
 
 
     let [isRunningServer, setIsRunningServer] = useState(false);
@@ -63,8 +64,13 @@ const Editor = (props) => {
     useEffect(() => {
 
         videosAPI.getVideoTime(gameNumber, Date.now()).then(r => {
-            setDif(r.timeData.timeSync + Math.round((Date.now() - r.timeData.dateClient) / 2));
-            setPing(Math.round((Date.now() - r.timeData.dateClient) / 2));
+            let serverPing = Math.round((Date.now() - r.dateClient) / 2);
+            let timeSyncServer = r.dateServer - r.dateClient
+
+
+            dispatch(setDifAC(timeSyncServer + serverPing + tupit))
+            dispatch(setPingAC(serverPing))
+
             setIsRunningServer(r.timeData.isRunning);
             return r
         }).then(r => {
@@ -86,30 +92,11 @@ const Editor = (props) => {
 
     }, []);
 
-    useEffect(() => {
-
-        videosAPI.getVideoTime(gameNumber, Date.now()).then(r => {
-
-            if (Math.round((Date.now() - r.timeData.dateClient) / 2) < ping) {
-                setDif(r.timeData.timeSync + Math.round((Date.now() - r.timeData.dateClient) / 2));
-                setPing(Math.round((Date.now() - r.timeData.dateClient) / 2));
-                setIsRunningServer(r.timeData.isRunning);
-                console.log('video' + dif + ' ' + ping);
-            }
-
-            setTimeout(() => {
-                setCount(count + 1);
-                if (tick < 5000) {
-                    setTick(tick + 50)
-                }
-            }, tick)
-        })
-    }, [count]);
 
     useEffect(() => {
             let interval = setInterval(() => {
                 if (isRunningServer) {
-                    setTimeDif(timeMem + ((Date.now() + dif) - startTime));
+                    setTimeDif(timeMem + (Date.now() - startTime + dif));
                 }
             }, 20);
             return () => clearInterval(interval);
@@ -160,13 +147,14 @@ const Editor = (props) => {
     let seconds = Math.floor(currentDuration / 1000) % 60;
     let minutes = Math.floor(currentDuration / (1000 * 60));
 
-    let duration00 = totalDuration - allVideos.slice(0, n - 1).map(v => v.duration)
-        .reduce((sum, current) => sum + current, 0);
 
     let duration0 = totalDuration - allVideos.slice(0, n).map(v => v.duration)
         .reduce((sum, current) => sum + current, 0);
 
     let duration1 = totalDuration - allVideos.slice(0, n + 1).map(v => v.duration)
+        .reduce((sum, current) => sum + current, 0);
+
+    let duration2 = totalDuration - allVideos.slice(0, n + 2).map(v => v.duration)
         .reduce((sum, current) => sum + current, 0);
 
 
@@ -185,33 +173,37 @@ const Editor = (props) => {
 
     useEffect(() => {
 
-            if ((currentDuration < duration0
-                && duration1 < currentDuration)) {
-                //videoSTART
-                setCurrentVideo(allVideos[n])
-                videosAPI.putCurrentVideoEditor(gameNumber);
-            }
+        if ((currentDuration < duration0 && duration1 < currentDuration)) {
+            //videoSTART
+            setCurrentVideo(allVideos[n])
+
+            // if (duration0 !== totalDuration) {
+            //     videosAPI.putCurrentVideoEditor(gameNumber);
+            // }
+
+        }
 
     }, [currentDuration < duration0, duration1 < currentDuration]);
 
 
     useEffect(() => {
-        if (isRunningServer) {
-            if (currentDuration < duration1) {
-                videosAPI.deleteVideoFromEditor(gameNumber, 0, true)
-                if (!allVideos[n + 1]) {
-                    videosAPI.clearEditorVideos(gameNumber, timeDif)
-                    videosAPI.resetCurrentVideo();
-                }
+
+        if (currentDuration < duration1 && duration2 < currentDuration) {
+            videosAPI.deleteVideoFromEditor(gameNumber, 0, true)
+            if (!allVideos[n + 1]) {
+                videosAPI.clearEditorVideos(gameNumber, timeDif)
+                videosAPI.resetCurrentVideo();
             }
         }
-    }, [currentDuration < duration1, isRunningServer]);
+
+    }, [currentDuration < duration1, duration2 < currentDuration]);
 
 
     const startVideo = () => {
         videosAPI.putVideoTimeStatus(gameNumber, true, timeDif,
             timeMem);
     };
+
 
     const stopVideo = () => {
         videosAPI.putVideoTimeStatus(gameNumber, false, timeMem + ((Date.now() + dif) - startTime),
@@ -220,7 +212,6 @@ const Editor = (props) => {
 
 
     const clearVideo = () => {
-
         videosAPI.clearEditorVideos(gameNumber, timeDif).then(r => {
             if (r.resultCode === 0) {
                 if (timeDif !== 0) {
@@ -228,8 +219,8 @@ const Editor = (props) => {
                 }
             }
         });
-
     };
+
 
     const nextVideo = () => {
         videosAPI.nextEditorVideos(gameNumber);
@@ -254,6 +245,7 @@ const Editor = (props) => {
 
     return (
         <div className={c.editor}>
+            {currentDuration} {duration0} {duration1} {duration2} {totalDuration} {n}
             <div className={width === 1920 ? c1920.title : c.title}>Редактор</div>
             <div className={width === 1920 ? c1920.editorPlayer : c.editorPlayer}>
                 <div style={{display: 'inline-flex'}}>
@@ -336,7 +328,6 @@ const Editor = (props) => {
                             </div>
                         </div>
                     }
-
                     <div className={c.playerTime}>
                         {minutes}:{seconds}:{ms}
                     </div>

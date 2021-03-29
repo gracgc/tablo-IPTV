@@ -154,7 +154,8 @@ router.put('/editor/current/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getCurrentVideo${gameNumber}`, DB.currentVideo)
+
+        io.emit(`getCurrentVideoEditor${gameNumber}`, DB.currentVideo)
 
     } catch (e) {
         console.log(e)
@@ -178,6 +179,7 @@ router.put('/editor/delete/:gameNumber', authMW, cors(), function (req, res) {
 
         if (isAuto) {
             DB.currentVideo.deletedN += 1
+            DB.currentVideo.n += 1;
         } else {
             DB.videos.splice(index, 1);
         }

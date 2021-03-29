@@ -1,1 +1,1 @@
-{"currentVideo":{"n":2,"deletedN":1},"timeData":{"timeMem":17686,"timeDif":17686,"isRunning":false,"runningTime":1617027138171},"videos":[{"videoName":"1","videoURL":"http://localhost:5000/api/videos/mp4/1","duration":11010},{"videoName":"1","videoURL":"http://localhost:5000/api/videos/mp4/1","duration":11010}]}
+{"currentVideo":{"n":0,"deletedN":0},"timeData":{"timeMem":0,"timeDif":0,"isRunning":false,"runningTime":1617038773064},"videos":[]}

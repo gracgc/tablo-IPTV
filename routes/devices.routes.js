@@ -46,6 +46,52 @@ router.put('/', authMW, cors(), function (req, res) {
     }
 });
 
+router.put('/lag', cors(), function (req, res) {
+    try {
+        let data = fs.readFileSync(path.join(__dirname + `/DB/devices.json`));
+        let DB = JSON.parse(data);
+
+
+        let deviceId = req.body.deviceId;
+        let lag = req.body.lag;
+
+        let device = DB.devices.find(device => device.id === deviceId)
+
+        device.lag = lag
+
+        let json = JSON.stringify(DB);
+
+        fs.writeFileSync(path.join(__dirname, `/DB/devices.json`), json, 'utf8');
+
+        res.send({resultCode: 0})
+
+        const io = req.app.locals.io;
+
+        io.emit('getDevices', DB.devices)
+        io.emit(`setDeviceLag${deviceId}`, lag)
+
+    } catch (e) {
+        console.log(e)
+    }
+});
+
+router.put('/autolag', cors(), function (req, res) {
+    try {
+
+        let deviceId = req.body.deviceId;
+
+
+        const io = req.app.locals.io;
+
+        io.emit(`setDeviceAutolag${deviceId}`, {deviceId: deviceId})
+
+    } catch (e) {
+        console.log(e)
+    }
+});
+
+
+
 router.put('/preset/:gameNumber', authMW, cors(), function (req, res) {
     try {
         let gameNumber = req.params.gameNumber;
@@ -56,7 +102,7 @@ router.put('/preset/:gameNumber', authMW, cors(), function (req, res) {
         let preset = req.body.preset;
 
 
-        DB.gameInfo.preset = preset
+        DB.gameInfo.preset = preset;
 
         let json = JSON.stringify(DB);
 

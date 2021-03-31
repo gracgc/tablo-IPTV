@@ -14,6 +14,7 @@ import Dif from "../../dif/Dif";
 import Cookies from "js-cookie";
 import {useHistory} from "react-router";
 import {setTimeDataAC} from "../../../redux/tablo_reducer";
+import {devicesAPI} from "../../../api/api";
 
 
 const TabloTimer = (props) => {
@@ -21,6 +22,10 @@ const TabloTimer = (props) => {
     let history = useHistory();
 
     let tupit = +window.localStorage.getItem('lag')
+
+    // const tupit = useSelector(
+    //     (state => state.appPage.lag)
+    // );
 
 
     const dif = useSelector(
@@ -155,18 +160,9 @@ const TabloTimer = (props) => {
     }, 10);
 
 
-    console.log(1)
-
     let getLag = () => {
-        history.push('/lag');
+
     }
-
-    let clearLag = () => {
-        window.localStorage.setItem('lag', '0');
-    }
-
-
-
 
 
 
@@ -182,8 +178,6 @@ const TabloTimer = (props) => {
                         left: '30px',
                         backgroundColor: 'green'
                     }}>
-                        <div onClick={e => getLag()}>GET LAG</div>
-                        <div onClick={e => clearLag()}>CLEAR LAG</div>
                     </div>
                 </div>
                 }

@@ -8,9 +8,16 @@ import {compose} from "redux";
 import socket from "../../../../socket/socket";
 import {tabloAPI} from "../../../../api/api";
 import logo from './logoIPTVPORTAL.png';
+import {setDifAC, setPingAC} from "../../../../redux/dif_reducer";
 
 
 const Info = (props) => {
+
+    let tupit = +window.localStorage.getItem('lag')
+
+    // const tupit = useSelector(
+    //     (state => state.appPage.lag)
+    // );
 
     const dispatch = useDispatch();
 
@@ -56,6 +63,14 @@ const Info = (props) => {
 
         tabloAPI.getTimerStatus(gameNumber, Date.now()).then(r => {
 
+
+            let serverPing = Math.round((Date.now() - r.dateClient) / 2);
+            let timeSyncServer = r.dateServer - r.dateClient
+
+
+            dispatch(setDifAC(timeSyncServer + serverPing + tupit))
+            dispatch(setPingAC(serverPing))
+
             setIsRunningServer(r.isRunning);
             return r
         }).then(r => {
@@ -92,8 +107,8 @@ const Info = (props) => {
     useEffect(() => {
             let interval = setInterval(() => {
                 if (isRunningServer) {
-                    setTimeDif(timeMem + ((Date.now() + dif) - startTime));
-                    setTimeMemTimer(deadLine - (timeMem + ((Date.now() + dif) - startTime)));
+                    setTimeDif(timeMem + (Date.now() + dif - startTime));
+                    setTimeMemTimer(deadLine - (timeMem + (Date.now() + dif - startTime)));
                 }
             }, 50);
             return () => clearInterval(interval);

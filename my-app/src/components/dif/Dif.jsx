@@ -9,8 +9,12 @@ import {tabloAPI} from "../../api/api";
 
 const Dif = (props) => {
 
-
     let tupit = +window.localStorage.getItem('lag')
+
+
+    // const tupit = useSelector(
+    //     (state => state.appPage.lag)
+    // );
 
 
     const dif = useSelector(

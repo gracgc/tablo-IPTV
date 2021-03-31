@@ -32,6 +32,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 io.on('connection', (socket) => {
     console.log('a user connected');
 
+
     socket.on('addDevice', res => {
         let data = fs.readFileSync(path.join(__dirname + `/routes/DB/devices.json`));
         let DB = JSON.parse(data);
@@ -39,19 +40,21 @@ io.on('connection', (socket) => {
 
         if (res.isAuth === false) {
             if (res.pathname.indexOf('tabloClient') !== -1) {
-                DB.devices.push({id: socket.id, type: 'Main Tablo'})
+                DB.devices.push({id: socket.id, type: 'Main Tablo', lag: res.lag})
             } else {
-                DB.devices.push({id: socket.id, type: 'undefined'})
+                DB.devices.push({id: socket.id, type: 'undefined', lag: res.lag})
             }
         } else {
             if (DB.devices.findIndex(user => user.id === socket.id) !== -1) {
                 DB.devices[DB.devices.findIndex(user => user.id === socket.id)].type = 'Admin'
             } else {
-                DB.devices.push({id: socket.id, type: 'Admin'})
+                DB.devices.push({id: socket.id, type: 'Admin', lag: res.lag})
             }
         }
 
         io.emit('getDevices', DB.devices)
+
+        io.emit(`getLag${socket.id}`, DB.devices[DB.devices.findIndex(user => user.id === socket.id)].lag)
 
 
         let json = JSON.stringify(DB);

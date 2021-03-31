@@ -213,6 +213,18 @@ export const devicesAPI = {
             .then(responce => {
                 return responce.data
             })
+    },
+    putDeviceLag(deviceId, lag) {
+        return instance.put(`devices/lag`, {deviceId, lag})
+            .then(responce => {
+                return responce.data
+            })
+    },
+    putDeviceAutoLag(deviceId) {
+        return instance.put(`devices/autolag`, {deviceId})
+            .then(responce => {
+                return responce.data
+            })
     }
 };
 

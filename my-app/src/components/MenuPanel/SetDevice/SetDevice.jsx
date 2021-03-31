@@ -35,7 +35,7 @@ const SetDevice = (props) => {
         <div className={width === 1920 ? c1920.setDevice : c.setDevice}>
             <span className={width === 1920 ? c1920.menuTitle : c.menuTitle}>Настройка устройств</span>
             <div className={width === 1920 ? c1920.navbar : c.navbar}>
-                {devices.map(d => <Device id={d.id} type={d.type}/>)}
+                {devices.map(d => <Device id={d.id} type={d.type} lag={d.lag}/>)}
             </div>
             <NavLink to="/">
                 <div className={width === 1920 ? c1920.navBackButton : c.navBackButton}>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import c from './TabloClient1.module.css'
 import socket from "../../../socket/socket";
 import {compose} from "redux";
@@ -23,13 +23,11 @@ const STB = (props) => {
     const dispatch = useDispatch();
 
 
-
-
-
     useEffect(() => {
         dispatch(getCurrentVideo());
         dispatch(getVideoEditor(props.gameNumber))
     }, [props.gameNumber]);
+
 
     useEffect(() => {
 
@@ -76,6 +74,7 @@ const STB = (props) => {
         });
     }, [])
 
+
     useEffect(() => {
         if (player && currentVideo.videoURL !== '') {
             player.playUrl(currentVideo.videoURL, '');
@@ -83,15 +82,11 @@ const STB = (props) => {
     }, [currentVideo]);
 
 
-
     useEffect(() => {
         if (stb && currentVideo.videoURL !== '') {
             stb.play(currentVideo.videoURL)
         }
     }, [currentVideo]);
-
-
-
 
 
     return (

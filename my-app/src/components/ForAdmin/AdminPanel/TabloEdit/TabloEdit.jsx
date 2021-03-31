@@ -14,12 +14,16 @@ import {tabloAPI} from "../../../../api/api";
 import useInterval from "use-interval";
 import {setDifAC, setPingAC} from "../../../../redux/dif_reducer";
 import Dif from "../../../dif/Dif";
-import Cookies from "js-cookie";
+
 
 
 const TabloEdit = (props) => {
 
     let tupit = +window.localStorage.getItem('lag')
+
+    // const tupit = useSelector(
+    //     (state => state.appPage.lag)
+    // );
 
 
     let gameNumber = props.match.params.gameNumber;
@@ -63,7 +67,6 @@ const TabloEdit = (props) => {
     );
 
 
-    let [count, setCount] = useState(0);
 
     let [isShowLog, setIsShowLog] = useState(false);
 
@@ -72,7 +75,7 @@ const TabloEdit = (props) => {
     let [isRunningServerTimeout, setIsRunningServerTimeout] = useState(false);
 
 
-    let [tick, setTick] = useState(1000);
+
 
 
     let [period, setPeriod] = useState();

@@ -14,15 +14,20 @@ import {useDispatch, useSelector} from "react-redux";
 import {authFalseAC, setIdAC} from "./redux/auth_reducer";
 import Cookies from "js-cookie"
 import SetDevice from "./components/MenuPanel/SetDevice/SetDevice";
-import {setSocketIDAC, setTupitAC} from "./redux/app_reducer";
+import {getLag, setLagAC, setSocketIDAC} from "./redux/app_reducer";
 import {useHistory} from "react-router";
 import CustomGame from "./components/ForAdmin/AdminPanel/CustomGame/CustomGame";
 import Test from "./components/MenuPanel/Test/Test";
 import VideoAdmin from "./components/ForAdmin/VideoAdmin/VideoAdmin";
 import Lag from "./components/MenuPanel/Lag/Lag";
+import LagClient from "./components/MenuPanel/Lag/LagClient";
 
 
 function App(props) {
+
+    if (!window.localStorage.getItem('lag')) {
+        window.localStorage.setItem('lag', '0')
+    }
 
     const dispatch = useDispatch();
 
@@ -36,7 +41,21 @@ function App(props) {
 
     socket.on("connect", () => {
         dispatch(setSocketIDAC(socket.id))
+        socket.on(`setDeviceLag${socket.id}`, lag => {
+            window.localStorage.setItem('lag', lag.toString())
+        })
+        socket.on(`setDeviceAutolag${socket.id}`, res => {
+            if (history.location.pathname.indexOf('tabloClient') === -1) {
+                history.push('/lag');
+            } else {
+                history.push('/lagClient');
+            }
+
+        })
     });
+
+
+
 
 
     useEffect(() => {
@@ -44,12 +63,12 @@ function App(props) {
         if (secretToken) {
             dispatch(setIdAC(1))
             if (isAuth !== null) {
-                socket.emit('addDevice', {pathname: history.location.pathname, isAuth: isAuth})
+                socket.emit('addDevice', {pathname: history.location.pathname, isAuth: isAuth, lag: +window.localStorage.getItem('lag')})
             }
         } else {
             dispatch(authFalseAC(1))
             if (isAuth !== null) {
-                socket.emit('addDevice', {pathname: history.location.pathname, isAuth: isAuth})
+                socket.emit('addDevice', {pathname: history.location.pathname, isAuth: isAuth, lag: +window.localStorage.getItem('lag')})
             }
         }
     }, [isAuth])
@@ -89,6 +108,7 @@ function App(props) {
                     <Route path='/customGame/:gameNumber?' render={() => <CustomGame/>}/>
                     <Route path='/test' render={() => <Test/>}/>
                     <Route path='/lag' render={() => <Lag/>}/>
+                    <Route path='/lagClient' render={() => <LagClient/>}/>
                 </Switch>
             </div>
         </ConfirmProvider>

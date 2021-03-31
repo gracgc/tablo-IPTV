@@ -1,15 +1,16 @@
 import {gameAPI} from "../api/api";
+import socket from "../socket/socket";
 
 const SET_GAME_NUMBER = 'app/SET_GAME_NUMBER';
 const PUT_GAME_NUMBER = 'app/PUT_GAME_NUMBER';
 const SET_SOCKET_ID = 'app/SET_SOCKET_ID';
-const SET_TUPIT = 'app/SET_TUPIT';
+const SET_LAG = 'app/SET_LAG';
 
 
 let initialState = {
     gameNumber: 1,
     socketID: null,
-    tupit: 0
+    lag: 0
 };
 
 const appReducer = (state = initialState, action) => {
@@ -37,11 +38,11 @@ const appReducer = (state = initialState, action) => {
                 socketID: action.socketID
             };
 
-        case SET_TUPIT:
+        case SET_LAG:
 
             return {
                 ...state,
-                gameNumber: action.gameNumber
+                lag: action.lag
             };
 
 
@@ -53,7 +54,9 @@ const appReducer = (state = initialState, action) => {
 export const setGameNumberAC = (gameNumber) => ({type: SET_GAME_NUMBER, gameNumber});
 export const setSocketIDAC = (socketID) => ({type: SET_SOCKET_ID, socketID});
 export const putGameNumberAC = (gameNumber) => ({type: PUT_GAME_NUMBER, gameNumber});
-export const setTupitAC = (tupit) => ({type: SET_TUPIT, tupit});
+export const setLagAC = (lag) => ({type: SET_LAG, lag});
+
+
 
 export const getGameNumber = () => async (dispatch) => {
     let response = await gameAPI.getGameNumber();

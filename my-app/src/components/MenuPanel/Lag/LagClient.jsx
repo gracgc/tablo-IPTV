@@ -4,17 +4,31 @@ import {devicesAPI} from "../../../api/api";
 import {useSelector} from "react-redux";
 
 
-const Lag = (props) => {
+const LagClient = (props) => {
 
     const socketID = useSelector(
         (state => state.appPage.socketID)
     );
+
+    let player = window.TvipPlayer;
+
+    let stb = window.stb;
+
 
     let history = useHistory();
 
     useEffect(() => {
 
         if (socketID !== null) {
+
+            if (stb) {
+                stb.pause()
+            }
+
+            if (player) {
+                player.pause();
+            }
+
             let time = Date.now()
             for (var i = 0; i < 10000; i++) {
                 document.getElementById("a").innerHTML += Math.random()
@@ -22,9 +36,17 @@ const Lag = (props) => {
 
             devicesAPI.putDeviceLag(socketID, Math.round((Date.now() - time) / 1000))
 
-            history.push('/auth');
-        }
+            history.push('/tabloClient');
 
+
+            if (stb) {
+                stb.continuePlay()
+            }
+
+            if (player) {
+                player.unpause();
+            }
+        }
 
     }, [socketID])
 
@@ -40,4 +62,4 @@ const Lag = (props) => {
     )
 }
 
-export default Lag;
+export default LagClient;

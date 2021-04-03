@@ -99,18 +99,15 @@ const TabloClient = (props) => {
             }
             {preset === 3 &&
             <div>
-                <STB gameNumber={props.gameNumber}/>
             </div>
             }
             {preset === 4 &&
             <div className={c.tablo1}>
                 <div className={c.tablo0}>TABLO</div>
-                <STB gameNumber={props.gameNumber}/>
             </div>
             }
             {preset === 5 &&
             <div className={c3.tablo3}>
-                <STB gameNumber={props.gameNumber}/>
                 <div className={c3.teamName}>
                     {props.homeTeam.name} <br/>
                     {props.homeTeam.logo &&
@@ -125,7 +122,6 @@ const TabloClient = (props) => {
             }
             {preset === 6 &&
             <div className={c3.tablo3}>
-                <STB gameNumber={props.gameNumber}/>
                 <div className={c3.teamName}>
                     {props.guestsTeam.name} <br/>
                     {props.guestsTeam.logo &&

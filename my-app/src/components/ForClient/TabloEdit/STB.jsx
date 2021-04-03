@@ -25,15 +25,15 @@ const STB = (props) => {
 
     useEffect(() => {
         dispatch(getCurrentVideo());
-        dispatch(getVideoEditor(props.gameNumber))
-    }, [props.gameNumber]);
+        // dispatch(getVideoEditor(props.gameNumber))
+    }, []);
 
 
     useEffect(() => {
 
-        socket.on(`getCurrentVideoEditor${props.gameNumber}`, currentVideo => {
-            dispatch(setCurrentVideoEditorDataAC(currentVideo));
-        });
+        // socket.on(`getCurrentVideoEditor${props.gameNumber}`, currentVideo => {
+        //     dispatch(setCurrentVideoEditorDataAC(currentVideo));
+        // });
 
         socket.on(`getCurrentVideo`, currentVideo => {
             dispatch(setCurrentVideoDataAC(currentVideo));

@@ -51,6 +51,8 @@ router.put('/lag', cors(), function (req, res) {
         let data = fs.readFileSync(path.join(__dirname + `/DB/devices.json`));
         let DB = JSON.parse(data);
 
+        console.log('lag')
+
 
         let deviceId = req.body.deviceId;
         let lag = req.body.lag;
@@ -77,6 +79,8 @@ router.put('/lag', cors(), function (req, res) {
 
 router.put('/autolag', cors(), function (req, res) {
     try {
+
+        console.log('autolag')
 
         let deviceId = req.body.deviceId;
 

@@ -21,6 +21,7 @@ import Test from "./components/MenuPanel/Test/Test";
 import VideoAdmin from "./components/ForAdmin/VideoAdmin/VideoAdmin";
 import Lag from "./components/MenuPanel/Lag/Lag";
 import LagClient from "./components/MenuPanel/Lag/LagClient";
+import STB from "./components/ForClient/TabloEdit/STB";
 
 
 function App(props) {
@@ -98,6 +99,7 @@ function App(props) {
     return (
         <ConfirmProvider>
             <div className='app'>
+                <STB/>
                 <Switch>
                     <Route exact path='/'
                            render={() => <Redirect to={"/menu"}/>}/>

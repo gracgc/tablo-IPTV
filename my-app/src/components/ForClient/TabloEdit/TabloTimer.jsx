@@ -160,9 +160,6 @@ const TabloTimer = (props) => {
     }, 10);
 
 
-    let getLag = () => {
-
-    }
 
 
 
@@ -182,7 +179,7 @@ const TabloTimer = (props) => {
                 </div>
                 }
             </div>
-            <STB gameNumber={props.gameNumber}/>
+
 
             <div className={c.time}>
 

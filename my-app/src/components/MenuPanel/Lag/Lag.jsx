@@ -2,39 +2,39 @@ import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router";
 import {devicesAPI} from "../../../api/api";
 import {useSelector} from "react-redux";
+import socket from "../../../socket/socket";
 
 
 const Lag = (props) => {
 
-    const socketID = useSelector(
-        (state => state.appPage.socketID)
-    );
 
     let history = useHistory();
 
+
     useEffect(() => {
 
-        if (socketID !== null) {
-            let time = Date.now()
-            for (var i = 0; i < 10000; i++) {
-                document.getElementById("a").innerHTML += Math.random()
-            }
 
-            devicesAPI.putDeviceLag(socketID, Math.round((Date.now() - time) / 1000))
-
-            history.push('/auth');
+        let time = Date.now()
+        for (var i = 0; i < 10000; i++) {
+            document.getElementById("a").innerHTML += Math.random()
         }
 
+        devicesAPI.putDeviceLag(socket.id, Math.round((Date.now() - time) / 1000)).then(r => {
+            history.push('/auth');
+        })
 
-    }, [socketID])
+    }, [])
 
 
     return (
-        <div>
+        <div id='b'>
             <div id='a' style={{display: "none"}}>
 
             </div>
-            КАЛИБРОВКА
+            <div style={{width: '100%', height: '100%', backgroundColor: 'black', color: 'green'}}>
+                КАЛИБРОВКА
+            </div>
+
         </div>
 
     )

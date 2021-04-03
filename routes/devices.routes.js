@@ -80,7 +80,6 @@ router.put('/autolag', cors(), function (req, res) {
 
         let deviceId = req.body.deviceId;
 
-
         const io = req.app.locals.io;
 
         io.emit(`setDeviceAutolag${deviceId}`, {deviceId: deviceId})

@@ -2,13 +2,11 @@ import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router";
 import {devicesAPI} from "../../../api/api";
 import {useSelector} from "react-redux";
+import socket from "../../../socket/socket";
 
 
 const LagClient = (props) => {
 
-    const socketID = useSelector(
-        (state => state.appPage.socketID)
-    );
 
     let player = window.TvipPlayer;
 
@@ -19,26 +17,23 @@ const LagClient = (props) => {
 
     useEffect(() => {
 
-        if (socketID !== null) {
 
-            if (stb) {
-                stb.pause()
-            }
 
-            if (player) {
-                player.pause();
-            }
+        if (stb) {
+            stb.pause()
+        }
 
-            let time = Date.now()
-            for (var i = 0; i < 10000; i++) {
-                document.getElementById("a").innerHTML += Math.random()
-            }
+        if (player) {
+            player.pause();
+        }
 
-            devicesAPI.putDeviceLag(socketID, Math.round((Date.now() - time) / 1000))
+        let time = Date.now()
+        for (var i = 0; i < 10000; i++) {
+            document.getElementById("a").innerHTML += Math.random()
+        }
 
+        devicesAPI.putDeviceLag(socket.id, Math.round((Date.now() - time) / 1000)).then(r => {
             history.push('/tabloClient');
-
-
             if (stb) {
                 stb.continuePlay()
             }
@@ -46,9 +41,9 @@ const LagClient = (props) => {
             if (player) {
                 player.unpause();
             }
-        }
+        })
 
-    }, [socketID])
+    }, [])
 
 
     return (

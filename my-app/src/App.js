@@ -25,6 +25,10 @@ import LagClient from "./components/MenuPanel/Lag/LagClient";
 
 function App(props) {
 
+    const socketID = useSelector(
+        (state => state.appPage.socketID)
+    );
+
     if (!window.localStorage.getItem('lag')) {
         window.localStorage.setItem('lag', '0')
     }
@@ -38,21 +42,24 @@ function App(props) {
         state => state.authPage.isAuth
     );
 
+    useEffect(() => {
+        socket.on("connect", () => {
+            dispatch(setSocketIDAC(socket.id))
 
-    socket.on("connect", () => {
-        dispatch(setSocketIDAC(socket.id))
-        socket.on(`setDeviceLag${socket.id}`, lag => {
-            window.localStorage.setItem('lag', lag.toString())
-        })
-        socket.on(`setDeviceAutolag${socket.id}`, res => {
-            if (history.location.pathname.indexOf('tabloClient') === -1) {
-                history.push('/lag');
-            } else {
-                history.push('/lagClient');
-            }
+            socket.on(`setDeviceLag${socket.id}`, lag => {
+                window.localStorage.setItem('lag', lag.toString())
+            })
 
-        })
-    });
+            socket.on(`setDeviceAutolag${socket.id}`, res => {
+                if (history.location.pathname.indexOf('tabloClient') === -1) {
+                    history.push('/lag');
+                } else {
+                    history.push('/lagClient');
+                }
+            })
+        });
+    }, [])
+
 
 
 
@@ -63,12 +70,20 @@ function App(props) {
         if (secretToken) {
             dispatch(setIdAC(1))
             if (isAuth !== null) {
-                socket.emit('addDevice', {pathname: history.location.pathname, isAuth: isAuth, lag: +window.localStorage.getItem('lag')})
+                socket.emit('addDevice', {
+                    pathname: history.location.pathname,
+                    isAuth: isAuth,
+                    lag: +window.localStorage.getItem('lag')
+                })
             }
         } else {
             dispatch(authFalseAC(1))
             if (isAuth !== null) {
-                socket.emit('addDevice', {pathname: history.location.pathname, isAuth: isAuth, lag: +window.localStorage.getItem('lag')})
+                socket.emit('addDevice', {
+                    pathname: history.location.pathname,
+                    isAuth: isAuth,
+                    lag: +window.localStorage.getItem('lag')
+                })
             }
         }
     }, [isAuth])

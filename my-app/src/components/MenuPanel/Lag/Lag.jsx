@@ -20,14 +20,17 @@ const Lag = (props) => {
         }
 
         devicesAPI.putDeviceLag(socket.id, Math.round((Date.now() - time) / 1000)).then(r => {
-            history.push('/auth');
+            if (r.resultCode === 0) {
+                history.push('/auth');
+            }
+
         })
 
     }, [])
 
 
     return (
-        <div id='b'>
+        <div>
             <div id='a' style={{display: "none"}}>
 
             </div>

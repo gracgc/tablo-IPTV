@@ -22,6 +22,8 @@ import VideoAdmin from "./components/ForAdmin/VideoAdmin/VideoAdmin";
 import Lag from "./components/MenuPanel/Lag/Lag";
 import LagClient from "./components/MenuPanel/Lag/LagClient";
 import STB from "./components/ForClient/TabloEdit/STB";
+import PreLag from "./components/MenuPanel/Lag/PreLag";
+import PreLagClient from "./components/MenuPanel/Lag/PreLagClient";
 
 
 function App(props) {
@@ -53,9 +55,9 @@ function App(props) {
 
             socket.on(`setDeviceAutolag${socket.id}`, res => {
                 if (history.location.pathname.indexOf('tabloClient') === -1) {
-                    history.push('/lag');
+                    history.push('/prelag');
                 } else {
-                    history.push('/lagClient');
+                    history.push('/prelagClient');
                 }
             })
         });
@@ -126,6 +128,8 @@ function App(props) {
                     <Route path='/test' render={() => <Test/>}/>
                     <Route path='/lag' render={() => <Lag/>}/>
                     <Route path='/lagClient' render={() => <LagClient/>}/>
+                    <Route path='/prelag' render={() => <PreLag/>}/>
+                    <Route path='/prelagClient' render={() => <PreLagClient/>}/>
                 </Switch>
             </div>
         </ConfirmProvider>

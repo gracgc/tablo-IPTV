@@ -19,13 +19,16 @@ import {devicesAPI} from "../../../api/api";
 
 const TabloTimer = (props) => {
 
-    let history = useHistory();
 
-    let tupit = +window.localStorage.getItem('lag')
+    let lag = +window.localStorage.getItem('lag')
 
-    // const tupit = useSelector(
-    //     (state => state.appPage.lag)
-    // );
+    let [tupit, setTupit] = useState(lag)
+
+    useEffect(() => {
+        socket.on(`setDeviceLag${socket.id}`, lag => {
+            setTupit(lag)
+        })
+    }, [])
 
 
     const dif = useSelector(

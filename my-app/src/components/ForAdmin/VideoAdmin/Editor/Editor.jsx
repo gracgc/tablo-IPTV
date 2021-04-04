@@ -18,7 +18,15 @@ import {setDifAC, setPingAC} from "../../../../redux/dif_reducer";
 
 const Editor = (props) => {
 
-    let tupit = +window.localStorage.getItem('lag')
+    let lag = +window.localStorage.getItem('lag')
+
+    let [tupit, setTupit] = useState(lag)
+
+    useEffect(() => {
+        socket.on(`setDeviceLag${socket.id}`, lag => {
+            setTupit(lag)
+        })
+    }, [])
 
     let width = window.innerWidth;
 

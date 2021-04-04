@@ -43,6 +43,7 @@ const Device = (props) => {
 
     const putLag = (lag) => {
         devicesAPI.putDeviceLag(props.id, lag)
+        setLag(0)
     }
 
     const putAutolag = (lag) => {

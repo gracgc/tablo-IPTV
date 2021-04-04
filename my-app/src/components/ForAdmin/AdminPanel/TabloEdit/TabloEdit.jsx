@@ -19,11 +19,15 @@ import Dif from "../../../dif/Dif";
 
 const TabloEdit = (props) => {
 
-    let tupit = +window.localStorage.getItem('lag')
+    let lag = +window.localStorage.getItem('lag')
 
-    // const tupit = useSelector(
-    //     (state => state.appPage.lag)
-    // );
+    let [tupit, setTupit] = useState(lag)
+
+    useEffect(() => {
+        socket.on(`setDeviceLag${socket.id}`, lag => {
+            setTupit(lag)
+        })
+    }, [])
 
 
     let gameNumber = props.match.params.gameNumber;

@@ -13,11 +13,15 @@ import {setDifAC, setPingAC} from "../../../../redux/dif_reducer";
 
 const Info = (props) => {
 
-    let tupit = +window.localStorage.getItem('lag')
+    let lag = +window.localStorage.getItem('lag')
 
-    // const tupit = useSelector(
-    //     (state => state.appPage.lag)
-    // );
+    let [tupit, setTupit] = useState(lag)
+
+    useEffect(() => {
+        socket.on(`setDeviceLag${socket.id}`, lag => {
+            setTupit(lag)
+        })
+    }, [])
 
     const dispatch = useDispatch();
 

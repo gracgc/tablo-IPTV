@@ -5,16 +5,21 @@ import {useDispatch, useSelector} from "react-redux";
 import useInterval from "use-interval";
 import {setDifAC, setPingAC} from "../../redux/dif_reducer";
 import {tabloAPI} from "../../api/api";
+import socket from "../../socket/socket";
 
 
 const Dif = (props) => {
 
-    let tupit = +window.localStorage.getItem('lag')
+    let lag = +window.localStorage.getItem('lag')
 
+    let [tupit, setTupit] = useState(lag)
 
-    // const tupit = useSelector(
-    //     (state => state.appPage.lag)
-    // );
+    useEffect(() => {
+        socket.on(`setDeviceLag${socket.id}`, lag => {
+            setTupit(lag)
+        })
+    }, [])
+
 
 
     const dif = useSelector(

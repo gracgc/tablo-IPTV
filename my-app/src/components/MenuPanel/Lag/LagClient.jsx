@@ -52,8 +52,10 @@ const LagClient = (props) => {
             <div id='a' style={{display: "none"}}>
 
             </div>
-            <div style={{width: '100%', height: '100%', backgroundColor: 'black', color: 'green'}}>
-                КАЛИБРОВКА
+            <div style={{width: '100vw', height: '100vh', backgroundColor: 'black'}}>
+                <div style={{margin: 'auto', color: 'green', fontSize: 50}}>
+                    КАЛИБРОВКА
+                </div>
             </div>
         </div>
 

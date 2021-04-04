@@ -11,7 +11,7 @@ const app = express();
 const server = require('http').Server(app);
 
 
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {pingTimeout: 1000000});
 
 
 app.use(function (req, res, next) {
@@ -62,8 +62,8 @@ io.on('connection', (socket) => {
         fs.writeFileSync(path.join(__dirname, `/routes/DB/devices.json`), json, 'utf8');
     });
 
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
+    socket.on('disconnect', (reason) => {
+        console.log('user disconnected' + reason);
 
         let data = fs.readFileSync(path.join(__dirname + `/routes/DB/devices.json`));
         let DB = JSON.parse(data);
@@ -78,6 +78,7 @@ io.on('connection', (socket) => {
 
         fs.writeFileSync(path.join(__dirname, `/routes/DB/devices.json`), json, 'utf8');
     });
+
 
     socket.on('setGameNumberStart', res => {
         let data = fs.readFileSync(path.join(__dirname + `/routes/DB/game_number.json`));

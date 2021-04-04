@@ -23,8 +23,9 @@ const Lag = (props) => {
             if (r.resultCode === 0) {
                 history.push('/auth');
             }
-
         })
+
+        history.push('/auth');
 
     }, [])
 
@@ -34,9 +35,9 @@ const Lag = (props) => {
             <div id='a' style={{display: "none"}}>
 
             </div>
-            <div style={{width: '100%', height: '100%', backgroundColor: 'black', color: 'green'}}>
-                КАЛИБРОВКА
-            </div>
+            {/*<div style={{width: '100%', height: '100%', backgroundColor: 'black', color: 'green'}}>*/}
+            {/*    КАЛИБРОВКА*/}
+            {/*</div>*/}
 
         </div>
 

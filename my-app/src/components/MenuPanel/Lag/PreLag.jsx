@@ -11,19 +11,15 @@ const PreLag = (props) => {
     let history = useHistory();
 
 
-    useEffect(() => {
-
+    setTimeout(() => {
         history.push('/lag');
-
-    }, [])
+    }, 1000)
 
 
     return (
         <div>
-            <div style={{width: '100vw', height: '100vh', backgroundColor: 'black'}}>
-                <div style={{margin: 'auto', color: 'green', fontSize: 50}}>
+            <div style={{width: '100vw', height: '100vh', backgroundColor: 'black', margin: 'auto 0', color: 'green', fontSize: 50}}>
                     КАЛИБРОВКА
-                </div>
             </div>
         </div>
     )

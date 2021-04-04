@@ -11,19 +11,22 @@ const PreLagClient = (props) => {
     let history = useHistory();
 
 
-    useEffect(() => {
-
-        history.push('/lag');
-
-    }, [])
+    setTimeout(() => {
+        history.push('/lagClient');
+    }, 1000)
 
 
     return (
         <div>
-            <div style={{width: '100vw', height: '100vh', backgroundColor: 'black'}}>
-                <div style={{margin: 'auto', color: 'green', fontSize: 50}}>
-                    КАЛИБРОВКА
-                </div>
+            <div style={{
+                width: '100vw',
+                height: '100vh',
+                backgroundColor: 'black',
+                margin: 'auto 0',
+                color: 'green',
+                fontSize: 50
+            }}>
+                КАЛИБРОВКА
             </div>
         </div>
     )

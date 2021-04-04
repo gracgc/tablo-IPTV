@@ -48,7 +48,7 @@ io.on('connection', (socket) => {
             if (DB.devices.findIndex(user => user.id === socket.id) !== -1) {
                 DB.devices[DB.devices.findIndex(user => user.id === socket.id)].type = 'Admin'
             } else {
-                DB.devices.push({id: socket.id, type: 'Admin', lag: res.lag})
+                DB.devices.push({id: socket.id, type: 'Admin', lag: res.lag, isLockLag: false})
             }
         }
 

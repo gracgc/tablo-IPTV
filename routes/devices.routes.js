@@ -51,8 +51,6 @@ router.put('/lag', cors(), function (req, res) {
         let data = fs.readFileSync(path.join(__dirname + `/DB/devices.json`));
         let DB = JSON.parse(data);
 
-        console.log('lag')
-
 
         let deviceId = req.body.deviceId;
         let lag = req.body.lag;
@@ -60,6 +58,8 @@ router.put('/lag', cors(), function (req, res) {
         let device = DB.devices.find(device => device.id === deviceId)
 
         device.lag = lag
+
+        device.isLockLag = false
 
         let json = JSON.stringify(DB);
 
@@ -80,13 +80,27 @@ router.put('/lag', cors(), function (req, res) {
 router.put('/autolag', cors(), function (req, res) {
     try {
 
-        console.log('autolag')
-
         let deviceId = req.body.deviceId;
+
+        let data = fs.readFileSync(path.join(__dirname + `/DB/devices.json`));
+        let DB = JSON.parse(data);
+
+        let device = DB.devices.find(device => device.id === deviceId)
+
+        device.isLockLag = true
+
+        let json = JSON.stringify(DB);
+
+        fs.writeFileSync(path.join(__dirname, `/DB/devices.json`), json, 'utf8');
+
+        res.send({resultCode: 0})
+
 
         const io = req.app.locals.io;
 
         io.emit(`setDeviceAutolag${deviceId}`, {deviceId: deviceId})
+
+        io.emit('getDevices', DB.devices)
 
     } catch (e) {
         console.log(e)

@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import c from './SetDevice.module.css';
 import c1920 from './SetDevice_1920.module.css';
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import {devicesAPI} from "../../../api/api";
+import socket from "../../../socket/socket";
 
 
 const Device = (props) => {
@@ -13,10 +14,17 @@ const Device = (props) => {
 
     const [lag, setLag] = useState(0);
 
+
+
+    useEffect(() => {
+        socket.on(`isLockLag${props.id}`)
+    }, [])
+
     let devicesMenu = [
         'Main Tablo',
         'Video'
     ]
+
 
     const plusLag = () => {
         setLag(lag + 10)
@@ -61,24 +69,28 @@ const Device = (props) => {
                     ID: {props.id} <br/>
                     Lag: {props.lag}
                 </div>
-                <div>
-                    <div className={width === 1920 ? c1920.lagButton : c.lagButton} onClick={e => putAutolag()}>
-                        Авто калибровка
-                    </div>
-                    <div className={width === 1920 ? c1920.lagButton : c.lagButton} onClick={e => putLag(0)}>
-                        Обнулить lag
-                    </div>
-                    <div style={{display: 'inline-flex'}}>
-                        <div className={width === 1920 ? c1920.lagButton : c.lagButton} onClick={e => putLag(lag)}>
-                            Задать lag
+                {props.isLockLag
+                ? <div style={{color: 'grey'}}>Калибруется...</div>
+                    : <div>
+                        <div className={width === 1920 ? c1920.lagButton : c.lagButton} onClick={e => putAutolag()}>
+                            Авто калибровка
                         </div>
-                        <div style={{display: 'inline-flex', marginLeft: 10}}>
-                            <div onClick={e => minusLag()}>-</div>
-                            <div style={{padding: '0 10px', margin: '0 10px', border: 'solid 1px', width: 60, textAlign: 'center'}}>{lag}</div>
-                            <div onClick={e => plusLag()}>+</div>
+                        <div className={width === 1920 ? c1920.lagButton : c.lagButton} onClick={e => putLag(0)}>
+                            Обнулить lag
+                        </div>
+                        <div style={{display: 'inline-flex'}}>
+                            <div className={width === 1920 ? c1920.lagButton : c.lagButton} onClick={e => putLag(lag)}>
+                                Задать lag
+                            </div>
+                            <div style={{display: 'inline-flex', marginLeft: 10}}>
+                                <div style={{cursor: 'pointer'}} onClick={e => minusLag()}>-</div>
+                                <div style={{padding: '0 10px', margin: '0 10px', border: 'solid 1px', width: 60, textAlign: 'center'}}>{lag}</div>
+                                <div style={{cursor: 'pointer'}} onClick={e => plusLag()}>+</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
+
                 {props.type !== 'Admin' &&
                 <div>
                     {!showDeviceMenu

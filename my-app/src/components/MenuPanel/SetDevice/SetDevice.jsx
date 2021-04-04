@@ -12,7 +12,7 @@ const SetDevice = (props) => {
 
     let width = window.innerWidth;
 
-    let [devices, setDevices] = useState([{id: 0, type: 'type'}])
+    let [devices, setDevices] = useState([{id: 0, type: 'type', lag: 0, isLockLag: false}])
 
     const getDevices = () => {
         return axios.get(`/api/devices`)
@@ -35,14 +35,13 @@ const SetDevice = (props) => {
         <div className={width === 1920 ? c1920.setDevice : c.setDevice}>
             <span className={width === 1920 ? c1920.menuTitle : c.menuTitle}>Настройка устройств</span>
             <div className={width === 1920 ? c1920.navbar : c.navbar}>
-                {devices.map(d => <Device id={d.id} type={d.type} lag={d.lag}/>)}
+                {devices.map(d => <Device id={d.id} type={d.type} lag={d.lag} isLockLag={d.isLockLag}/>)}
             </div>
             <NavLink to="/">
                 <div className={width === 1920 ? c1920.navBackButton : c.navBackButton}>
                     Вернуться в меню
                 </div>
             </NavLink>
-
         </div>
     )
 };

@@ -320,7 +320,7 @@ const CreateGame = (props) => {
                         </div>
                     </NavLink>
                 </div>
-                <div className={width === 1920 ? c1920.menuTitle : c.menuTitle}>Создать новую игру</div>
+                <div className={width === 1920 ? c1920.menuTitle : c.menuTitle}>СОЗДАТЬ НОВУЮ ИГРУ</div>
                 <div></div>
             </div>
 

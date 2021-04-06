@@ -80,10 +80,7 @@ const TabloTimer = (props) => {
     }, [])
 
 
-
-
     useEffect(() => {
-
 
 
         ////TIME LOAD////
@@ -120,7 +117,7 @@ const TabloTimer = (props) => {
                 setTimeMem(time.timeData.timeMem);
                 setTimeMemTimer(time.timeData.timeMemTimer);
                 setDeadLine(time.timeData.deadLine);
-            dispatch(setTimeDataAC(time.timeData.timeMemTimer))
+                dispatch(setTimeDataAC(time.timeData.timeMemTimer))
             }
         );
 
@@ -135,8 +132,6 @@ const TabloTimer = (props) => {
     }, [gameNumber])
 
 
-
-
     useInterval(() => {
         if (isRunningServer) {
             let time = deadLine - (timeMem + ((Date.now()) - startTime + dif))
@@ -146,7 +141,7 @@ const TabloTimer = (props) => {
                 }
                 document.getElementById("s").innerHTML = `${(Math.floor(time / 1000) % 60) < 10 ? 0 : ''}${Math.floor(time / 1000) % 60}`
 
-                    //setTimeMemTimer(deadLine - (timeMem + ((Date.now()) - startTime + dif)))
+                //setTimeMemTimer(deadLine - (timeMem + ((Date.now()) - startTime + dif)))
                 // document.getElementById("ms").innerHTML = (deadLine - (timeMem + ((Date.now()) - startTime + dif))) % 1000
             }
             dispatch(setTimeDataAC(deadLine - (timeMem + ((Date.now()) - startTime + dif))))
@@ -161,9 +156,6 @@ const TabloTimer = (props) => {
             }
         }
     }, 10);
-
-
-
 
 
     return (
@@ -185,20 +177,23 @@ const TabloTimer = (props) => {
 
 
             <div className={c.time}>
-
-                <span id='m'>
+                {timeMemTimer !== 0 &&
+                    <div>
+                        <span id='m'>
                     {minutesTimer}
                 </span>:
-                <span id='s'>
+                        <span id='s'>
                     {secondsTimer < 10 ? `0${secondsTimer}` : `${secondsTimer}`}
-                </span>
-                {/*<span id='ms'*/}
-                {/*      style={{display: 'none'}}*/}
-                {/*>*/}
+                    </span>
+                        {/*<span id='ms'*/}
+                        {/*      style={{display: 'none'}}*/}
+                        {/*>*/}
 
-                {/*</span>*/}
-
+                        {/*</span>*/}
+                    </div>
+                }
             </div>
+
 
             {props.preset === 1 &&
             <div>
@@ -206,7 +201,7 @@ const TabloTimer = (props) => {
                     <div className={c.tempLog}></div>}
 
                 <div className={c.timeout}>
-                    {isRunningServerTimeout &&
+                    {(isRunningServerTimeout && timeMemTimerTimeout !== 0) &&
                     <div>
                         Таймаут <span id='tm'>
                     {secondsTimerTimeout}

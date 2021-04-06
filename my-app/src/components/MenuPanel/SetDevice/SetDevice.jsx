@@ -5,6 +5,7 @@ import socket from "../../../socket/socket";
 import * as axios from "axios";
 import Device from "./Device";
 import {NavLink} from "react-router-dom";
+import logo from "../../ForAdmin/AdminPanel/Info/logoIPTVPORTAL.png";
 
 
 
@@ -33,15 +34,21 @@ const SetDevice = (props) => {
 
     return (
         <div className={width === 1920 ? c1920.setDevice : c.setDevice}>
-            <span className={width === 1920 ? c1920.menuTitle : c.menuTitle}>Настройка устройств</span>
+            <div className={width === 1920 ? c1920.menuHeader : c.menuHeader}>
+                <div className={width === 1920 ? c1920.back : c.back}>
+                    <img src={logo} alt="" width={width === 1920 ? 70 : 50} height={width === 1920 ? 70 : 50}/>
+                    <NavLink to="/">
+                        <div className={width === 1920 ? c1920.backButton : c.backButton}>
+                            ВЕРНУТЬСЯ В МЕНЮ
+                        </div>
+                    </NavLink>
+                </div>
+                <div className={width === 1920 ? c1920.menuTitle : c.menuTitle}>УСТРОЙСТВА</div>
+                <div></div>
+            </div>
             <div className={width === 1920 ? c1920.navbar : c.navbar}>
                 {devices.map(d => <Device id={d.id} type={d.type} lag={d.lag} isLockLag={d.isLockLag}/>)}
             </div>
-            <NavLink to="/">
-                <div className={width === 1920 ? c1920.navBackButton : c.navBackButton}>
-                    Вернуться в меню
-                </div>
-            </NavLink>
         </div>
     )
 };

@@ -2,6 +2,7 @@
     background-color: #000000;;
     /*background-color: #e0223b;*/
     position: absolute;
+    z-index: 1000;
     top: 540px;
     width: 1280px;
     height: 180px;

@@ -7,8 +7,6 @@ import {getGame, setPresetAC} from "../../../redux/games_reducer";
 import socket from "../../../socket/socket";
 import classNames from 'classnames'
 import TabloTimer from "./TabloTimer";
-import STB from "./STB";
-import tabloIMG from "../../../content/img/TABLO-1.png"
 
 
 const TabloClient = (props) => {
@@ -40,19 +38,16 @@ const TabloClient = (props) => {
             <div className={c.tablo1}>
 
                 <div>
-                    <TabloTimer gameNumber={props.gameNumber} gameConsLog={props.gameConsLog} isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={preset}/>
+                    <TabloTimer gameNumber={props.gameNumber} gameConsLog={props.gameConsLog}
+                                isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={preset}/>
                 </div>
 
                 <div>
                     <div className={classNames(c.logo, c.homeLogo)}>
-                        {props.homeTeam.logo &&
                         <img src={props.homeTeam.logo} style={{width: '200px', height: '200px'}} alt=""/>
-                        }
                     </div>
                     <div className={classNames(c.logo, c.guestsLogo)}>
-                        {props.guestsTeam.logo &&
                         <img src={props.guestsTeam.logo} style={{width: '200px', height: '200px'}} alt=""/>
-                        }
                     </div>
                 </div>
                 <div>
@@ -69,31 +64,26 @@ const TabloClient = (props) => {
             }
 
             {preset === 2 &&
-            <div>
-                <div className={c2.tablo2}>
-                    <div className={classNames(c2.counter2, c2.homeTeam2)}>
-                        {props.homeCounter} <br/>
-                        {props.homeTeam.name}
-                    </div>
-                    <div className={c2.time2}>
-                        <TabloTimer gameNumber={props.gameNumber} gameConsLog={props.gameConsLog} isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={preset}/>
-                    </div>
-                    <div className={classNames(c2.counter2, c2.guestsTeam2)}>
-                        {props.guestsCounter} <br/>
-                        {props.guestsTeam.name}
-                    </div>
+            <div className={c2.tablo2}>
+                <div className={classNames(c2.counter2, c2.homeTeam2)}>
+                    {props.homeCounter} <br/>
+                    {props.homeTeam.name}
+                </div>
+                <div className={c2.time2}>
+                    <TabloTimer gameNumber={props.gameNumber} gameConsLog={props.gameConsLog}
+                                isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={preset}/>
+                </div>
+                <div className={classNames(c2.counter2, c2.guestsTeam2)}>
+                    {props.guestsCounter} <br/>
+                    {props.guestsTeam.name}
                 </div>
 
-                    <div className={c2.homeLogo}>
-                        {props.homeTeam.logo &&
-                        <img src={props.homeTeam.logo} style={{width: '180px', height: '180px'}} alt=""/>
-                        }
-                    </div>
-                    <div className={c2.guestsLogo}>
-                        {props.guestsTeam.logo &&
-                        <img src={props.guestsTeam.logo} style={{width: '180px', height: '180px'}} alt=""/>
-                        }
-                    </div>
+                <div className={c2.homeLogo}>
+                    <img src={props.homeTeam.logo} style={{width: '180px', height: '180px'}} alt=""/>
+                </div>
+                <div className={c2.guestsLogo}>
+                    <img src={props.guestsTeam.logo} style={{width: '180px', height: '180px'}} alt=""/>
+                </div>
 
             </div>
             }

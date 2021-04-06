@@ -34,16 +34,17 @@
     text-align: center;
 }
 
-.logos {
-
-}
 
 .homeLogo {
+    width: 200px;
+    height: 200px;
     bottom: 200px;
     left: 200px;
 }
 
 .guestsLogo {
+    width: 200px;
+    height: 200px;
     bottom: 200px;
     right: 200px;
 }

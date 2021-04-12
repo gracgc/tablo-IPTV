@@ -1,5 +1,5 @@
 {
   "port": 5000,
-  "baseUrl": "localhost",
+  "baseUrl": "http://localhost",
   "secretKey": "tablo-key"
 }

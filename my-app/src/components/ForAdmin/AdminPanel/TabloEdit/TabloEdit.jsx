@@ -197,9 +197,9 @@ const TabloEdit = (props) => {
                     0,
                     0, 0, period + 1, smallOvertime, bigOvertime);
                 dispatch(addNewLog(gameNumber,
-                    `Конец ${period} периода`));
+                    `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец ${period} периода`));
                 dispatch(addNewTempLog(gameNumber,
-                    `Конец ${period} периода`));
+                    `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец ${period} периода`));
             }
             if (period > 3) {
                 if (deadLine === 300000) {
@@ -208,9 +208,9 @@ const TabloEdit = (props) => {
                         0,
                         0, 0, period, smallOvertime + 1, bigOvertime);
                     dispatch(addNewLog(gameNumber,
-                        `Конец овертайма`));
+                        `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец овертайма`));
                     dispatch(addNewTempLog(gameNumber,
-                        `Конец овертайма`));
+                        `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец овертайма`));
                 }
                 if (deadLine === 1200000) {
                     tabloAPI.putTimerStatus(gameNumber, false,
@@ -218,9 +218,9 @@ const TabloEdit = (props) => {
                         0,
                         0, 0, period, smallOvertime, bigOvertime + 1);
                     dispatch(addNewLog(gameNumber,
-                        `Конец овертайма`));
+                        `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец овертайма`));
                     dispatch(addNewTempLog(gameNumber,
-                        `Конец овертайма`));
+                        `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец овертайма`));
                 }
             } else {
                 tabloAPI.putTimerStatus(gameNumber, false,
@@ -228,9 +228,9 @@ const TabloEdit = (props) => {
                     0,
                     deadLine, deadLine, period + 1, smallOvertime, bigOvertime);
                 dispatch(addNewLog(gameNumber,
-                    `Конец ${period} периода`));
+                    `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец ${period} периода`));
                 dispatch(addNewTempLog(gameNumber,
-                    `Конец ${period} периода`));
+                    `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец ${period} периода`));
             }
         }
     }, [timeDif >= deadLine]);
@@ -244,9 +244,9 @@ const TabloEdit = (props) => {
                 0,
                 0, 0);
             dispatch(addNewLog(gameNumber,
-                `Конец таймаута`));
+                `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец таймаута`));
             dispatch(addNewTempLog(gameNumber,
-                `Конец таймаута`));
+                `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец таймаута`));
         }
     }, [timeDifTimeout >= deadLineTimeout]);
 
@@ -292,6 +292,8 @@ const TabloEdit = (props) => {
         dispatch(addNewLog(gameNumber,
             `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - СТОП`));
     };
+
+
 
 
     return (

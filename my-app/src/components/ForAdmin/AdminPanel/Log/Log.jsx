@@ -40,6 +40,9 @@ const Log = (props) => {
 
     let width = window.innerWidth;
 
+    let secondsStopwatch = Math.floor(props.timeMem / 1000) % 60;
+    let minutesStopwatch = Math.floor(props.timeMem / (1000 * 60)) + (props.period - 1) * 20;
+
     const gameLog = useSelector(
         state => state.logPage.logData.gameLog
     );
@@ -55,7 +58,7 @@ const Log = (props) => {
 
     const onSubmit = (formData) => {
         if (formData.addLog !== undefined) {
-            dispatch(addNewLog(gameNumber, formData.addLog));
+            dispatch(addNewLog(gameNumber, `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - ${formData.addLog}`));
             dispatch(reset('addLog'))
         }
     };

@@ -8,7 +8,6 @@ import {compose} from "redux";
 import {withRouter} from "react-router-dom";
 import {gameAPI, tabloAPI} from "../../../api/api";
 import socket from "../../../socket/socket";
-import {useConfirm} from "material-ui-confirm";
 import {useDispatch, useSelector} from "react-redux";
 import {getTeams, setTeamsAC} from "../../../redux/teams_reducer";
 import TeamInfo from "./Parameters/Teams/TeamInfo";
@@ -17,9 +16,7 @@ const AdminPanel = (props) => {
 
     let gameNumber = props.match.params.gameNumber;
 
-    let width = window.innerWidth;
-
-    const confirm = useConfirm();
+    let [goalStop, setGoalStop] = useState(false)
 
     let [isRunningServer, setIsRunningServer] = useState(false);
     let [isRunningServerTimeout, setIsRunningServerTimeout] = useState(false);
@@ -101,7 +98,7 @@ const AdminPanel = (props) => {
                         <TabloEdit/>
                     </div>
                     <div>
-                        <Log/>
+                        <Log period={period} timeMem={timeMem}/>
                     </div>
                     <div>
                         <AddOptions period={period} isRunningServer={isRunningServer}/>

@@ -7,6 +7,7 @@ import {useDispatch} from "react-redux";
 import {tabloAPI} from "../../../../../api/api";
 import {teamGoal} from "../../../../../redux/teams_reducer";
 import {useConfirm} from "material-ui-confirm";
+import TabloEdit from "../../TabloEdit/TabloEdit";
 
 
 const TeamInfo = (props) => {
@@ -22,10 +23,12 @@ const TeamInfo = (props) => {
 
 
     let startTimeout = async () => {
-        await confirm({description: 'Вы уверены, что хотете совершить это действие?',
+        await confirm({
+            description: 'Вы уверены, что хотете совершить это действие?',
             title: 'Вы уверены?',
             confirmationText: 'Хорошо',
-            cancellationText: 'Отменить'});
+            cancellationText: 'Отменить'
+        });
         tabloAPI.putTimeoutStatus(props.gameNumber, true, 0, 0, 30000, 30000);
         dispatch(addNewLog(props.gameNumber,
             `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Старт таймаута для ${props.name}`));
@@ -33,26 +36,44 @@ const TeamInfo = (props) => {
 
 
     let clearTimeout = async () => {
-        await confirm({description: 'Вы уверены, что хотете совершить это действие?',
+        await confirm({
+            description: 'Вы уверены, что хотете совершить это действие?',
             title: 'Вы уверены?',
             confirmationText: 'Хорошо',
-            cancellationText: 'Отменить'});
+            cancellationText: 'Отменить'
+        });
         tabloAPI.putTimeoutStatus(props.gameNumber, false, 0, 0, 0, 0);
     };
 
-    const addTeamGoal = async (teamType, symbol) => {
-        dispatch(teamGoal(props.gameNumber, teamType, symbol));
-    };
+    let addTeamGoal = async (teamType, symbol) => {
+        if (symbol === '-') {
+            await confirm({
+                description: 'Вы уверены, что хотете убрать гол?',
+                title: 'Вы уверены?',
+                confirmationText: 'Хорошо',
+                cancellationText: 'Отменить'
+            });
+            dispatch(teamGoal(props.gameNumber, teamType, symbol));
+        }
 
-
+        if (symbol === '+') {
+            dispatch(teamGoal(props.gameNumber, teamType, symbol));
+            dispatch(addNewLog(props.gameNumber,
+                `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - ГОЛ для ${props.name}!`));
+            dispatch(addNewTempLog(props.gameNumber,
+                `ГОЛ для ${props.name}!`))
+        }
+    }
 
 
     return (
         <div className={width === 1920 ? c1920.team : c.team}>
-            <div className={width === 1920 ? c1920.teamInfo : c.teamInfo} style={{textAlign: props.teamType === 'guests' && 'right'}}>
+            <div className={width === 1920 ? c1920.teamInfo : c.teamInfo}
+                 style={{textAlign: props.teamType === 'guests' && 'right'}}>
                 <div style={{display: 'inline-flex'}}>
                     {props.teamType === 'home' &&
-                    <img src={props.logo} alt="" width={width === 1920 ? 180 : 120} height={width === 1920 ? 180 : 120}/>
+                    <img src={props.logo} alt="" width={width === 1920 ? 180 : 120}
+                         height={width === 1920 ? 180 : 120}/>
                     }
 
                     <div style={{marginLeft: 30, marginRight: 30, textAlign: props.teamType === 'guests' && 'right'}}>
@@ -61,29 +82,44 @@ const TeamInfo = (props) => {
                         </div>
                         <div className={width === 1920 ? c1920.points : c.points}>
                             Очки:
-                            <div style={{width: width === 1920 ? 60 : 40, textAlign: 'center', fontWeight: 'bold', color: 'red', cursor: 'pointer'}}
+                            <div style={{
+                                width: width === 1920 ? 60 : 40,
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                color: 'red',
+                                cursor: 'pointer'
+                            }}
                                  onClick={(e) => addTeamGoal(props.teamType, '-')}>
                                 −
                             </div>
                             {props.teamCounter}
-                            <div style={{width: width === 1920 ? 60 : 40, textAlign: 'center', fontWeight: 'bold', color: 'green', cursor: 'pointer'}}
+                            <div style={{
+                                width: width === 1920 ? 60 : 40,
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                color: 'green',
+                                cursor: 'pointer'
+                            }}
                                  onClick={(e) => addTeamGoal(props.teamType, '+')}>
                                 ＋
                             </div>
                         </div>
                     </div>
                     {props.teamType === 'guests' &&
-                    <img src={props.logo} alt="" width={width === 1920 ? 180 : 120} height={width === 1920 ? 180 : 120}/>
+                    <img src={props.logo} alt="" width={width === 1920 ? 180 : 120}
+                         height={width === 1920 ? 180 : 120}/>
                     }
                 </div>
 
                 {!props.isRunningServer ?
                     <div>
                         {!props.isRunningServerTimeout
-                            ? <div className={width === 1920 ? c1920.timeout : c.timeout} onClick={(e) => startTimeout()}>
+                            ?
+                            <div className={width === 1920 ? c1920.timeout : c.timeout} onClick={(e) => startTimeout()}>
                                 Взять таймаут 30 сек.
                             </div>
-                            : <div className={width === 1920 ? c1920.timeout : c.timeout} onClick={(e) => clearTimeout()}>
+                            :
+                            <div className={width === 1920 ? c1920.timeout : c.timeout} onClick={(e) => clearTimeout()}>
                                 Отменить таймаут
                             </div>
                         }

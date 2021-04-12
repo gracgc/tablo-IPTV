@@ -115,9 +115,11 @@ if (process.env.NODE_ENV === 'production') {
 
 const PORT = config.get('port') || 5000
 
+const URL = config.get('baseUrl') || 5000
+
 const start = () => {
     try {
-        server.listen(PORT, () => {
+        server.listen(PORT, URL, () => {
             console.log(`Server has been started on ${PORT}...`)
         })
     } catch (e) {

@@ -7,9 +7,17 @@ const authMW = require('../middleware/authMW')
 const config = require('config')
 let url = `${config.get('baseUrl')}:${config.get('port')}`
 
+let url1 = require('url');
+
+
 
 router.get('/:gameNumber', function (req, res) {
     try {
+        var requrl = req.get('host')
+
+
+        console.log(requrl)
+
         let gameNumber = req.params.gameNumber;
 
         let data = fs.readFileSync(path.join(__dirname + `/DB/game_${gameNumber}.json`));

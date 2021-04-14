@@ -23,7 +23,7 @@ const Editor = (props) => {
     let [tupit, setTupit] = useState(lag)
 
     useEffect(() => {
-        socket.on(`setDeviceLag${socket.id}`, lag => {
+        socket.on(`setDeviceLag${socket.id}_${socket.io.engine.hostname}`, lag => {
             setTupit(lag)
         })
     }, [])
@@ -90,7 +90,7 @@ const Editor = (props) => {
         dispatch(getVideoEditor(gameNumber));
 
 
-        socket.on(`getVideoTime${gameNumber}`, time => {
+        socket.on(`getVideoTime${gameNumber}_${socket.io.engine.hostname}`, time => {
                 setIsRunningServer(time.timeData.isRunning);
                 setStartTime(time.timeData.runningTime);
                 setTimeMem(time.timeData.timeMem);
@@ -114,15 +114,15 @@ const Editor = (props) => {
 
     useEffect(() => {
 
-        socket.on(`getCurrentVideoEditor${gameNumber}`, currentVideo => {
+        socket.on(`getCurrentVideoEditor${gameNumber}_${socket.io.engine.hostname}`, currentVideo => {
             dispatch(setCurrentVideoEditorDataAC(currentVideo));
         });
 
-        socket.on(`getVideosEditor${gameNumber}`, videos => {
+        socket.on(`getVideosEditor${gameNumber}_${socket.io.engine.hostname}`, videos => {
             dispatch(setVideosEditorAC(videos));
         });
 
-        socket.on(`getCurrentVideo`, currentVideo => {
+        socket.on(`getCurrentVideo_${socket.io.engine.hostname}`, currentVideo => {
             dispatch(setCurrentVideoDataAC(currentVideo));
         });
 

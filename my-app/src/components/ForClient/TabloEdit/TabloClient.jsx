@@ -25,7 +25,7 @@ const TabloClient = (props) => {
 
     useEffect(() => {
 
-        socket.on(`getPreset${props.gameNumber}`, preset => {
+        socket.on(`getPreset${props.gameNumber}_${socket.io.engine.hostname}`, preset => {
             dispatch(setPresetAC(preset))
         });
 

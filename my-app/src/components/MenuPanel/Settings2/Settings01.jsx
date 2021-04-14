@@ -56,7 +56,7 @@
 //
 //     useEffect(() => {
 //         dispatch(getTimeData(1))
-//         socket.on('getTime', time => {
+//         socket.on(`getTime_${socket.io.engine.hostname}`, time => {
 //                 dispatch(setTimeDataAC(time))
 //             }
 //         )

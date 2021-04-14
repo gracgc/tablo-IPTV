@@ -31,11 +31,11 @@ const STB = (props) => {
 
     useEffect(() => {
 
-        // socket.on(`getCurrentVideoEditor${props.gameNumber}`, currentVideo => {
+        // socket.on(`getCurrentVideoEditor${props.gameNumber}_${socket.io.engine.hostname}`, currentVideo => {
         //     dispatch(setCurrentVideoEditorDataAC(currentVideo));
         // });
 
-        socket.on(`getCurrentVideo`, currentVideo => {
+        socket.on(`getCurrentVideo_${socket.io.engine.hostname}`, currentVideo => {
             dispatch(setCurrentVideoDataAC(currentVideo));
             console.log(currentVideo)
         });
@@ -49,7 +49,7 @@ const STB = (props) => {
 
 
     useEffect(() => {
-        socket.on(`getPlayerStatus`, isRunning => {
+        socket.on(`getPlayerStatus_${socket.io.engine.hostname}`, isRunning => {
             if (player) {
                 if (isRunning) {
                     player.unpause();
@@ -62,7 +62,7 @@ const STB = (props) => {
 
 
     useEffect(() => {
-        socket.on(`getPlayerStatus`, isRunning => {
+        socket.on(`getPlayerStatus_${socket.io.engine.hostname}`, isRunning => {
 
             if (stb) {
                 if (isRunning) {

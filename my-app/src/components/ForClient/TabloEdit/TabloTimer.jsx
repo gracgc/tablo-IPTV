@@ -25,7 +25,7 @@ const TabloTimer = (props) => {
     let [tupit, setTupit] = useState(lag)
 
     useEffect(() => {
-        socket.on(`setDeviceLag${socket.id}`, lag => {
+        socket.on(`setDeviceLag${socket.id}_${socket.io.engine.hostname}`, lag => {
             setTupit(lag)
         })
     }, [])
@@ -72,7 +72,7 @@ const TabloTimer = (props) => {
 
     useEffect(() => {
         ////LOAD NEW DATA////
-        socket.on('getGameNumber', gameNumberX => {
+        socket.on(`getGameNumber_${socket.io.engine.hostname}`, gameNumberX => {
                 props.history.push(`/tabloClient/${gameNumberX}`);
                 setGameNumber(gameNumberX)
             }
@@ -111,7 +111,7 @@ const TabloTimer = (props) => {
 
 
         ////Socket IO////
-        socket.on(`getTime${gameNumber}`, time => {
+        socket.on(`getTime${gameNumber}_${socket.io.engine.hostname}`, time => {
                 setIsRunningServer(time.isRunning);
                 setStartTime(time.runningTime)
                 setTimeMem(time.timeData.timeMem);
@@ -121,7 +121,7 @@ const TabloTimer = (props) => {
             }
         );
 
-        socket.on(`getTimeout${gameNumber}`, time => {
+        socket.on(`getTimeout${gameNumber}_${socket.io.engine.hostname}`, time => {
                 setIsRunningServerTimeout(time.isRunning);
                 setStartTimeout(time.runningTime);
                 setTimeMemTimeout(time.timeData.timeMem);

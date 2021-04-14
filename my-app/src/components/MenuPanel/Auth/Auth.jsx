@@ -53,13 +53,13 @@ const Auth = (props) => {
 
     useEffect(() => {
         if (isAuth) {
-            socket.emit('addDevice', {pathname: history.location.pathname, isAuth: isAuth})
+            socket.emit(`addDevice_${socket.io.engine.hostname}`, {pathname: history.location.pathname, isAuth: isAuth})
             history.push("/menu");
         }
     }, [isAuth])
 
     useEffect(() => {
-        socket.on(`setDevicePage${socketID}`, deviceType => {
+        socket.on(`setDevicePage${socketID}_${socket.io.engine.hostname}`, deviceType => {
             if (deviceType === 'Main Tablo') {
                 history.push("/tabloClient/0");
             } if (deviceType === 'Video') {

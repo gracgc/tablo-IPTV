@@ -44,14 +44,14 @@ function App(props) {
 
     useEffect(() => {
         socket.on("connect", () => {
-            console.log(socket.io.engine.hostname)
+            console.log(`_${socket.io.engine.hostname}`)
             dispatch(setSocketIDAC(socket.id))
 
-            socket.on(`setDeviceLag${socket.id}`, lag => {
+            socket.on(`setDeviceLag${socket.id}_${socket.io.engine.hostname}`, lag => {
                 window.localStorage.setItem('lag', lag.toString())
             })
 
-            socket.on(`setDeviceAutolag${socket.id}`, res => {
+            socket.on(`setDeviceAutolag${socket.id}_${socket.io.engine.hostname}`, res => {
                 if (history.location.pathname.indexOf('tabloClient') === -1) {
                     history.push('/prelag');
                 } else {
@@ -68,7 +68,7 @@ function App(props) {
         if (secretToken) {
             dispatch(setIdAC(1))
             if (isAuth !== null) {
-                socket.emit('addDevice', {
+                socket.emit(`addDevice_${socket.io.engine.hostname}`, {
                     pathname: history.location.pathname,
                     isAuth: isAuth,
                     lag: +window.localStorage.getItem('lag')
@@ -77,7 +77,7 @@ function App(props) {
         } else {
             dispatch(authFalseAC(1))
             if (isAuth !== null) {
-                socket.emit('addDevice', {
+                socket.emit(`addDevice_${socket.io.engine.hostname}`, {
                     pathname: history.location.pathname,
                     isAuth: isAuth,
                     lag: +window.localStorage.getItem('lag')

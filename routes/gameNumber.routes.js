@@ -62,7 +62,7 @@ router.put('/', authMW, function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit('getGameNumber', DB.gameNumber)
+        io.emit(`getGameNumber_${requrl}`, DB.gameNumber)
 
 
     } catch (e) {

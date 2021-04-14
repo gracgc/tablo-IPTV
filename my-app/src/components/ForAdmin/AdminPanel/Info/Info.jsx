@@ -18,7 +18,7 @@ const Info = (props) => {
     let [tupit, setTupit] = useState(lag)
 
     useEffect(() => {
-        socket.on(`setDeviceLag${socket.id}`, lag => {
+        socket.on(`setDeviceLag${socket.id}_${socket.io.engine.hostname}`, lag => {
             setTupit(lag)
         })
     }, [])
@@ -61,7 +61,7 @@ const Info = (props) => {
     useEffect(() => {
         dispatch(getGame(gameNumber));
 
-        socket.on(`getGame${gameNumber}`, game => {
+        socket.on(`getGame${gameNumber}_${socket.io.engine.hostname}`, game => {
             dispatch(setGameDataAC(game))
         });
 
@@ -90,7 +90,7 @@ const Info = (props) => {
         });
 
         ////Socket IO////
-        socket.on(`getTime${gameNumber}`, time => {
+        socket.on(`getTime${gameNumber}_${socket.io.engine.hostname}`, time => {
                 setIsRunningServer(time.isRunning);
                 setStartTime(time.runningTime);
                 setTimeMem(time.timeData.timeMem);

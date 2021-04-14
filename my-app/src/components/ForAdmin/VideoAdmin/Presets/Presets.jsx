@@ -26,7 +26,7 @@ const Presets = (props) => {
         dispatch(getGame(gameNumber));
 
 
-        socket.on(`getPreset${gameNumber}`, preset => {
+        socket.on(`getPreset${gameNumber}_${socket.io.engine.hostname}`, preset => {
             dispatch(setPresetAC(preset))
         });
     }, [])

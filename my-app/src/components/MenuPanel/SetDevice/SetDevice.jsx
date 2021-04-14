@@ -26,7 +26,7 @@ const SetDevice = (props) => {
         getDevices().then(r => {
             setDevices(r)
         })
-        socket.on('getDevices', devices => {
+        socket.on(`getDevices_${socket.io.engine.hostname}`, devices => {
             setDevices(devices)
         })
     }, []);

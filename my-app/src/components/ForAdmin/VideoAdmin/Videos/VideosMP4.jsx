@@ -84,7 +84,7 @@ const VideosMP4 = (props) => {
     useEffect(() => {
         dispatch(getVideosMP4());
 
-        socket.on(`getVideosMP4`, videos => {
+        socket.on(`getVideosMP4_${socket.io.engine.hostname}`, videos => {
             dispatch(setVideosMP4DataAC(videos));
         });
 

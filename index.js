@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
 
 
 
-    socket.on('addDevice', res => {
+    socket.on(`addDevice_${requrl}`, res => {
         let data = fs.readFileSync(path.join(__dirname + `/routes/DB_${stadium}/devices.json`));
         let DB = JSON.parse(data);
 
@@ -87,7 +87,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', (reason) => {
-        console.log('user disconnected' + reason);
+        console.log('user disconnected' + ' ' + reason);
 
         let data = fs.readFileSync(path.join(__dirname + `/routes/DB_${stadium}/devices.json`));
         let DB = JSON.parse(data);
@@ -104,7 +104,7 @@ io.on('connection', (socket) => {
     });
 
 
-    socket.on('setGameNumberStart', res => {
+    socket.on(`setGameNumberStart_${requrl}`, res => {
         let data = fs.readFileSync(path.join(__dirname + `/routes/DB_${stadium}/game_number.json`));
         let DB = JSON.parse(data);
 

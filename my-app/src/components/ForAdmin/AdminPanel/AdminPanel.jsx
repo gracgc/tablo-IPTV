@@ -51,7 +51,7 @@ const AdminPanel = (props) => {
             setIsRunningServerTimeout(r.timeoutData.isRunning);
         });
 
-        socket.on(`getTime${gameNumber}`, time => {
+        socket.on(`getTime${gameNumber}_${socket.io.engine.hostname}`, time => {
                 setTimeMem(time.timeData.timeMem);
                 setTimeMemTimer(time.timeData.timeMemTimer);
                 setPeriod(time.period);
@@ -60,14 +60,14 @@ const AdminPanel = (props) => {
             }
         );
 
-        socket.on(`getTimeout${gameNumber}`, time => {
+        socket.on(`getTimeout${gameNumber}_${socket.io.engine.hostname}`, time => {
                 setIsRunningServerTimeout(time.isRunning);
             }
         );
 
         dispatch(getTeams(gameNumber));
 
-        socket.on(`getTeams${gameNumber}`, teams => {
+        socket.on(`getTeams${gameNumber}_${socket.io.engine.hostname}`, teams => {
                 dispatch(setTeamsAC(teams))
             }
         )

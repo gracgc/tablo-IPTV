@@ -144,7 +144,7 @@ router.post('/', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getSavedGames`, DB.savedGames)
+        io.emit(`getSavedGames_${requrl}`, DB.savedGames)
 
     } catch
         (e) {
@@ -215,14 +215,14 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getGame${gameNumber}`, DB.gameInfo)
+        io.emit(`getGame${gameNumber}_${requrl}`, DB.gameInfo)
 
         DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
-        io.emit(`getTeams${gameNumber}`, DB.teams)
+        io.emit(`getTeams${gameNumber}_${requrl}`, DB.teams)
 
-        io.emit(`getTime${gameNumber}`, DB.gameInfo.gameTime)
+        io.emit(`getTime${gameNumber}_${requrl}`, DB.gameInfo.gameTime)
 
     } catch
         (e) {
@@ -312,16 +312,16 @@ router.put('/reset/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getGame${gameNumber}`, DB.gameInfo)
+        io.emit(`getGame${gameNumber}_${requrl}`, DB.gameInfo)
 
         DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
-        io.emit(`getTeams${gameNumber}`, DB.teams)
+        io.emit(`getTeams${gameNumber}_${requrl}`, DB.teams)
 
-        io.emit(`getTime${gameNumber}`, DB.gameInfo.gameTime)
+        io.emit(`getTime${gameNumber}_${requrl}`, DB.gameInfo.gameTime)
 
-        io.emit(`getLog${gameNumber}`, DB.logData)
+        io.emit(`getLog${gameNumber}_${requrl}`, DB.logData)
 
     } catch
         (e) {

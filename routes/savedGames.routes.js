@@ -137,7 +137,7 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
 
 
 
-        io.emit('getSavedGames', DB.savedGames)
+        io.emit(`getSavedGames_${requrl}`, DB.savedGames)
 
     } catch
         (e) {

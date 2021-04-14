@@ -17,7 +17,7 @@ const Device = (props) => {
 
 
     useEffect(() => {
-        socket.on(`isLockLag${props.id}`)
+        socket.on(`isLockLag${props.id}_${socket.io.engine.hostname}`)
     }, [])
 
     let devicesMenu = [

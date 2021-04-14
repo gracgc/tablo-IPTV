@@ -15,7 +15,7 @@ const Dif = (props) => {
     let [tupit, setTupit] = useState(lag)
 
     useEffect(() => {
-        socket.on(`setDeviceLag${socket.id}`, lag => {
+        socket.on(`setDeviceLag${socket.id}_${socket.io.engine.hostname}`, lag => {
             setTupit(lag)
         })
     }, [])

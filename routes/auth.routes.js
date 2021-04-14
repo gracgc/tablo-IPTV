@@ -7,12 +7,29 @@ const bcrypt = require("bcrypt")
 const config = require("config")
 const jwt = require("jsonwebtoken")
 
+let stadiums = config.get('stadiums')
+
+let getHost = (host) => {
+    return host.split(':')[0]
+}
+
+let getStadium = (host) => {
+    if (stadiums[host]) {
+        return stadiums[host]
+    } else {
+        return 0
+    }
+}
 
 router.post('/login', cors(), async function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         const password = req.body.password
 
-        let data = fs.readFileSync(path.join(__dirname, `/DB/auth.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DB_${stadium}/auth.json`));
         let DB = JSON.parse(data);
 
         const isPassValid = bcrypt.compareSync(password, DB.password)

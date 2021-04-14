@@ -5,9 +5,6 @@ const express = require('express');
 const fs = require('fs');
 const uploadFile = require('express-fileupload')
 
-const url = require('url');
-
-
 
 
 const app = express();
@@ -32,13 +29,36 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({extended: true}));
 
+let stadiums = config.get('stadiums')
+
+let getHost = (host) => {
+    return host.split(':')[0]
+}
+
+let getStadium = (host) => {
+
+    if (stadiums[host]) {
+        return stadiums[host]
+    } else {
+        return 0
+    }
+}
 
 io.on('connection', (socket) => {
     console.log('a user connected');
 
+    let host = socket.handshake.headers.host
+
+
+    let requrl = getHost(host)
+
+
+    let stadium = getStadium(requrl)
+
+
 
     socket.on('addDevice', res => {
-        let data = fs.readFileSync(path.join(__dirname + `/routes/DB/devices.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/routes/DB_${stadium}/devices.json`));
         let DB = JSON.parse(data);
 
 
@@ -56,39 +76,39 @@ io.on('connection', (socket) => {
             }
         }
 
-        io.emit('getDevices', DB.devices)
+        io.emit(`getDevices_${requrl}`, DB.devices)
 
-        io.emit(`getLag${socket.id}`, DB.devices[DB.devices.findIndex(user => user.id === socket.id)].lag)
+        io.emit(`getLag${socket.id}_${requrl}`, DB.devices[DB.devices.findIndex(user => user.id === socket.id)].lag)
 
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/routes/DB/devices.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/routes/DB_${stadium}/devices.json`), json, 'utf8');
     });
 
     socket.on('disconnect', (reason) => {
         console.log('user disconnected' + reason);
 
-        let data = fs.readFileSync(path.join(__dirname + `/routes/DB/devices.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/routes/DB_${stadium}/devices.json`));
         let DB = JSON.parse(data);
 
         let deletedItem = DB.devices.findIndex(user => user.id === socket.id);
 
         DB.devices.splice(deletedItem, 1)
 
-        io.emit('getDevices', DB.devices)
+        io.emit(`getDevices_${requrl}`, DB.devices)
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/routes/DB/devices.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/routes/DB_${stadium}/devices.json`), json, 'utf8');
     });
 
 
     socket.on('setGameNumberStart', res => {
-        let data = fs.readFileSync(path.join(__dirname + `/routes/DB/game_number.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/routes/DB_${stadium}/game_number.json`));
         let DB = JSON.parse(data);
 
-        io.emit('getGameNumberStart', DB.gameNumber)
+        io.emit(`getGameNumberStart_${requrl}`, DB.gameNumber)
     })
 
 });
@@ -119,7 +139,6 @@ if (process.env.NODE_ENV === 'production') {
 
 const PORT = config.get('port') || 5000
 
-const URL = config.get('baseUrl') || 5000
 
 const start = () => {
     try {

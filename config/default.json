@@ -1,5 +1,8 @@
 {
   "port": 5000,
-  "baseUrl": "http://localhost",
-  "secretKey": "tablo-key"
+  "secretKey": "tablo-key",
+  "stadiums":
+    {
+      "localhost": "stadium1"
+    }
 }

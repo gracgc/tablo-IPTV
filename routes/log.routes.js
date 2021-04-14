@@ -4,13 +4,32 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const authMW = require('../middleware/authMW');
+const config = require('config')
 
+
+let stadiums = config.get('stadiums')
+
+let getHost = (host) => {
+    return host.split(':')[0]
+}
+
+let getStadium = (host) => {
+    if (stadiums[host]) {
+        return stadiums[host]
+    } else {
+        return 0
+    }
+}
 
 router.get('/:gameNumber', function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
-        let data = fs.readFileSync(path.join(__dirname, `/DB/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         res.send(DB.logData)
@@ -22,9 +41,13 @@ router.get('/:gameNumber', function (req, res) {
 
 router.post('/:gameNumber', authMW, cors(), function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
-        let data = fs.readFileSync(path.join(__dirname, `/DB/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let newLogItem = req.body.newLogItem;
@@ -53,7 +76,7 @@ router.post('/:gameNumber', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/DB/game_${gameNumber}.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0})
 
@@ -69,9 +92,13 @@ router.post('/:gameNumber', authMW, cors(), function (req, res) {
 
 router.put('/:gameNumber', authMW, cors(), function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
-        let data = fs.readFileSync(path.join(__dirname, `/DB/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let deletedItem = req.body.deletedItem;
@@ -80,7 +107,7 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/DB/game_${gameNumber}.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0})
 
@@ -95,9 +122,13 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
 
 router.post('/temp/:gameNumber', authMW, cors(), function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let newLogItem = req.body.newLogItem;
@@ -114,7 +145,7 @@ router.post('/temp/:gameNumber', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname + `/DB/game_${gameNumber}.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0})
 
@@ -125,9 +156,13 @@ router.post('/temp/:gameNumber', authMW, cors(), function (req, res) {
 
 router.post('/cons/:gameNumber', authMW, cors(), function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let gamerId = req.body.gamerId;
@@ -148,7 +183,7 @@ router.post('/cons/:gameNumber', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname + `/DB/game_${gameNumber}.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0})
 
@@ -159,9 +194,13 @@ router.post('/cons/:gameNumber', authMW, cors(), function (req, res) {
 
 router.put('/cons/:gameNumber', authMW, cors(), function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let deletedItem = req.body.deletedItem;
@@ -174,7 +213,7 @@ router.put('/cons/:gameNumber', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname + `/DB/game_${gameNumber}.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0})
 

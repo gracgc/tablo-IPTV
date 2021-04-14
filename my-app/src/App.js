@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Route, withRouter, Switch, Redirect} from "react-router-dom";
 import {compose} from "redux";
@@ -14,7 +14,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {authFalseAC, setIdAC} from "./redux/auth_reducer";
 import Cookies from "js-cookie"
 import SetDevice from "./components/MenuPanel/SetDevice/SetDevice";
-import {getLag, setLagAC, setSocketIDAC} from "./redux/app_reducer";
+import {setSocketIDAC} from "./redux/app_reducer";
 import {useHistory} from "react-router";
 import CustomGame from "./components/ForAdmin/AdminPanel/CustomGame/CustomGame";
 import Test from "./components/MenuPanel/Test/Test";
@@ -28,9 +28,6 @@ import PreLagClient from "./components/MenuPanel/Lag/PreLagClient";
 
 function App(props) {
 
-    const socketID = useSelector(
-        (state => state.appPage.socketID)
-    );
 
     if (!window.localStorage.getItem('lag')) {
         window.localStorage.setItem('lag', '0')
@@ -47,6 +44,7 @@ function App(props) {
 
     useEffect(() => {
         socket.on("connect", () => {
+            console.log(socket.io.engine.hostname)
             dispatch(setSocketIDAC(socket.id))
 
             socket.on(`setDeviceLag${socket.id}`, lag => {
@@ -62,9 +60,6 @@ function App(props) {
             })
         });
     }, [])
-
-
-
 
 
 

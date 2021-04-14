@@ -1,5 +1,8 @@
 {
   "port": 3000,
-  "baseUrl": "http://tablo-beta-v191220.f247.iptvportal.ru",
-  "secretKey": "tablo-key"
+  "secretKey": "tablo-key",
+  "stadiums":
+    {
+      "stadium1.f247.iptvportal.ru": "stadium1"
+    }
 }

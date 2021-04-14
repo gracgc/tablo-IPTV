@@ -7,19 +7,37 @@ const authMW = require('../middleware/authMW')
 const config = require('config')
 const resizeOptimizeImages = require('resize-optimize-images');
 
-let url = `${config.get('baseUrl')}:${config.get('port')}`
+// let url = `${config.get('baseUrl')}:${config.get('port')}`
+
+let stadiums = config.get('stadiums')
+
+let getHost = (host) => {
+    return host.split(':')[0]
+}
+
+let getStadium = (host) => {
+    if (stadiums[host]) {
+        return stadiums[host]
+    } else {
+        return 0
+    }
+}
 
 
 router.get('/:gameNumber', function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         if (DB.gameInfo.gameName !== 'Быстрая игра') {
-            DB.teams.find(t => t.teamType === 'home').logo = `${url}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
-            DB.teams.find(t => t.teamType === 'guests').logo = `${url}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
+            DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
+            DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
         }
 
 
@@ -33,9 +51,13 @@ router.get('/:gameNumber', function (req, res) {
 
 router.get('/homelogo/:gameNumber/:dateNow', function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
-        let img = path.join(__dirname + `/DB/img/home_logo_${gameNumber}.png`);
+        let img = path.join(__dirname + `/DB_${stadium}/img/home_logo_${gameNumber}.png`);
 
         res.sendFile(img);
 
@@ -46,9 +68,13 @@ router.get('/homelogo/:gameNumber/:dateNow', function (req, res) {
 
 router.get('/guestslogo/:gameNumber/:dateNow', function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
-        let img = path.join(__dirname + `/DB/img/guests_logo_${gameNumber}.png`);
+        let img = path.join(__dirname + `/DB_${stadium}/img/guests_logo_${gameNumber}.png`);
 
 
         res.sendFile(img);
@@ -61,6 +87,10 @@ router.get('/guestslogo/:gameNumber/:dateNow', function (req, res) {
 
 router.post('/homelogo/:gameNumber', async function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
 
@@ -70,10 +100,10 @@ router.post('/homelogo/:gameNumber', async function (req, res) {
 
         img.name = `home_logo_${gameNumber}.png`
 
-        await img.mv(`${__dirname}/DB/img/${img.name}`)
+        await img.mv(`${__dirname}/DB_${stadium}/img/${img.name}`)
 
         const options = {
-            images: [path.join(__dirname + `/DB/img/home_logo_${gameNumber}.png`)],
+            images: [path.join(__dirname + `/DB_${stadium}/img/home_logo_${gameNumber}.png`)],
             width: 200,
             quality: 50
         };
@@ -98,6 +128,10 @@ router.post('/homelogo/:gameNumber', async function (req, res) {
 
 router.post('/guestslogo/:gameNumber', function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
 
@@ -107,10 +141,10 @@ router.post('/guestslogo/:gameNumber', function (req, res) {
 
         img.name = `guests_logo_${gameNumber}.png`
 
-        img.mv(`${__dirname}/DB/img/${img.name}`)
+        img.mv(`${__dirname}/DB_${stadium}/img/${img.name}`)
 
         const options = {
-            images: [path.join(__dirname + `/DB/img/home_logo_${gameNumber}.png`)],
+            images: [path.join(__dirname + `/DB_${stadium}/img/home_logo_${gameNumber}.png`)],
             width: 200,
             quality: 50
         };
@@ -129,9 +163,13 @@ router.post('/guestslogo/:gameNumber', function (req, res) {
 
 router.post('/:gameNumber', authMW, cors(), function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let homeName = req.body.homeName;
@@ -166,14 +204,14 @@ router.post('/:gameNumber', authMW, cors(), function (req, res) {
         let json = JSON.stringify(DB);
 
         fs.writeFileSync(path.join(__dirname +
-            `/DB/game_${gameNumber}.json`), json, 'utf8');
+            `/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 
         const io = req.app.locals.io;
 
-        DB.teams.find(t => t.teamType === 'home').logo = `${url}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
-        DB.teams.find(t => t.teamType === 'guests').logo = `${url}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
         io.emit(`getTeams${gameNumber}`, DB.teams)
 
@@ -184,11 +222,15 @@ router.post('/:gameNumber', authMW, cors(), function (req, res) {
 
 router.put('/gamerGoal/:gameNumber', authMW, cors(), function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
 
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let teamType = req.body.teamType;
@@ -209,14 +251,14 @@ router.put('/gamerGoal/:gameNumber', authMW, cors(), function (req, res) {
         let json = JSON.stringify(DB);
 
         fs.writeFileSync(path.join(__dirname +
-            `/DB/game_${gameNumber}.json`), json, 'utf8');
+            `/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 
         const io = req.app.locals.io;
 
-        DB.teams.find(t => t.teamType === 'home').logo = `${url}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
-        DB.teams.find(t => t.teamType === 'guests').logo = `${url}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
         io.emit(`getTeams${gameNumber}`, DB.teams)
 
@@ -228,10 +270,14 @@ router.put('/gamerGoal/:gameNumber', authMW, cors(), function (req, res) {
 
 router.put('/teamGoal/:gameNumber', authMW, cors(), function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let teamType = req.body.teamType;
@@ -251,14 +297,14 @@ router.put('/teamGoal/:gameNumber', authMW, cors(), function (req, res) {
         let json = JSON.stringify(DB);
 
         fs.writeFileSync(path.join(__dirname +
-            `/DB/game_${gameNumber}.json`), json, 'utf8');
+            `/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0})
 
         const io = req.app.locals.io;
 
-        DB.teams.find(t => t.teamType === 'home').logo = `${url}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
-        DB.teams.find(t => t.teamType === 'guests').logo = `${url}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
         io.emit(`getTeams${gameNumber}`, DB.teams);
 
@@ -269,10 +315,14 @@ router.put('/teamGoal/:gameNumber', authMW, cors(), function (req, res) {
 
 router.put('/gamerStatus/:gameNumber', authMW, cors(), function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let teamType = req.body.teamType;
@@ -291,14 +341,14 @@ router.put('/gamerStatus/:gameNumber', authMW, cors(), function (req, res) {
         let json = JSON.stringify(DB);
 
         fs.writeFileSync(path.join(__dirname +
-            `/DB/game_${gameNumber}.json`), json, 'utf8');
+            `/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 
         const io = req.app.locals.io;
 
-        DB.teams.find(t => t.teamType === 'home').logo = `${url}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
-        DB.teams.find(t => t.teamType === 'guests').logo = `${url}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
         io.emit(`getTeams${gameNumber}`, DB.teams)
 
@@ -310,10 +360,14 @@ router.put('/gamerStatus/:gameNumber', authMW, cors(), function (req, res) {
 
 router.put('/onField/:gameNumber', authMW, cors(), function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let teamType = req.body.teamType;
@@ -329,14 +383,14 @@ router.put('/onField/:gameNumber', authMW, cors(), function (req, res) {
         let json = JSON.stringify(DB);
 
         fs.writeFileSync(path.join(__dirname +
-            `/DB/game_${gameNumber}.json`), json, 'utf8');
+            `/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 
         const io = req.app.locals.io;
 
-        DB.teams.find(t => t.teamType === 'home').logo = `${url}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
-        DB.teams.find(t => t.teamType === 'guests').logo = `${url}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
         io.emit(`getTeams${gameNumber}`, DB.teams)
 
@@ -348,10 +402,14 @@ router.put('/onField/:gameNumber', authMW, cors(), function (req, res) {
 
 router.put('/penalty/:gameNumber', authMW, cors(), function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let teamType = req.body.teamType;
@@ -369,14 +427,14 @@ router.put('/penalty/:gameNumber', authMW, cors(), function (req, res) {
         let json = JSON.stringify(DB);
 
         fs.writeFileSync(path.join(__dirname +
-            `/DB/game_${gameNumber}.json`), json, 'utf8');
+            `/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 
         const io = req.app.locals.io;
 
-        DB.teams.find(t => t.teamType === 'home').logo = `${url}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
-        DB.teams.find(t => t.teamType === 'guests').logo = `${url}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
         io.emit(`getTeams${gameNumber}`, DB.teams)
 

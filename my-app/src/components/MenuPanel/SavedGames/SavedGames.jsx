@@ -52,7 +52,7 @@ const SavedGames = (props) => {
     let currentGame = savedGames.find(g => g.gameNumber === gameNumber)
 
 
-    let lastGameNumber = savedGames[savedGames.length - 1].gameNumber
+    let lastGameNumber = savedGames.length !== 0 && savedGames[savedGames.length - 1].gameNumber
 
 
     let createFastGame = async () => {
@@ -116,7 +116,7 @@ const SavedGames = (props) => {
                     </NavLink>
                 </div>}
                 <div className={width === 1920 ? c1920.navbar : c.navbar}>
-                    {savedGames.map(sg => (sg.gameName.toLowerCase().indexOf(searchWord) !== -1) &&
+                    {savedGames.length !== 0 && savedGames.map(sg => (sg.gameName.toLowerCase().indexOf(searchWord) !== -1) &&
                         <SavedGame gameNumber={gameNumber} savedGame={sg} savedGames={savedGames}/>)}
                 </div>
 

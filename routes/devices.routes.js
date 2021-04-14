@@ -4,11 +4,32 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const authMW = require('../middleware/authMW')
+const config = require('config')
+
+
+let stadiums = config.get('stadiums')
+
+let getHost = (host) => {
+    return host.split(':')[0]
+}
+
+let getStadium = (host) => {
+    if (stadiums[host]) {
+        return stadiums[host]
+    } else {
+        return 0
+    }
+}
 
 
 router.get('/', cors(), function (req, res) {
     try {
-        let data = fs.readFileSync(path.join(__dirname + `/DB/devices.json`));
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
+
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/devices.json`));
         let DB = JSON.parse(data);
 
         res.send(DB.devices)
@@ -20,7 +41,11 @@ router.get('/', cors(), function (req, res) {
 
 router.put('/', authMW, cors(), function (req, res) {
     try {
-        let data = fs.readFileSync(path.join(__dirname + `/DB/devices.json`));
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/devices.json`));
         let DB = JSON.parse(data);
 
         let deviceType = req.body.deviceType;
@@ -32,14 +57,14 @@ router.put('/', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/DB/devices.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/devices.json`), json, 'utf8');
 
         res.send({resultCode: 0})
 
         const io = req.app.locals.io;
 
-        io.emit('getDevices', DB.devices)
-        io.emit(`setDevicePage${deviceId}`, deviceType)
+        io.emit(`getDevices_${requrl}`, DB.devices)
+        io.emit(`setDevicePage${deviceId}_${requrl}`, deviceType)
 
     } catch (e) {
         console.log(e)
@@ -48,7 +73,11 @@ router.put('/', authMW, cors(), function (req, res) {
 
 router.put('/lag', cors(), function (req, res) {
     try {
-        let data = fs.readFileSync(path.join(__dirname + `/DB/devices.json`));
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/devices.json`));
         let DB = JSON.parse(data);
 
 
@@ -63,14 +92,14 @@ router.put('/lag', cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/DB/devices.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/devices.json`), json, 'utf8');
 
         res.send({resultCode: 0})
 
         const io = req.app.locals.io;
 
-        io.emit('getDevices', DB.devices)
-        io.emit(`setDeviceLag${deviceId}`, lag)
+        io.emit(`getDevices_${requrl}`, DB.devices)
+        io.emit(`setDeviceLag${deviceId}_${requrl}`, lag)
 
     } catch (e) {
         console.log(e)
@@ -79,10 +108,13 @@ router.put('/lag', cors(), function (req, res) {
 
 router.put('/autolag', cors(), function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
 
         let deviceId = req.body.deviceId;
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB/devices.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/devices.json`));
         let DB = JSON.parse(data);
 
         let device = DB.devices.find(device => device.id === deviceId)
@@ -91,16 +123,16 @@ router.put('/autolag', cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/DB/devices.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/devices.json`), json, 'utf8');
 
         res.send({resultCode: 0})
 
 
         const io = req.app.locals.io;
 
-        io.emit(`setDeviceAutolag${deviceId}`, {deviceId: deviceId})
+        io.emit(`setDeviceAutolag${deviceId}_${requrl}`, {deviceId: deviceId})
 
-        io.emit('getDevices', DB.devices)
+        io.emit(`getDevices_${requrl}`, DB.devices)
 
     } catch (e) {
         console.log(e)
@@ -111,9 +143,13 @@ router.put('/autolag', cors(), function (req, res) {
 
 router.put('/preset/:gameNumber', authMW, cors(), function (req, res) {
     try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
         let gameNumber = req.params.gameNumber;
 
-        let data = fs.readFileSync(path.join(__dirname, `/DB/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let preset = req.body.preset;
@@ -123,13 +159,13 @@ router.put('/preset/:gameNumber', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/DB/game_${gameNumber}.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0})
 
         const io = req.app.locals.io;
 
-        io.emit(`getPreset${gameNumber}`, DB.gameInfo.preset)
+        io.emit(`getPreset${gameNumber}_${requrl}`, DB.gameInfo.preset)
 
     } catch (e) {
         console.log(e)

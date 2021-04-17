@@ -19,7 +19,7 @@ let getStadium = (host) => {
     if (stadiums[host]) {
         return stadiums[host]
     } else {
-        return 0
+        return stadiums['default']
     }
 }
 

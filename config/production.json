@@ -3,6 +3,7 @@
   "secretKey": "tablo-key",
   "stadiums":
     {
+      "default": "stadium1",
       "stadium1.f247.iptvportal.ru": "stadium1",
       "stadium2.f247.iptvportal.ru": "stadium2"
     }

@@ -39,6 +39,48 @@ router.get('/', cors(), function (req, res) {
     }
 });
 
+router.put('/add', authMW, cors(), function (req, res) {
+    try {
+
+        const io = req.app.locals.io;req
+
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
+        let data = fs.readFileSync(path.join(__dirname + `/routes/DB_${stadium}/devices.json`));
+        let DB = JSON.parse(data);
+
+
+        if (req.isAuth === false) {
+            if (req.pathname.indexOf('tabloClient') !== -1) {
+                DB.devices.push({id: io.id, type: 'Main Tablo', lag: req.lag})
+            } else {
+                DB.devices.push({id: io.id, type: 'undefined', lag: req.lag})
+            }
+        } else {
+            if (DB.devices.findIndex(user => user.id === io.id) !== -1) {
+                DB.devices[DB.devices.findIndex(user => user.id === io.id)].type = 'Admin'
+            } else {
+                DB.devices.push({id: io.id, type: 'Admin', lag: req.lag, isLockLag: false})
+            }
+        }
+
+
+        io.to(stadium).emit(`getDevices`, DB.devices)
+
+        io.to(stadium).emit(`getLag${io.id}`, DB.devices[DB.devices.findIndex(user => user.id === io.id)].lag)
+
+
+        let json = JSON.stringify(DB);
+
+        fs.writeFileSync(path.join(__dirname, `/routes/DB_${stadium}/devices.json`), json, 'utf8');
+
+    } catch (e) {
+        console.log(e)
+    }
+});
+
 router.put('/', authMW, cors(), function (req, res) {
     try {
         let requrl = getHost(req.get('host'))

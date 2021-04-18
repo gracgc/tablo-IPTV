@@ -127,7 +127,18 @@ export const gameAPI = {
             })
     },
     customGame(gameNumber, period, time, homeName, homeColor, homeGamers, guestsName, guestsColor, guestsGamers, additionalHomeGamers, additionalGuestsGamers) {
-        return instance.put(`game/${gameNumber}`, {period, time, homeName, homeColor, homeGamers, guestsName, guestsColor, guestsGamers, additionalHomeGamers, additionalGuestsGamers})
+        return instance.put(`game/${gameNumber}`, {
+            period,
+            time,
+            homeName,
+            homeColor,
+            homeGamers,
+            guestsName,
+            guestsColor,
+            guestsGamers,
+            additionalHomeGamers,
+            additionalGuestsGamers
+        })
             .then(responce => {
                 return responce.data
             })
@@ -140,6 +151,12 @@ export const gameAPI = {
     },
     putGameNumber(gameNumber) {
         return instance.put(`gameNumber`, {gameNumber})
+            .then(responce => {
+                return responce.data
+            })
+    },
+    startGameNumber() {
+        return instance.get(`gameNumber`)
             .then(responce => {
                 return responce.data
             })
@@ -222,6 +239,16 @@ export const devicesAPI = {
     },
     putDeviceAutoLag(deviceId) {
         return instance.put(`devices/autolag`, {deviceId})
+            .then(responce => {
+                return responce.data
+            })
+    },
+    addDevice(pathname, isAuth, lag) {
+        return instance.put(`devices/add`, {
+            pathname: pathname,
+            isAuth: isAuth,
+            lag: lag
+        })
             .then(responce => {
                 return responce.data
             })

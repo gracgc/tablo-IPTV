@@ -40,6 +40,27 @@ router.get('/', function (req, res) {
     }
 });
 
+router.get('/start', authMW, function (req, res) {
+    try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
+
+        let data = fs.readFileSync(path.join(__dirname + `/routes/DB_${stadium}/game_number.json`));
+        let DB = JSON.parse(data);
+
+        const io = req.app.locals.io;
+
+        io.to(stadium).emit(`getGameNumberStart`, DB.gameNumber)
+
+
+    } catch (e) {
+        console.log(e)
+    }
+});
+
+
 router.put('/', authMW, function (req, res) {
     try {
         let requrl = getHost(req.get('host'))

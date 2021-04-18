@@ -4,14 +4,15 @@ import socket from "../../../socket/socket";
 import {compose} from "redux";
 import {withRouter} from "react-router";
 import {useSelector} from "react-redux";
-
+import {gameAPI} from "../../../../api/api";
 
 const Tablo0 = (props) => {
 
     const stadium = window.localStorage.getItem('stadium')
 
     useEffect(() => {
-        socket.emit(`setGameNumberStart`, 'res');
+        gameAPI.startGameNumber()
+        // socket.emit(`setGameNumberStart`, 'res');
         socket.on(`getGameNumberStart`, gameNumber => {
             props.history.push('/tabloClient/' + gameNumber);
         })

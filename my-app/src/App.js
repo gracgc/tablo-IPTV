@@ -24,6 +24,7 @@ import LagClient from "./components/MenuPanel/Lag/LagClient";
 import STB from "./components/ForClient/TabloEdit/STB";
 import PreLag from "./components/MenuPanel/Lag/PreLag";
 import PreLagClient from "./components/MenuPanel/Lag/PreLagClient";
+import {devicesAPI} from "../../../api/api";
 
 
 function App(props) {
@@ -46,6 +47,8 @@ function App(props) {
 
     useEffect(() => {
         socket.on("connect", () => {
+
+            console.log(socket)
 
             dispatch(setSocketIDAC(socket.id))
 
@@ -77,11 +80,12 @@ function App(props) {
         if (secretToken) {
             dispatch(setIdAC(1))
             if (isAuth !== null) {
-                socket.emit(`addDevice`, {
-                    pathname: history.location.pathname,
-                    isAuth: isAuth,
-                    lag: +window.localStorage.getItem('lag')
-                })
+                devicesAPI.addDevice(history.location.pathname, isAuth, +window.localStorage.getItem('lag'))
+                // socket.emit(`addDevice`, {
+                //     pathname: history.location.pathname,
+                //     isAuth: isAuth,
+                //     lag: +window.localStorage.getItem('lag')
+                // })
             }
         } else {
             dispatch(authFalseAC(1))

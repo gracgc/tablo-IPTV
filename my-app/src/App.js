@@ -51,8 +51,8 @@ function App(props) {
 
             socket.on(`getStadium`, stadium => {
                 dispatch(setStadiumAC(stadium.stadium))
-                // window.localStorage.setItem('stadium', stadium.stadium.toString())
-                window.localStorage.setItem('stadium', '123')
+                window.localStorage.setItem('stadium', stadium.stadium.toString())
+
             })
 
 

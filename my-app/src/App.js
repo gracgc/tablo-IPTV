@@ -46,12 +46,13 @@ function App(props) {
 
     useEffect(() => {
         socket.on("connect", () => {
-            console.log(stadium)
+
             dispatch(setSocketIDAC(socket.id))
 
             socket.on(`getStadium`, stadium => {
                 dispatch(setStadiumAC(stadium.stadium))
-                window.localStorage.setItem('stadium', stadium.stadium.toString())
+                // window.localStorage.setItem('stadium', stadium.stadium.toString())
+                window.localStorage.setItem('stadium', '123')
             })
 
 

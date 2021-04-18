@@ -64,9 +64,7 @@ const Cameras = (props) => {
         (state => state.videosPage.currentVideoStream)
     );
 
-    const stadium = useSelector(
-        state => state.appPage.stadium
-    );
+    const stadium = window.localStorage.getItem('stadium')
 
 
     useEffect(() => {

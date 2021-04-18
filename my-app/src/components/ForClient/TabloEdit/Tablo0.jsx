@@ -8,9 +8,7 @@ import {useSelector} from "react-redux";
 
 const Tablo0 = (props) => {
 
-    const stadium = useSelector(
-        state => state.appPage.stadium
-    );
+    const stadium = window.localStorage.getItem('stadium')
 
     useEffect(() => {
         socket.emit(`setGameNumberStart_${stadium}`, 'res');

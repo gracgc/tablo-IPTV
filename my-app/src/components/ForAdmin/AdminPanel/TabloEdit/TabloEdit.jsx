@@ -23,9 +23,7 @@ const TabloEdit = (props) => {
 
     let [tupit, setTupit] = useState(lag)
 
-    const stadium = useSelector(
-        state => state.appPage.stadium
-    );
+    const stadium = window.localStorage.getItem('stadium')
 
     useEffect(() => {
         socket.on(`setDeviceLag${socket.id}_${stadium}`, lag => {

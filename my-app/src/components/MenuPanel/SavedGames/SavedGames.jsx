@@ -32,9 +32,7 @@ const SavedGames = (props) => {
 
     let history = useHistory();
 
-    const stadium = useSelector(
-        state => state.appPage.stadium
-    );
+    const stadium = window.localStorage.getItem('stadium')
 
 
     useEffect(() => {

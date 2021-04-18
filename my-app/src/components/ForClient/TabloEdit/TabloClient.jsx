@@ -17,9 +17,7 @@ const TabloClient = (props) => {
         (state => state.gamesPage.gameData.preset)
     );
 
-    const stadium = useSelector(
-        state => state.appPage.stadium
-    );
+    const stadium = window.localStorage.getItem('stadium')
 
 
     useEffect(() => {

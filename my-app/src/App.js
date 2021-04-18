@@ -42,9 +42,7 @@ function App(props) {
         state => state.authPage.isAuth
     );
 
-    const stadium = useSelector(
-        state => state.appPage.stadium
-    );
+    const stadium = window.localStorage.getItem('stadium')
 
     useEffect(() => {
         socket.on("connect", () => {
@@ -53,6 +51,7 @@ function App(props) {
 
             socket.on(`getStadium`, stadium => {
                 dispatch(setStadiumAC(stadium.stadium))
+                window.localStorage.setItem('stadium', stadium.stadium.toString())
             })
 
 

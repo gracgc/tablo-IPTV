@@ -16,9 +16,7 @@ const SetDevice = (props) => {
 
     let [devices, setDevices] = useState([{id: 0, type: 'type', lag: 0, isLockLag: false}])
 
-    const stadium = useSelector(
-        state => state.appPage.stadium
-    );
+    const stadium = window.localStorage.getItem('stadium')
 
     const getDevices = () => {
         return axios.get(`/api/devices`)

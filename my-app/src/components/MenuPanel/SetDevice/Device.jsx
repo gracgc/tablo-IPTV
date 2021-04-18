@@ -15,9 +15,7 @@ const Device = (props) => {
 
     const [lag, setLag] = useState(0);
 
-    const stadium = useSelector(
-        state => state.appPage.stadium
-    );
+    const stadium = window.localStorage.getItem('stadium')
 
 
     useEffect(() => {

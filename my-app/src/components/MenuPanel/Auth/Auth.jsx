@@ -51,15 +51,19 @@ const Auth = (props) => {
         dispatch(login(formData.password));
     };
 
+    const stadium = useSelector(
+        state => state.appPage.stadium
+    );
+
     useEffect(() => {
         if (isAuth) {
-            socket.emit(`addDevice_${socket.io.engine.hostname}`, {pathname: history.location.pathname, isAuth: isAuth})
+            socket.emit(`addDevice_${stadium}`, {pathname: history.location.pathname, isAuth: isAuth})
             history.push("/menu");
         }
     }, [isAuth])
 
     useEffect(() => {
-        socket.on(`setDevicePage${socketID}_${socket.io.engine.hostname}`, deviceType => {
+        socket.on(`setDevicePage${socketID}_${stadium}`, deviceType => {
             if (deviceType === 'Main Tablo') {
                 history.push("/tabloClient/0");
             } if (deviceType === 'Video') {

@@ -14,7 +14,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {authFalseAC, setIdAC} from "./redux/auth_reducer";
 import Cookies from "js-cookie"
 import SetDevice from "./components/MenuPanel/SetDevice/SetDevice";
-import {setSocketIDAC} from "./redux/app_reducer";
+import {setSocketIDAC, setStadiumAC} from "./redux/app_reducer";
 import {useHistory} from "react-router";
 import CustomGame from "./components/ForAdmin/AdminPanel/CustomGame/CustomGame";
 import Test from "./components/MenuPanel/Test/Test";
@@ -42,16 +42,25 @@ function App(props) {
         state => state.authPage.isAuth
     );
 
+    const stadium = useSelector(
+        state => state.appPage.stadium
+    );
+
     useEffect(() => {
         socket.on("connect", () => {
-            console.log(`_${socket.io.engine.hostname}`)
+            console.log(stadium)
             dispatch(setSocketIDAC(socket.id))
 
-            socket.on(`setDeviceLag${socket.id}_${socket.io.engine.hostname}`, lag => {
+            socket.on(`getStadium`, stadium => {
+                dispatch(setStadiumAC(stadium.stadium))
+            })
+
+
+            socket.on(`setDeviceLag${socket.id}_${stadium}`, lag => {
                 window.localStorage.setItem('lag', lag.toString())
             })
 
-            socket.on(`setDeviceAutolag${socket.id}_${socket.io.engine.hostname}`, res => {
+            socket.on(`setDeviceAutolag${socket.id}_${stadium}`, res => {
                 if (history.location.pathname.indexOf('tabloClient') === -1) {
                     history.push('/prelag');
                 } else {
@@ -68,7 +77,7 @@ function App(props) {
         if (secretToken) {
             dispatch(setIdAC(1))
             if (isAuth !== null) {
-                socket.emit(`addDevice_${socket.io.engine.hostname}`, {
+                socket.emit(`addDevice_${stadium}`, {
                     pathname: history.location.pathname,
                     isAuth: isAuth,
                     lag: +window.localStorage.getItem('lag')
@@ -77,7 +86,7 @@ function App(props) {
         } else {
             dispatch(authFalseAC(1))
             if (isAuth !== null) {
-                socket.emit(`addDevice_${socket.io.engine.hostname}`, {
+                socket.emit(`addDevice_${stadium}`, {
                     pathname: history.location.pathname,
                     isAuth: isAuth,
                     lag: +window.localStorage.getItem('lag')

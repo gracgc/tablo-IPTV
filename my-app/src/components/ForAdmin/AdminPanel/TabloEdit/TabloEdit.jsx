@@ -23,8 +23,12 @@ const TabloEdit = (props) => {
 
     let [tupit, setTupit] = useState(lag)
 
+    const stadium = useSelector(
+        state => state.appPage.stadium
+    );
+
     useEffect(() => {
-        socket.on(`setDeviceLag${socket.id}_${socket.io.engine.hostname}`, lag => {
+        socket.on(`setDeviceLag${socket.id}_${stadium}`, lag => {
             setTupit(lag)
         })
     }, [])
@@ -146,7 +150,7 @@ const TabloEdit = (props) => {
 
 
         ////Socket IO////
-        socket.on(`getTime${gameNumber}_${socket.io.engine.hostname}`, time => {
+        socket.on(`getTime${gameNumber}_${stadium}`, time => {
                 setIsRunningServer(time.isRunning);
                 setStartTime(time.runningTime);
                 setTimeMem(time.timeData.timeMem);
@@ -160,7 +164,7 @@ const TabloEdit = (props) => {
         );
 
 
-        socket.on(`getTimeout${gameNumber}_${socket.io.engine.hostname}`, time => {
+        socket.on(`getTimeout${gameNumber}_${stadium}`, time => {
                 setIsRunningServerTimeout(time.isRunning);
                 setStartTimeout(time.runningTime);
                 setTimeDifTimeout(time.timeData.timeDif);
@@ -172,7 +176,7 @@ const TabloEdit = (props) => {
 
         ////TEAMS LOAD///
         dispatch(getTeams(gameNumber));
-        socket.on(`getTeams${gameNumber}_${socket.io.engine.hostname}`, teams => {
+        socket.on(`getTeams${gameNumber}_${stadium}`, teams => {
                 dispatch(setTeamsAC(teams))
             }
         );

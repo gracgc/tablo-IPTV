@@ -63,9 +63,13 @@ const Log = (props) => {
         }
     };
 
+    const stadium = useSelector(
+        state => state.appPage.stadium
+    );
+
     useEffect(() => {
         dispatch(getLog(gameNumber));
-        socket.on(`getLog${gameNumber}_${socket.io.engine.hostname}`, log => {
+        socket.on(`getLog${gameNumber}_${stadium}`, log => {
                 dispatch(setLogDataAC(log))
             }
         )

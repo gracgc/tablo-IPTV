@@ -72,7 +72,7 @@ router.post('/', authMW, cors(), async function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getVideos_${requrl}`, DB.videos)
+        io.emit(`getVideos_${stadium}`, DB.videos)
 
     } catch (e) {
         console.log(e)
@@ -103,7 +103,7 @@ router.put('/delete', authMW, cors(), async function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getVideos_${requrl}`, DB.videos)
+        io.emit(`getVideos_${stadium}`, DB.videos)
 
     } catch (e) {
         console.log(e)
@@ -153,7 +153,7 @@ router.post('/editor/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getVideosEditor${gameNumber}_${requrl}`, DB.videos)
+        io.emit(`getVideosEditor${gameNumber}_${stadium}`, DB.videos)
 
         let json = JSON.stringify(DB);
 
@@ -193,7 +193,7 @@ router.put('/editor/current/:gameNumber', authMW, cors(), function (req, res) {
         const io = req.app.locals.io;
 
 
-        io.emit(`getCurrentVideoEditor${gameNumber}_${requrl}`, DB.currentVideo)
+        io.emit(`getCurrentVideoEditor${gameNumber}_${stadium}`, DB.currentVideo)
 
     } catch (e) {
         console.log(e)
@@ -233,9 +233,9 @@ router.put('/editor/delete/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getVideosEditor${gameNumber}_${requrl}`, DB.videos)
+        io.emit(`getVideosEditor${gameNumber}_${stadium}`, DB.videos)
 
-        io.emit(`getCurrentVideoEditor${gameNumber}_${requrl}`, DB.currentVideo)
+        io.emit(`getCurrentVideoEditor${gameNumber}_${stadium}`, DB.currentVideo)
 
     } catch (e) {
         console.log(e)
@@ -276,11 +276,11 @@ router.put('/editor/clear/:gameNumber', authMW, cors(), function (req, res) {
 
         res.send({resultCode: 0});
 
-        io.emit(`getVideoTime${gameNumber}_${requrl}`, DB);
+        io.emit(`getVideoTime${gameNumber}_${stadium}`, DB);
 
-        io.emit(`getVideosEditor${gameNumber}_${requrl}`, []);
+        io.emit(`getVideosEditor${gameNumber}_${stadium}`, []);
 
-        io.emit(`getCurrentVideoEditor${gameNumber}_${requrl}`, DB.currentVideo)
+        io.emit(`getCurrentVideoEditor${gameNumber}_${stadium}`, DB.currentVideo)
 
 
     } catch (e) {
@@ -320,7 +320,7 @@ router.put('/editor/nextVideo/:gameNumber', authMW, cors(), function (req, res) 
 
         res.send({resultCode: 0});
 
-        io.emit(`getVideoTime${gameNumber}_${requrl}`, DB);
+        io.emit(`getVideoTime${gameNumber}_${stadium}`, DB);
 
     } catch (e) {
         console.log(e)
@@ -377,7 +377,7 @@ router.put('/current/:gameNumber', authMW, cors(), function (req, res) {
 
             fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/videos.json`), json, 'utf8');
 
-            io.emit(`getCurrentVideo_${requrl}`, {currentVideo: DB.currentVideo, currentVideoStream: DB.currentVideoStream});
+            io.emit(`getCurrentVideo_${stadium}`, {currentVideo: DB.currentVideo, currentVideoStream: DB.currentVideoStream});
 
             if (!currentVideo.duration) {
                 DB.currentVideoStream = currentVideo;
@@ -390,7 +390,7 @@ router.put('/current/:gameNumber', authMW, cors(), function (req, res) {
 
                 fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/videos.json`), json, 'utf8');
 
-                io.emit(`getCurrentVideo_${requrl}`, {currentVideo: DB.currentVideo, currentVideoStream: DB.currentVideoStream})
+                io.emit(`getCurrentVideo_${stadium}`, {currentVideo: DB.currentVideo, currentVideoStream: DB.currentVideoStream})
 
             } else {
 
@@ -401,7 +401,7 @@ router.put('/current/:gameNumber', authMW, cors(), function (req, res) {
 
                     fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/videos.json`), json, 'utf8');
 
-                    io.emit(`getCurrentVideo_${requrl}`, {currentVideo: null, currentVideoStream: DB.currentVideoStream})
+                    io.emit(`getCurrentVideo_${stadium}`, {currentVideo: null, currentVideoStream: DB.currentVideoStream})
 
                 }
             }
@@ -438,7 +438,7 @@ router.put('/reset', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getCurrentVideo_${requrl}`, {currentVideo: DB.currentVideo, currentVideoStream: DB.currentVideoStream})
+        io.emit(`getCurrentVideo_${stadium}`, {currentVideo: DB.currentVideo, currentVideoStream: DB.currentVideoStream})
 
     } catch (e) {
         console.log(e)
@@ -533,7 +533,7 @@ router.post('/mp4/:videoName', authMW, cors(), async function (req, res) {
                     fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/videosMP4_local.json`), json, 'utf8');
 
 
-                    io.emit(`getVideosMP4_${requrl}`, DB.videos);
+                    io.emit(`getVideosMP4_${stadium}`, DB.videos);
 
                     res.send({resultCode: 0});
 
@@ -553,7 +553,7 @@ router.post('/mp4/:videoName', authMW, cors(), async function (req, res) {
                     fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/videosMP4.json`), json, 'utf8');
 
 
-                    io.emit(`getVideosMP4_${requrl}`, DB.videos);
+                    io.emit(`getVideosMP4_${stadium}`, DB.videos);
 
                     res.send({resultCode: 0});
                 }
@@ -599,7 +599,7 @@ router.put('/mp4/delete', authMW, cors(), async function (req, res) {
             fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/videosMP4_local.json`), json, 'utf8');
 
 
-            io.emit(`getVideosMP4_${requrl}`, DB.videos);
+            io.emit(`getVideosMP4_${stadium}`, DB.videos);
 
             res.send({resultCode: 0});
 
@@ -615,7 +615,7 @@ router.put('/mp4/delete', authMW, cors(), async function (req, res) {
             fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/videosMP4.json`), json, 'utf8');
 
 
-            io.emit(`getVideosMP4_${requrl}`, DB.videos);
+            io.emit(`getVideosMP4_${stadium}`, DB.videos);
 
             res.send({resultCode: 0});
         }
@@ -687,9 +687,9 @@ router.put('/isRunning/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getVideoTime${gameNumber}_${requrl}`, DB);
+        io.emit(`getVideoTime${gameNumber}_${stadium}`, DB);
 
-        io.emit(`getPlayerStatus_${requrl}`, DB.timeData.isRunning)
+        io.emit(`getPlayerStatus_${stadium}`, DB.timeData.isRunning)
 
     } catch (e) {
         console.log(e)

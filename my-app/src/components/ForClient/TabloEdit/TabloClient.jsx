@@ -17,15 +17,20 @@ const TabloClient = (props) => {
         (state => state.gamesPage.gameData.preset)
     );
 
+    const stadium = useSelector(
+        state => state.appPage.stadium
+    );
+
 
     useEffect(() => {
         dispatch(getGame(props.gameNumber));
     }, [props.gameNumber]);
 
 
+
     useEffect(() => {
 
-        socket.on(`getPreset${props.gameNumber}_${socket.io.engine.hostname}`, preset => {
+        socket.on(`getPreset${props.gameNumber}_${stadium}`, preset => {
             dispatch(setPresetAC(preset))
         });
 

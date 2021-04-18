@@ -4,12 +4,14 @@ import socket from "../socket/socket";
 const SET_GAME_NUMBER = 'app/SET_GAME_NUMBER';
 const PUT_GAME_NUMBER = 'app/PUT_GAME_NUMBER';
 const SET_SOCKET_ID = 'app/SET_SOCKET_ID';
+const SET_STADIUM = 'app/SET_STADIUM'
 const SET_LAG = 'app/SET_LAG';
 
 
 let initialState = {
     gameNumber: 1,
     socketID: null,
+    stadium: null,
     lag: 0
 };
 
@@ -38,12 +40,13 @@ const appReducer = (state = initialState, action) => {
                 socketID: action.socketID
             };
 
-        case SET_LAG:
+        case SET_STADIUM:
 
             return {
                 ...state,
-                lag: action.lag
+                stadium: action.stadium
             };
+
 
 
         default:
@@ -53,8 +56,9 @@ const appReducer = (state = initialState, action) => {
 
 export const setGameNumberAC = (gameNumber) => ({type: SET_GAME_NUMBER, gameNumber});
 export const setSocketIDAC = (socketID) => ({type: SET_SOCKET_ID, socketID});
+export const setStadiumAC = (stadium) => ({type: SET_STADIUM, stadium});
 export const putGameNumberAC = (gameNumber) => ({type: PUT_GAME_NUMBER, gameNumber});
-export const setLagAC = (lag) => ({type: SET_LAG, lag});
+
 
 
 

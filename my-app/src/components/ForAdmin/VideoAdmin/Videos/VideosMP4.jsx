@@ -80,11 +80,14 @@ const VideosMP4 = (props) => {
 
     const [showAddVideoForm, setShowAddVideoForm] = useState(false);
 
+    const stadium = useSelector(
+        state => state.appPage.stadium
+    );
 
     useEffect(() => {
         dispatch(getVideosMP4());
 
-        socket.on(`getVideosMP4_${socket.io.engine.hostname}`, videos => {
+        socket.on(`getVideosMP4_${stadium}`, videos => {
             dispatch(setVideosMP4DataAC(videos));
         });
 

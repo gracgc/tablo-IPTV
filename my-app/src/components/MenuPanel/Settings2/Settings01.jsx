@@ -11,6 +11,10 @@
 // const Settings01 = (props) => {
 //
 //     const dispatch = useDispatch();
+
+// const stadium = useSelector(
+//     state => state.appPage.stadium
+// );
 //
 //     let isRunningServer = useSelector(
 //         state => state.tabloPage.gameTime.isRunning
@@ -56,7 +60,7 @@
 //
 //     useEffect(() => {
 //         dispatch(getTimeData(1))
-//         socket.on(`getTime_${socket.io.engine.hostname}`, time => {
+//         socket.on(`getTime_${stadium}`, time => {
 //                 dispatch(setTimeDataAC(time))
 //             }
 //         )

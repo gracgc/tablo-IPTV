@@ -22,6 +22,10 @@ const STB = (props) => {
 
     const dispatch = useDispatch();
 
+    const stadium = useSelector(
+        state => state.appPage.stadium
+    );
+
 
     useEffect(() => {
         dispatch(getCurrentVideo());
@@ -31,11 +35,11 @@ const STB = (props) => {
 
     useEffect(() => {
 
-        // socket.on(`getCurrentVideoEditor${props.gameNumber}_${socket.io.engine.hostname}`, currentVideo => {
+        // socket.on(`getCurrentVideoEditor${props.gameNumber}_${stadium}`, currentVideo => {
         //     dispatch(setCurrentVideoEditorDataAC(currentVideo));
         // });
 
-        socket.on(`getCurrentVideo_${socket.io.engine.hostname}`, currentVideo => {
+        socket.on(`getCurrentVideo_${stadium}`, currentVideo => {
             dispatch(setCurrentVideoDataAC(currentVideo));
             console.log(currentVideo)
         });
@@ -49,7 +53,7 @@ const STB = (props) => {
 
 
     useEffect(() => {
-        socket.on(`getPlayerStatus_${socket.io.engine.hostname}`, isRunning => {
+        socket.on(`getPlayerStatus_${stadium}`, isRunning => {
             if (player) {
                 if (isRunning) {
                     player.unpause();
@@ -62,7 +66,7 @@ const STB = (props) => {
 
 
     useEffect(() => {
-        socket.on(`getPlayerStatus_${socket.io.engine.hostname}`, isRunning => {
+        socket.on(`getPlayerStatus_${stadium}`, isRunning => {
 
             if (stb) {
                 if (isRunning) {

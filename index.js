@@ -44,6 +44,8 @@ let getStadium = (host) => {
     }
 }
 
+
+
 io.on('connection', (socket) => {
     console.log('a user connected');
 
@@ -55,6 +57,7 @@ io.on('connection', (socket) => {
 
     let stadium = getStadium(requrl)
 
+    socket.emit('getStadium', {stadium: stadium})
 
 
     socket.on(`addDevice_${requrl}`, res => {
@@ -76,9 +79,9 @@ io.on('connection', (socket) => {
             }
         }
 
-        io.emit(`getDevices_${requrl}`, DB.devices)
+        io.emit(`getDevices_${stadium}`, DB.devices)
 
-        io.emit(`getLag${socket.id}_${requrl}`, DB.devices[DB.devices.findIndex(user => user.id === socket.id)].lag)
+        io.emit(`getLag${socket.id}_${stadium}`, DB.devices[DB.devices.findIndex(user => user.id === socket.id)].lag)
 
 
         let json = JSON.stringify(DB);
@@ -96,7 +99,7 @@ io.on('connection', (socket) => {
 
         DB.devices.splice(deletedItem, 1)
 
-        io.emit(`getDevices_${requrl}`, DB.devices)
+        io.emit(`getDevices_${stadium}`, DB.devices)
 
         let json = JSON.stringify(DB);
 
@@ -108,7 +111,7 @@ io.on('connection', (socket) => {
         let data = fs.readFileSync(path.join(__dirname + `/routes/DB_${stadium}/game_number.json`));
         let DB = JSON.parse(data);
 
-        io.emit(`getGameNumberStart_${requrl}`, DB.gameNumber)
+        io.emit(`getGameNumberStart_${stadium}`, DB.gameNumber)
     })
 
 });

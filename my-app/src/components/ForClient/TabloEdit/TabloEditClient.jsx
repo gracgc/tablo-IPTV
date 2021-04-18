@@ -49,11 +49,14 @@ const TabloEditClient = (props) => {
 
         let [isShowLog, setIsShowLog] = useState(false);
 
+    const stadium = useSelector(
+        state => state.appPage.stadium
+    );
 
 
         useEffect(() => {
             ////LOAD NEW DATA////
-            socket.on(`getGameNumber_${socket.io.engine.hostname}`, gameNumberX => {
+            socket.on(`getGameNumber_${stadium}`, gameNumberX => {
                     props.history.push(`/tabloClient/${gameNumberX}`);
                     setGameNumber(gameNumberX)
                 }
@@ -65,13 +68,13 @@ const TabloEditClient = (props) => {
 
             ////LOG LOAD///
             dispatch(getLog(gameNumber));
-            socket.on(`getLog${gameNumber}_${socket.io.engine.hostname}`, log => {
+            socket.on(`getLog${gameNumber}_${stadium}`, log => {
                     dispatch(setLogDataAC(log))
                 }
             );
             ////TEAMS LOAD///
             dispatch(getTeams(gameNumber));
-            socket.on(`getTeams${gameNumber}_${socket.io.engine.hostname}`, teams => {
+            socket.on(`getTeams${gameNumber}_${stadium}`, teams => {
                     dispatch(setTeamsAC(teams))
                 }
             );

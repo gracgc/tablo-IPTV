@@ -3,6 +3,7 @@
   "secretKey": "tablo-key",
   "stadiums":
     {
+      "default": "stadium1",
       "localhost": "stadium1"
     }
 }

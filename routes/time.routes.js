@@ -127,9 +127,9 @@ router.put('/isRunning/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getTime${gameNumber}_${requrl}`, DB.gameInfo.gameTime);
+        io.emit(`getTime${gameNumber}_${stadium}`, DB.gameInfo.gameTime);
 
-        io.emit(`getGame${gameNumber}_${requrl}`, DB.gameInfo)
+        io.emit(`getGame${gameNumber}_${stadium}`, DB.gameInfo)
 
     } catch (e) {
         console.log(e)
@@ -170,7 +170,7 @@ router.put('/isRunningTimeout/:gameNumber', authMW, cors(), function (req, res) 
 
         const io = req.app.locals.io;
 
-        io.emit(`getTimeout${gameNumber}_${requrl}`, DB.gameInfo.gameTime.timeoutData)
+        io.emit(`getTimeout${gameNumber}_${stadium}`, DB.gameInfo.gameTime.timeoutData)
 
     } catch (e) {
         console.log(e)
@@ -208,7 +208,7 @@ router.put('/deadline/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getTime${gameNumber}_${requrl}`, DB.gameInfo.gameTime)
+        io.emit(`getTime${gameNumber}_${stadium}`, DB.gameInfo.gameTime)
 
 
     } catch (e) {

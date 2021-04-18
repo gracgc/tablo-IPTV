@@ -213,7 +213,7 @@ router.post('/:gameNumber', authMW, cors(), function (req, res) {
         DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
-        io.emit(`getTeams${gameNumber}_${requrl}`, DB.teams)
+        io.emit(`getTeams${gameNumber}_${stadium}`, DB.teams)
 
     } catch (e) {
         console.log(e)
@@ -260,7 +260,7 @@ router.put('/gamerGoal/:gameNumber', authMW, cors(), function (req, res) {
         DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
-        io.emit(`getTeams${gameNumber}_${requrl}`, DB.teams)
+        io.emit(`getTeams${gameNumber}_${stadium}`, DB.teams)
 
 
     } catch (e) {
@@ -306,7 +306,7 @@ router.put('/teamGoal/:gameNumber', authMW, cors(), function (req, res) {
         DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
-        io.emit(`getTeams${gameNumber}_${requrl}`, DB.teams);
+        io.emit(`getTeams${gameNumber}_${stadium}`, DB.teams);
 
     } catch (e) {
         console.log(e)
@@ -350,7 +350,7 @@ router.put('/gamerStatus/:gameNumber', authMW, cors(), function (req, res) {
         DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
-        io.emit(`getTeams${gameNumber}_${requrl}`, DB.teams)
+        io.emit(`getTeams${gameNumber}_${stadium}`, DB.teams)
 
 
     } catch (e) {
@@ -392,7 +392,7 @@ router.put('/onField/:gameNumber', authMW, cors(), function (req, res) {
         DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
-        io.emit(`getTeams${gameNumber}_${requrl}`, DB.teams)
+        io.emit(`getTeams${gameNumber}_${stadium}`, DB.teams)
 
 
     } catch (e) {
@@ -436,7 +436,7 @@ router.put('/penalty/:gameNumber', authMW, cors(), function (req, res) {
         DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
-        io.emit(`getTeams${gameNumber}_${requrl}`, DB.teams)
+        io.emit(`getTeams${gameNumber}_${stadium}`, DB.teams)
 
     } catch (e) {
         console.log(e)

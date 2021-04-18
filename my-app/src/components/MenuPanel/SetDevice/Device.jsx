@@ -4,6 +4,7 @@ import c1920 from './SetDevice_1920.module.css';
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import {devicesAPI} from "../../../api/api";
 import socket from "../../../socket/socket";
+import {useSelector} from "react-redux";
 
 
 const Device = (props) => {
@@ -14,10 +15,13 @@ const Device = (props) => {
 
     const [lag, setLag] = useState(0);
 
+    const stadium = useSelector(
+        state => state.appPage.stadium
+    );
 
 
     useEffect(() => {
-        socket.on(`isLockLag${props.id}_${socket.io.engine.hostname}`)
+        socket.on(`isLockLag${props.id}_${stadium}`)
     }, [])
 
     let devicesMenu = [

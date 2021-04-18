@@ -41,6 +41,10 @@ const AdminPanel = (props) => {
 
     const dispatch = useDispatch();
 
+    const stadium = useSelector(
+        state => state.appPage.stadium
+    );
+
 
     useEffect(() => {
         tabloAPI.getTimerStatus(gameNumber).then(r => {
@@ -51,7 +55,7 @@ const AdminPanel = (props) => {
             setIsRunningServerTimeout(r.timeoutData.isRunning);
         });
 
-        socket.on(`getTime${gameNumber}_${socket.io.engine.hostname}`, time => {
+        socket.on(`getTime${gameNumber}_${stadium}`, time => {
                 setTimeMem(time.timeData.timeMem);
                 setTimeMemTimer(time.timeData.timeMemTimer);
                 setPeriod(time.period);
@@ -60,14 +64,14 @@ const AdminPanel = (props) => {
             }
         );
 
-        socket.on(`getTimeout${gameNumber}_${socket.io.engine.hostname}`, time => {
+        socket.on(`getTimeout${gameNumber}_${stadium}`, time => {
                 setIsRunningServerTimeout(time.isRunning);
             }
         );
 
         dispatch(getTeams(gameNumber));
 
-        socket.on(`getTeams${gameNumber}_${socket.io.engine.hostname}`, teams => {
+        socket.on(`getTeams${gameNumber}_${stadium}`, teams => {
                 dispatch(setTeamsAC(teams))
             }
         )

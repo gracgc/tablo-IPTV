@@ -32,17 +32,21 @@ const SavedGames = (props) => {
 
     let history = useHistory();
 
+    const stadium = useSelector(
+        state => state.appPage.stadium
+    );
+
 
     useEffect(() => {
         dispatch(getSavedGames());
         dispatch(getGameNumber())
 
-        socket.on(`getGameNumber_${socket.io.engine.hostname}`, gameNumber => {
+        socket.on(`getGameNumber_${stadium}`, gameNumber => {
                 dispatch(setGameNumberAC(gameNumber));
             }
         );
 
-        socket.on(`getSavedGames_${socket.io.engine.hostname}`, games => {
+        socket.on(`getSavedGames_${stadium}`, games => {
             dispatch(setSavedGamesAC(games));
         })
 
@@ -52,7 +56,7 @@ const SavedGames = (props) => {
     let currentGame = savedGames.find(g => g.gameNumber === gameNumber)
 
 
-    let lastGameNumber = savedGames.length !== 0 && savedGames[savedGames.length - 1].gameNumber
+    let lastGameNumber = savedGames.length
 
 
     let createFastGame = async () => {

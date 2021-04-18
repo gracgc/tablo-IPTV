@@ -223,6 +223,10 @@ const CreateGame = (props) => {
 
     let [successMessage, setSuccessMessage] = useState(false);
 
+    let lastGameNumber = useSelector(
+        state => state.gamesPage.savedGames.length
+    );
+
     let dispatch = useDispatch();
 
     let uploadLogo = (homeLogo, guestsLogo) => {
@@ -252,9 +256,7 @@ const CreateGame = (props) => {
         dispatch(getSavedGames());
     }, []);
 
-    let lastGameNumber = useSelector(
-        state => state.gamesPage.savedGames[state.gamesPage.savedGames.length - 1].gameNumber
-    );
+
 
 
     const onSubmit = (formData) => {

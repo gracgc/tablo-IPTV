@@ -21,12 +21,16 @@ const Presets = (props) => {
         (state => state.gamesPage.gameData.preset)
     );
 
+    const stadium = useSelector(
+        state => state.appPage.stadium
+    );
+
 
     useEffect(() => {
         dispatch(getGame(gameNumber));
 
 
-        socket.on(`getPreset${gameNumber}_${socket.io.engine.hostname}`, preset => {
+        socket.on(`getPreset${gameNumber}_${stadium}`, preset => {
             dispatch(setPresetAC(preset))
         });
     }, [])

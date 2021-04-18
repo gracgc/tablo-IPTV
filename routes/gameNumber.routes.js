@@ -48,6 +48,7 @@ router.put('/', authMW, function (req, res) {
 
         let gameNumber = req.body.gameNumber;
 
+
         let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_number.json`));
         let DB = JSON.parse(data);
 
@@ -62,7 +63,7 @@ router.put('/', authMW, function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getGameNumber_${requrl}`, DB.gameNumber)
+        io.emit(`getGameNumber_${stadium}`, gameNumber)
 
 
     } catch (e) {

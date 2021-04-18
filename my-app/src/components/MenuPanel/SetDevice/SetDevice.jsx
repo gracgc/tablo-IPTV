@@ -6,6 +6,7 @@ import * as axios from "axios";
 import Device from "./Device";
 import {NavLink} from "react-router-dom";
 import logo from "../../ForAdmin/AdminPanel/Info/logoIPTVPORTAL.png";
+import {useSelector} from "react-redux";
 
 
 
@@ -14,6 +15,10 @@ const SetDevice = (props) => {
     let width = window.innerWidth;
 
     let [devices, setDevices] = useState([{id: 0, type: 'type', lag: 0, isLockLag: false}])
+
+    const stadium = useSelector(
+        state => state.appPage.stadium
+    );
 
     const getDevices = () => {
         return axios.get(`/api/devices`)
@@ -26,7 +31,7 @@ const SetDevice = (props) => {
         getDevices().then(r => {
             setDevices(r)
         })
-        socket.on(`getDevices_${socket.io.engine.hostname}`, devices => {
+        socket.on(`getDevices_${stadium}`, devices => {
             setDevices(devices)
         })
     }, []);

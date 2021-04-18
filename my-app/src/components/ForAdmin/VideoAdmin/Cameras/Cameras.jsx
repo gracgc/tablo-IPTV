@@ -64,18 +64,21 @@ const Cameras = (props) => {
         (state => state.videosPage.currentVideoStream)
     );
 
+    const stadium = useSelector(
+        state => state.appPage.stadium
+    );
 
 
     useEffect(() => {
         dispatch(getVideos());
         dispatch(getCurrentVideo());
 
-        socket.on(`getPreset${gameNumber}_${socket.io.engine.hostname}`, preset => {
+        socket.on(`getPreset${gameNumber}_${stadium}`, preset => {
             dispatch(setPresetAC(preset))
         });
 
 
-        socket.on(`getVideos_${socket.io.engine.hostname}`, videos => {
+        socket.on(`getVideos_${stadium}`, videos => {
                 dispatch(setVideosDataAC(videos))
             }
         );

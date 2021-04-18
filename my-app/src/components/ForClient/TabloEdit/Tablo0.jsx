@@ -4,7 +4,7 @@ import socket from "../../../socket/socket";
 import {compose} from "redux";
 import {withRouter} from "react-router";
 import {useSelector} from "react-redux";
-import {gameAPI} from "../../../../api/api";
+import {gameAPI} from "../../../api/api";
 
 const Tablo0 = (props) => {
 

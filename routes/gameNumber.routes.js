@@ -47,7 +47,7 @@ router.get('/start', authMW, function (req, res) {
         let stadium = getStadium(requrl)
 
 
-        let data = fs.readFileSync(path.join(__dirname + `/routes/DB_${stadium}/game_number.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_number.json`));
         let DB = JSON.parse(data);
 
         const io = req.app.locals.io;

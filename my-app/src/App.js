@@ -24,7 +24,7 @@ import LagClient from "./components/MenuPanel/Lag/LagClient";
 import STB from "./components/ForClient/TabloEdit/STB";
 import PreLag from "./components/MenuPanel/Lag/PreLag";
 import PreLagClient from "./components/MenuPanel/Lag/PreLagClient";
-import {devicesAPI} from "../../../api/api";
+import {devicesAPI} from "./api/api";
 
 
 function App(props) {

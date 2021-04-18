@@ -48,7 +48,7 @@ router.put('/add', authMW, cors(), function (req, res) {
 
         let stadium = getStadium(requrl)
 
-        let data = fs.readFileSync(path.join(__dirname + `/routes/DB_${stadium}/devices.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/devices.json`));
         let DB = JSON.parse(data);
 
 
@@ -74,7 +74,7 @@ router.put('/add', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/routes/DB_${stadium}/devices.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/devices.json`), json, 'utf8');
 
     } catch (e) {
         console.log(e)

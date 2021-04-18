@@ -144,7 +144,7 @@ router.post('/', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getSavedGames_${stadium}`, DB.savedGames)
+        io.to(stadium).emit(`getSavedGames`, DB.savedGames)
 
     } catch
         (e) {
@@ -215,14 +215,14 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getGame${gameNumber}_${stadium}`, DB.gameInfo)
+        io.to(stadium).emit(`getGame${gameNumber}`, DB.gameInfo)
 
         DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
-        io.emit(`getTeams${gameNumber}_${stadium}`, DB.teams)
+        io.to(stadium).emit(`getTeams${gameNumber}`, DB.teams)
 
-        io.emit(`getTime${gameNumber}_${stadium}`, DB.gameInfo.gameTime)
+        io.to(stadium).emit(`getTime${gameNumber}`, DB.gameInfo.gameTime)
 
     } catch
         (e) {
@@ -312,16 +312,16 @@ router.put('/reset/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getGame${gameNumber}_${stadium}`, DB.gameInfo)
+        io.to(stadium).emit(`getGame${gameNumber}`, DB.gameInfo)
 
         DB.teams.find(t => t.teamType === 'home').logo = `${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
-        io.emit(`getTeams${gameNumber}_${stadium}`, DB.teams)
+        io.to(stadium).emit(`getTeams${gameNumber}`, DB.teams)
 
-        io.emit(`getTime${gameNumber}_${stadium}`, DB.gameInfo.gameTime)
+        io.to(stadium).emit(`getTime${gameNumber}`, DB.gameInfo.gameTime)
 
-        io.emit(`getLog${gameNumber}_${stadium}`, DB.logData)
+        io.to(stadium).emit(`getLog${gameNumber}`, DB.logData)
 
     } catch
         (e) {

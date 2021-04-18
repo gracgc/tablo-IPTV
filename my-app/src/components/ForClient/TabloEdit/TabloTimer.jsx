@@ -27,7 +27,7 @@ const TabloTimer = (props) => {
     const stadium = window.localStorage.getItem('stadium')
 
     useEffect(() => {
-        socket.on(`setDeviceLag${socket.id}_${stadium}`, lag => {
+        socket.on(`setDeviceLag${socket.id}`, lag => {
             setTupit(lag)
         })
     }, [])
@@ -74,7 +74,7 @@ const TabloTimer = (props) => {
 
     useEffect(() => {
         ////LOAD NEW DATA////
-        socket.on(`getGameNumber_${stadium}`, gameNumberX => {
+        socket.on(`getGameNumber`, gameNumberX => {
                 props.history.push(`/tabloClient/${gameNumberX}`);
                 setGameNumber(gameNumberX)
             }
@@ -113,7 +113,7 @@ const TabloTimer = (props) => {
 
 
         ////Socket IO////
-        socket.on(`getTime${gameNumber}_${stadium}`, time => {
+        socket.on(`getTime${gameNumber}`, time => {
                 setIsRunningServer(time.isRunning);
                 setStartTime(time.runningTime)
                 setTimeMem(time.timeData.timeMem);
@@ -123,7 +123,7 @@ const TabloTimer = (props) => {
             }
         );
 
-        socket.on(`getTimeout${gameNumber}_${stadium}`, time => {
+        socket.on(`getTimeout${gameNumber}`, time => {
                 setIsRunningServerTimeout(time.isRunning);
                 setStartTimeout(time.runningTime);
                 setTimeMemTimeout(time.timeData.timeMem);

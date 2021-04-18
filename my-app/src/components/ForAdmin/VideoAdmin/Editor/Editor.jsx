@@ -25,7 +25,7 @@ const Editor = (props) => {
     const stadium = window.localStorage.getItem('stadium')
 
     useEffect(() => {
-        socket.on(`setDeviceLag${socket.id}_${stadium}`, lag => {
+        socket.on(`setDeviceLag${socket.id}`, lag => {
             setTupit(lag)
         })
     }, [])
@@ -92,7 +92,7 @@ const Editor = (props) => {
         dispatch(getVideoEditor(gameNumber));
 
 
-        socket.on(`getVideoTime${gameNumber}_${stadium}`, time => {
+        socket.on(`getVideoTime${gameNumber}`, time => {
                 setIsRunningServer(time.timeData.isRunning);
                 setStartTime(time.timeData.runningTime);
                 setTimeMem(time.timeData.timeMem);
@@ -116,15 +116,15 @@ const Editor = (props) => {
 
     useEffect(() => {
 
-        socket.on(`getCurrentVideoEditor${gameNumber}_${stadium}`, currentVideo => {
+        socket.on(`getCurrentVideoEditor${gameNumber}`, currentVideo => {
             dispatch(setCurrentVideoEditorDataAC(currentVideo));
         });
 
-        socket.on(`getVideosEditor${gameNumber}_${stadium}`, videos => {
+        socket.on(`getVideosEditor${gameNumber}`, videos => {
             dispatch(setVideosEditorAC(videos));
         });
 
-        socket.on(`getCurrentVideo_${stadium}`, currentVideo => {
+        socket.on(`getCurrentVideo`, currentVideo => {
             dispatch(setCurrentVideoDataAC(currentVideo));
         });
 

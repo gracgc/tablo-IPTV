@@ -63,8 +63,8 @@ router.put('/', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getDevices_${stadium}`, DB.devices)
-        io.emit(`setDevicePage${deviceId}_${stadium}`, deviceType)
+        io.to(stadium).emit(`getDevices`, DB.devices)
+        io.to(stadium).emit(`setDevicePage${deviceId}`, deviceType)
 
     } catch (e) {
         console.log(e)
@@ -98,8 +98,8 @@ router.put('/lag', cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getDevices_${stadium}`, DB.devices)
-        io.emit(`setDeviceLag${deviceId}_${stadium}`, lag)
+        io.to(stadium).emit(`getDevices_${stadium}`, DB.devices)
+        io.to(stadium).emit(`setDeviceLag${deviceId}`, lag)
 
     } catch (e) {
         console.log(e)
@@ -130,9 +130,9 @@ router.put('/autolag', cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`setDeviceAutolag${deviceId}_${stadium}`, {deviceId: deviceId})
+        io.to(stadium).emit(`setDeviceAutolag${deviceId}`, {deviceId: deviceId})
 
-        io.emit(`getDevices_${stadium}`, DB.devices)
+        io.to(stadium).emit(`getDevices`, DB.devices)
 
     } catch (e) {
         console.log(e)
@@ -165,7 +165,7 @@ router.put('/preset/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getPreset${gameNumber}_${stadium}`, DB.gameInfo.preset)
+        io.to(stadium).emit(`getPreset${gameNumber}`, DB.gameInfo.preset)
 
     } catch (e) {
         console.log(e)

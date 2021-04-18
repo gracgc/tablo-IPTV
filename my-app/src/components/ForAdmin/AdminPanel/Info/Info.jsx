@@ -20,7 +20,7 @@ const Info = (props) => {
     const stadium = window.localStorage.getItem('stadium')
 
     useEffect(() => {
-        socket.on(`setDeviceLag${socket.id}_${stadium}`, lag => {
+        socket.on(`setDeviceLag${socket.id}`, lag => {
             setTupit(lag)
         })
     }, [])
@@ -63,7 +63,7 @@ const Info = (props) => {
     useEffect(() => {
         dispatch(getGame(gameNumber));
 
-        socket.on(`getGame${gameNumber}_${stadium}`, game => {
+        socket.on(`getGame${gameNumber}`, game => {
             dispatch(setGameDataAC(game))
         });
 
@@ -92,7 +92,7 @@ const Info = (props) => {
         });
 
         ////Socket IO////
-        socket.on(`getTime${gameNumber}_${stadium}`, time => {
+        socket.on(`getTime${gameNumber}`, time => {
                 setIsRunningServer(time.isRunning);
                 setStartTime(time.runningTime);
                 setTimeMem(time.timeData.timeMem);

@@ -49,18 +49,18 @@ function App(props) {
 
             dispatch(setSocketIDAC(socket.id))
 
-            socket.on(`getStadium`, stadium => {
-                dispatch(setStadiumAC(stadium.stadium))
-                window.localStorage.setItem('stadium', stadium.stadium.toString())
+            // socket.on(`getStadium`, stadium => {
+            //     dispatch(setStadiumAC(stadium.stadium))
+            //     window.localStorage.setItem('stadium', stadium.stadium.toString())
+            //
+            // })
 
-            })
 
-
-            socket.on(`setDeviceLag${socket.id}_${stadium}`, lag => {
+            socket.on(`setDeviceLag${socket.id}`, lag => {
                 window.localStorage.setItem('lag', lag.toString())
             })
 
-            socket.on(`setDeviceAutolag${socket.id}_${stadium}`, res => {
+            socket.on(`setDeviceAutolag${socket.id}`, res => {
                 if (history.location.pathname.indexOf('tabloClient') === -1) {
                     history.push('/prelag');
                 } else {
@@ -77,7 +77,7 @@ function App(props) {
         if (secretToken) {
             dispatch(setIdAC(1))
             if (isAuth !== null) {
-                socket.emit(`addDevice_${stadium}`, {
+                socket.emit(`addDevice`, {
                     pathname: history.location.pathname,
                     isAuth: isAuth,
                     lag: +window.localStorage.getItem('lag')
@@ -86,7 +86,7 @@ function App(props) {
         } else {
             dispatch(authFalseAC(1))
             if (isAuth !== null) {
-                socket.emit(`addDevice_${stadium}`, {
+                socket.emit(`addDevice`, {
                     pathname: history.location.pathname,
                     isAuth: isAuth,
                     lag: +window.localStorage.getItem('lag')

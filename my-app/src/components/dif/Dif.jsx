@@ -17,7 +17,7 @@ const Dif = (props) => {
     const stadium = window.localStorage.getItem('stadium')
 
     useEffect(() => {
-        socket.on(`setDeviceLag${socket.id}_${stadium}`, lag => {
+        socket.on(`setDeviceLag${socket.id}`, lag => {
             setTupit(lag)
         })
     }, [])

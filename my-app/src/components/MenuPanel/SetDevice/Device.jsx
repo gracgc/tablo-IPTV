@@ -19,7 +19,7 @@ const Device = (props) => {
 
 
     useEffect(() => {
-        socket.on(`isLockLag${props.id}_${stadium}`)
+        socket.on(`isLockLag${props.id}`)
     }, [])
 
     let devicesMenu = [

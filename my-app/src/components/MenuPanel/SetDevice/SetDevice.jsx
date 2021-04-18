@@ -29,7 +29,7 @@ const SetDevice = (props) => {
         getDevices().then(r => {
             setDevices(r)
         })
-        socket.on(`getDevices_${stadium}`, devices => {
+        socket.on(`getDevices`, devices => {
             setDevices(devices)
         })
     }, []);

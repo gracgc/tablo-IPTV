@@ -83,7 +83,7 @@ router.post('/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getLog${gameNumber}_${stadium}`, DB.logData)
+        io.to(stadium).emit(`getLog${gameNumber}`, DB.logData)
 
     } catch (e) {
         console.log(e)
@@ -113,7 +113,7 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getLog${gameNumber}_${stadium}`, DB.logData)
+        io.to(stadium).emit(`getLog${gameNumber}`, DB.logData)
 
     } catch (e) {
         console.log(e)
@@ -141,7 +141,7 @@ router.post('/temp/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getLog${gameNumber}_${stadium}`, DB.logData);
+        io.to(stadium).emit(`getLog${gameNumber}`, DB.logData);
 
         let json = JSON.stringify(DB);
 
@@ -179,7 +179,7 @@ router.post('/cons/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getLog${gameNumber}_${stadium}`, DB.logData);
+        io.to(stadium).emit(`getLog${gameNumber}`, DB.logData);
 
         let json = JSON.stringify(DB);
 
@@ -209,7 +209,7 @@ router.put('/cons/:gameNumber', authMW, cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.emit(`getLog${gameNumber}_${stadium}`, DB.logData);
+        io.to(stadium).emit(`getLog${gameNumber}`, DB.logData);
 
         let json = JSON.stringify(DB);
 

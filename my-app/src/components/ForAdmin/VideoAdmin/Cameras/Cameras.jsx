@@ -71,12 +71,12 @@ const Cameras = (props) => {
         dispatch(getVideos());
         dispatch(getCurrentVideo());
 
-        socket.on(`getPreset${gameNumber}_${stadium}`, preset => {
+        socket.on(`getPreset${gameNumber}`, preset => {
             dispatch(setPresetAC(preset))
         });
 
 
-        socket.on(`getVideos_${stadium}`, videos => {
+        socket.on(`getVideos`, videos => {
                 dispatch(setVideosDataAC(videos))
             }
         );

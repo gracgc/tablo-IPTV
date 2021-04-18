@@ -28,7 +28,7 @@ const Presets = (props) => {
         dispatch(getGame(gameNumber));
 
 
-        socket.on(`getPreset${gameNumber}_${stadium}`, preset => {
+        socket.on(`getPreset${gameNumber}`, preset => {
             dispatch(setPresetAC(preset))
         });
     }, [])

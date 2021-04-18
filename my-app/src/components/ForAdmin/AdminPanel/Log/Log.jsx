@@ -67,7 +67,7 @@ const Log = (props) => {
 
     useEffect(() => {
         dispatch(getLog(gameNumber));
-        socket.on(`getLog${gameNumber}_${stadium}`, log => {
+        socket.on(`getLog${gameNumber}`, log => {
                 dispatch(setLogDataAC(log))
             }
         )

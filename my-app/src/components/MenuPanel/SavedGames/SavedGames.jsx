@@ -39,12 +39,12 @@ const SavedGames = (props) => {
         dispatch(getSavedGames());
         dispatch(getGameNumber())
 
-        socket.on(`getGameNumber_${stadium}`, gameNumber => {
+        socket.on(`getGameNumber`, gameNumber => {
                 dispatch(setGameNumberAC(gameNumber));
             }
         );
 
-        socket.on(`getSavedGames_${stadium}`, games => {
+        socket.on(`getSavedGames`, games => {
             dispatch(setSavedGamesAC(games));
         })
 

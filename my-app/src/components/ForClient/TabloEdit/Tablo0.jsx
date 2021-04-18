@@ -11,11 +11,11 @@ const Tablo0 = (props) => {
     const stadium = window.localStorage.getItem('stadium')
 
     useEffect(() => {
-        socket.emit(`setGameNumberStart_${stadium}`, 'res');
-        socket.on(`getGameNumberStart_${stadium}`, gameNumber => {
+        socket.emit(`setGameNumberStart`, 'res');
+        socket.on(`getGameNumberStart`, gameNumber => {
             props.history.push('/tabloClient/' + gameNumber);
         })
-        socket.on(`getGameNumber_${stadium}`, gameNumber => {
+        socket.on(`getGameNumber`, gameNumber => {
                 props.history.push(`/tabloClient/${gameNumber}`);
             }
         );

@@ -54,6 +54,8 @@ router.get('/start', authMW, function (req, res) {
 
         io.to(stadium).emit(`getGameNumberStart`, DB.gameNumber)
 
+        res.send({resultCode: 0});
+
 
     } catch (e) {
         console.log(e)

@@ -48,7 +48,7 @@ function App(props) {
     useEffect(() => {
         socket.on("connect", () => {
 
-            console.log(socket)
+
 
             dispatch(setSocketIDAC(socket.id))
 
@@ -81,20 +81,13 @@ function App(props) {
             dispatch(setIdAC(1))
             if (isAuth !== null) {
                 devicesAPI.addDevice(history.location.pathname, isAuth, +window.localStorage.getItem('lag'))
-                // socket.emit(`addDevice`, {
-                //     pathname: history.location.pathname,
-                //     isAuth: isAuth,
-                //     lag: +window.localStorage.getItem('lag')
-                // })
+
             }
         } else {
             dispatch(authFalseAC(1))
             if (isAuth !== null) {
-                socket.emit(`addDevice`, {
-                    pathname: history.location.pathname,
-                    isAuth: isAuth,
-                    lag: +window.localStorage.getItem('lag')
-                })
+                devicesAPI.addDevice(history.location.pathname, isAuth, +window.localStorage.getItem('lag'))
+
             }
         }
     }, [isAuth])

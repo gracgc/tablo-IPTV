@@ -15,6 +15,7 @@ const Tablo0 = (props) => {
         // socket.emit(`setGameNumberStart`, 'res');
         socket.on(`getGameNumberStart`, gameNumber => {
             props.history.push('/tabloClient/' + gameNumber);
+            console.log(123)
         })
         socket.on(`getGameNumber`, gameNumber => {
                 props.history.push(`/tabloClient/${gameNumber}`);

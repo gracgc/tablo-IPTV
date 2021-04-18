@@ -42,7 +42,10 @@ router.get('/', cors(), function (req, res) {
 router.put('/add', authMW, cors(), function (req, res) {
     try {
 
-        const io = req.app.locals.io;req
+        const io = req.app.locals.io;
+
+        const socket = req.app.locals.socket;
+
 
         let requrl = getHost(req.get('host'))
 
@@ -51,30 +54,37 @@ router.put('/add', authMW, cors(), function (req, res) {
         let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/devices.json`));
         let DB = JSON.parse(data);
 
+        let isAuth = req.body.isAuth
+        let pathname = req.body.pathname
+        let lag = req.body.lag
 
-        if (req.isAuth === false) {
-            if (req.pathname.indexOf('tabloClient') !== -1) {
-                DB.devices.push({id: io.id, type: 'Main Tablo', lag: req.lag})
+
+
+        if (isAuth === false) {
+            if (pathname.indexOf('tabloClient') !== -1) {
+                DB.devices.push({id: socket.id, type: 'Main Tablo', lag: lag})
             } else {
-                DB.devices.push({id: io.id, type: 'undefined', lag: req.lag})
+                DB.devices.push({id: socket.id, type: 'undefined', lag: lag})
             }
         } else {
-            if (DB.devices.findIndex(user => user.id === io.id) !== -1) {
-                DB.devices[DB.devices.findIndex(user => user.id === io.id)].type = 'Admin'
+            if (DB.devices.findIndex(user => user.id === socket.id) !== -1) {
+                DB.devices[DB.devices.findIndex(user => user.id === socket.id)].type = 'Admin'
             } else {
-                DB.devices.push({id: io.id, type: 'Admin', lag: req.lag, isLockLag: false})
+                DB.devices.push({id: socket.id, type: 'Admin', lag: lag, isLockLag: false})
             }
         }
 
 
         io.to(stadium).emit(`getDevices`, DB.devices)
 
-        io.to(stadium).emit(`getLag${io.id}`, DB.devices[DB.devices.findIndex(user => user.id === io.id)].lag)
+        io.to(stadium).emit(`getLag${socket.id}`, DB.devices[DB.devices.findIndex(user => user.id === socket.id)].lag)
 
 
         let json = JSON.stringify(DB);
 
         fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/devices.json`), json, 'utf8');
+
+        res.send({resultCode: 0})
 
     } catch (e) {
         console.log(e)

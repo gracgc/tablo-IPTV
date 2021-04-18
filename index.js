@@ -49,6 +49,8 @@ let getStadium = (host) => {
 io.on('connection', (socket) => {
     console.log('a user connected');
 
+    app.locals.socket = socket;
+
     let host = socket.handshake.headers.host
 
 

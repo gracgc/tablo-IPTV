@@ -156,7 +156,7 @@ export const gameAPI = {
             })
     },
     startGameNumber() {
-        return instance.get(`gameNumber`)
+        return instance.get(`gameNumber/start`)
             .then(responce => {
                 return responce.data
             })
@@ -244,11 +244,7 @@ export const devicesAPI = {
             })
     },
     addDevice(pathname, isAuth, lag) {
-        return instance.put(`devices/add`, {
-            pathname: pathname,
-            isAuth: isAuth,
-            lag: lag
-        })
+        return instance.put(`devices/add`, {pathname, isAuth, lag})
             .then(responce => {
                 return responce.data
             })

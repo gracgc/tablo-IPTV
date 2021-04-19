@@ -75,11 +75,11 @@ router.put('/add', cors(), function (req, res) {
         }
 
 
-        socket.to(stadium).emit(`getDevices`, DB.devices)
+        io.to(stadium).emit(`getDevices`, DB.devices)
 
         console.log(123)
 
-        socket.to(stadium).emit(`getLag${socket.id}`, DB.devices[DB.devices.findIndex(user => user.id === socket.id)].lag)
+        io.to(stadium).emit(`getLag${socket.id}`, DB.devices[DB.devices.findIndex(user => user.id === socket.id)].lag)
 
 
         let json = JSON.stringify(DB);

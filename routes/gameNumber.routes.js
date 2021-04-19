@@ -52,9 +52,9 @@ router.get('/start', authMW, function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.to(stadium).emit(`getGameNumberStart`, DB.gameNumber)
+        // io.to(stadium).emit(`getGameNumberStart`, DB.gameNumber)
 
-        res.send({resultCode: 0});
+        res.send({gameNumber: DB.gameNumber});
 
 
     } catch (e) {

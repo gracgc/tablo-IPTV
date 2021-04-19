@@ -8,14 +8,14 @@ import {gameAPI} from "../../../api/api";
 
 const Tablo0 = (props) => {
 
-    const stadium = window.localStorage.getItem('stadium')
 
     useEffect(() => {
-        gameAPI.startGameNumber()
+        gameAPI.startGameNumber().then(res => {
+            props.history.push('/tabloClient/' + res.gameNumber);
+        })
         // socket.emit(`setGameNumberStart`, 'res');
         socket.on(`getGameNumberStart`, gameNumber => {
             props.history.push('/tabloClient/' + gameNumber);
-            console.log(123)
         })
         socket.on(`getGameNumber`, gameNumber => {
                 props.history.push(`/tabloClient/${gameNumber}`);

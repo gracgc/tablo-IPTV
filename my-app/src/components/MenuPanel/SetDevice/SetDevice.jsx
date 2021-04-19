@@ -30,6 +30,9 @@ const SetDevice = (props) => {
         //     setDevices(r)
         //     console.log(1)
         // })
+    }, []);
+
+    useEffect(() => {
         socket.on(`getDevices`, devices => {
             setDevices(devices)
             console.log(2)

@@ -80,7 +80,7 @@ const VideosMP4 = (props) => {
 
     const [showAddVideoForm, setShowAddVideoForm] = useState(false);
 
-    const stadium = window.localStorage.getItem('stadium')
+
 
     useEffect(() => {
         dispatch(getVideosMP4());

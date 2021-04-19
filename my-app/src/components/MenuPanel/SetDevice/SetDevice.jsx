@@ -16,7 +16,7 @@ const SetDevice = (props) => {
 
     let [devices, setDevices] = useState([{id: 0, type: 'type', lag: 0, isLockLag: false}])
 
-    const stadium = window.localStorage.getItem('stadium')
+
 
     const getDevices = () => {
         return axios.get(`/api/devices`)
@@ -26,11 +26,13 @@ const SetDevice = (props) => {
     };
 
     useEffect(() => {
-        getDevices().then(r => {
-            setDevices(r)
-        })
+        // getDevices().then(r => {
+        //     setDevices(r)
+        //     console.log(1)
+        // })
         socket.on(`getDevices`, devices => {
             setDevices(devices)
+            console.log(2)
         })
     }, []);
 

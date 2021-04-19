@@ -49,7 +49,7 @@ const TabloEditClient = (props) => {
 
         let [isShowLog, setIsShowLog] = useState(false);
 
-    const stadium = window.localStorage.getItem('stadium')
+
 
 
         useEffect(() => {

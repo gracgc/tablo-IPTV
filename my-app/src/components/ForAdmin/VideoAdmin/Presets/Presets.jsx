@@ -21,7 +21,7 @@ const Presets = (props) => {
         (state => state.gamesPage.gameData.preset)
     );
 
-    const stadium = window.localStorage.getItem('stadium')
+
 
 
     useEffect(() => {

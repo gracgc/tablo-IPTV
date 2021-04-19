@@ -63,7 +63,7 @@ const Log = (props) => {
         }
     };
 
-    const stadium = window.localStorage.getItem('stadium')
+
 
     useEffect(() => {
         dispatch(getLog(gameNumber));

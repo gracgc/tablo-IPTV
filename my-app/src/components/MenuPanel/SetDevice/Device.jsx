@@ -15,7 +15,7 @@ const Device = (props) => {
 
     const [lag, setLag] = useState(0);
 
-    const stadium = window.localStorage.getItem('stadium')
+
 
 
     useEffect(() => {

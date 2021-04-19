@@ -43,21 +43,12 @@ function App(props) {
         state => state.authPage.isAuth
     );
 
-    const stadium = window.localStorage.getItem('stadium')
+
 
     useEffect(() => {
         socket.on("connect", () => {
 
-
-
             dispatch(setSocketIDAC(socket.id))
-
-            // socket.on(`getStadium`, stadium => {
-            //     dispatch(setStadiumAC(stadium.stadium))
-            //     window.localStorage.setItem('stadium', stadium.stadium.toString())
-            //
-            // })
-
 
             socket.on(`setDeviceLag${socket.id}`, lag => {
                 window.localStorage.setItem('lag', lag.toString())
@@ -81,13 +72,11 @@ function App(props) {
             dispatch(setIdAC(1))
             if (isAuth !== null) {
                 devicesAPI.addDevice(history.location.pathname, isAuth, +window.localStorage.getItem('lag'))
-
             }
         } else {
             dispatch(authFalseAC(1))
             if (isAuth !== null) {
                 devicesAPI.addDevice(history.location.pathname, isAuth, +window.localStorage.getItem('lag'))
-
             }
         }
     }, [isAuth])

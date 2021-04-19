@@ -41,7 +41,7 @@ const AdminPanel = (props) => {
 
     const dispatch = useDispatch();
 
-    const stadium = window.localStorage.getItem('stadium')
+
 
 
     useEffect(() => {

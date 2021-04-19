@@ -77,6 +77,8 @@ router.put('/add', cors(), function (req, res) {
 
         io.to(stadium).emit(`getDevices`, DB.devices)
 
+        console.log(123)
+
         io.to(stadium).emit(`getLag${socket.id}`, DB.devices[DB.devices.findIndex(user => user.id === socket.id)].lag)
 
 

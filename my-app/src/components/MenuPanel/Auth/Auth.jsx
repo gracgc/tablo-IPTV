@@ -51,7 +51,7 @@ const Auth = (props) => {
         dispatch(login(formData.password));
     };
 
-    const stadium = window.localStorage.getItem('stadium')
+
 
     useEffect(() => {
         if (isAuth) {

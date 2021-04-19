@@ -43,6 +43,10 @@ function App(props) {
         state => state.authPage.isAuth
     );
 
+    const socketID = useSelector(
+        state => state.appPage.socketID
+    );
+
 
 
     useEffect(() => {
@@ -70,16 +74,16 @@ function App(props) {
         let secretToken = Cookies.get('secretToken')
         if (secretToken) {
             dispatch(setIdAC(1))
-            if (isAuth !== null) {
+            if (isAuth !== null && socketID !== null) {
                 devicesAPI.addDevice(history.location.pathname, isAuth, +window.localStorage.getItem('lag'))
             }
         } else {
             dispatch(authFalseAC(1))
-            if (isAuth !== null) {
+            if (isAuth !== null && socketID !== null) {
                 devicesAPI.addDevice(history.location.pathname, isAuth, +window.localStorage.getItem('lag'))
             }
         }
-    }, [isAuth])
+    }, [isAuth, socketID])
 
     useEffect(() => {
         if (isAuth === false && history.location.pathname.indexOf('tabloClient') === -1) {

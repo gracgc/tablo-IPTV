@@ -152,7 +152,7 @@ router.put('/lag', cors(), function (req, res) {
 
         const io = req.app.locals.io;
 
-        io.to(stadium).emit(`getDevices_${stadium}`, DB.devices)
+        io.to(stadium).emit(`getDevices`, DB.devices)
         io.to(stadium).emit(`setDeviceLag${deviceId}`, lag)
 
     } catch (e) {

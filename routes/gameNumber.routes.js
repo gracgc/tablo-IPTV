@@ -40,7 +40,7 @@ router.get('/', function (req, res) {
     }
 });
 
-router.get('/start', authMW, function (req, res) {
+router.get('/start', function (req, res) {
     try {
         let requrl = getHost(req.get('host'))
 
@@ -50,9 +50,7 @@ router.get('/start', authMW, function (req, res) {
         let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_number.json`));
         let DB = JSON.parse(data);
 
-        const io = req.app.locals.io;
 
-        // io.to(stadium).emit(`getGameNumberStart`, DB.gameNumber)
 
         res.send({gameNumber: DB.gameNumber});
 

@@ -39,7 +39,7 @@ router.get('/', cors(), function (req, res) {
     }
 });
 
-router.put('/add', authMW, cors(), function (req, res) {
+router.put('/add', cors(), function (req, res) {
     try {
 
         const io = req.app.locals.io;

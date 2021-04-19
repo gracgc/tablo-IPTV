@@ -26,10 +26,10 @@ const SetDevice = (props) => {
     };
 
     useEffect(() => {
-        // getDevices().then(r => {
-        //     setDevices(r)
-        //     console.log(1)
-        // })
+        getDevices().then(r => {
+            setDevices(r)
+            console.log(1)
+        })
     }, []);
 
     useEffect(() => {

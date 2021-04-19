@@ -49,8 +49,6 @@ let getStadium = (host) => {
 io.on('connection', (socket) => {
     console.log('a user connected');
 
-    app.locals.socket = socket;
-
     let host = socket.handshake.headers.host
 
 
@@ -60,6 +58,8 @@ io.on('connection', (socket) => {
     let stadium = getStadium(requrl)
 
     socket.join(stadium);
+
+    app.locals.socket = socket;
 
     // socket.emit('getStadium', {stadium: stadium})
 

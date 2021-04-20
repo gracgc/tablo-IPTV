@@ -29,7 +29,7 @@ router.post('/login', cors(), async function (req, res) {
 
         const password = req.body.password
 
-        let data = fs.readFileSync(path.join(__dirname, `/DB_${stadium}/auth.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/auth.json`));
         let DB = JSON.parse(data);
 
         const isPassValid = bcrypt.compareSync(password, DB.password)

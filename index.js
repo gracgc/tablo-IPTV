@@ -67,7 +67,7 @@ io.on('connection', (socket) => {
 
 
     // socket.on(`addDevice_${requrl}`, res => {
-    //     let data = fs.readFileSync(path.join(__dirname + `/routes/DB_${stadium}/devices.json`));
+    //     let data = fs.readFileSync(path.join(__dirname + `/routes/DBs/DB_${stadium}/devices.json`));
     //     let DB = JSON.parse(data);
     //
     //
@@ -92,13 +92,13 @@ io.on('connection', (socket) => {
     //
     //     let json = JSON.stringify(DB);
     //
-    //     fs.writeFileSync(path.join(__dirname, `/routes/DB_${stadium}/devices.json`), json, 'utf8');
+    //     fs.writeFileSync(path.join(__dirname, `/routes/DBs/DB_${stadium}/devices.json`), json, 'utf8');
     // });
 
     socket.on('disconnect', (reason) => {
         console.log('user disconnected' + ' ' + reason);
 
-        let data = fs.readFileSync(path.join(__dirname + `/routes/DB_${stadium}/devices.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/routes/DBs/DB_${stadium}/devices.json`));
         let DB = JSON.parse(data);
 
         let deletedItem = DB.devices.findIndex(user => user.id === socket.id);
@@ -109,12 +109,12 @@ io.on('connection', (socket) => {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/routes/DB_${stadium}/devices.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/routes/DBs/DB_${stadium}/devices.json`), json, 'utf8');
     });
 
 
     // socket.on(`setGameNumberStart_${requrl}`, res => {
-    //     let data = fs.readFileSync(path.join(__dirname + `/routes/DB_${stadium}/game_number.json`));
+    //     let data = fs.readFileSync(path.join(__dirname + `/routes/DBs/DB_${stadium}/game_number.json`));
     //     let DB = JSON.parse(data);
     //
     //     socket.to(stadium).emit(`getGameNumberStart`, DB.gameNumber)

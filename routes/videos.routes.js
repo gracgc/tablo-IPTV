@@ -32,7 +32,7 @@ router.get('/', function (req, res) {
         let stadium = getStadium(requrl)
 
 
-        let data = fs.readFileSync(path.join(__dirname, `/DB_${stadium}/videos.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videos.json`));
         let DB = JSON.parse(data);
 
 
@@ -56,7 +56,7 @@ router.post('/', authMW, cors(), async function (req, res) {
         let videoURL = req.body.videoURL;
 
 
-        let data = fs.readFileSync(path.join(__dirname, `/DB_${stadium}/videos.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videos.json`));
         let DB = JSON.parse(data);
 
         DB.videos.push({
@@ -66,7 +66,7 @@ router.post('/', authMW, cors(), async function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/videos.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videos.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 
@@ -90,14 +90,14 @@ router.put('/delete', authMW, cors(), async function (req, res) {
         let index = req.body.index;
 
 
-        let data = fs.readFileSync(path.join(__dirname, `/DB_${stadium}/videos.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videos.json`));
         let DB = JSON.parse(data);
 
         DB.videos.splice(index, 1)
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/videos.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videos.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 
@@ -120,7 +120,7 @@ router.get('/editor/:gameNumber', function (req, res) {
 
         let gameNumber = req.params.gameNumber;
 
-        let data = fs.readFileSync(path.join(__dirname, `/DB_${stadium}/video_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/video_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
 
@@ -144,7 +144,7 @@ router.post('/editor/:gameNumber', authMW, cors(), function (req, res) {
 
         let videos = req.body.videos;
 
-        let data = fs.readFileSync(path.join(__dirname, `/DB_${stadium}/video_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/video_${gameNumber}.json`));
 
         let DB = JSON.parse(data);
 
@@ -157,7 +157,7 @@ router.post('/editor/:gameNumber', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/video_${gameNumber}.json`), json, 'utf8')
+        fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/video_${gameNumber}.json`), json, 'utf8')
 
         res.send({resultCode: 0});
 
@@ -177,7 +177,7 @@ router.put('/editor/current/:gameNumber', authMW, cors(), function (req, res) {
         let gameNumber = req.params.gameNumber;
 
 
-        let data = fs.readFileSync(path.join(__dirname, `/DB_${stadium}/video_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/video_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
 
@@ -186,7 +186,7 @@ router.put('/editor/current/:gameNumber', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/video_${gameNumber}.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/video_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 
@@ -215,7 +215,7 @@ router.put('/editor/delete/:gameNumber', authMW, cors(), function (req, res) {
         let isAuto = req.body.isAuto;
 
 
-        let data = fs.readFileSync(path.join(__dirname, `/DB_${stadium}/video_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/video_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
 
@@ -227,7 +227,7 @@ router.put('/editor/delete/:gameNumber', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/video_${gameNumber}.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/video_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 
@@ -272,7 +272,7 @@ router.put('/editor/clear/:gameNumber', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/video_${gameNumber}.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/video_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 
@@ -300,7 +300,7 @@ router.put('/editor/nextVideo/:gameNumber', authMW, cors(), function (req, res) 
         let gameNumber = req.params.gameNumber;
 
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/video_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/video_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let n = DB.currentVideo.n;
@@ -316,7 +316,7 @@ router.put('/editor/nextVideo/:gameNumber', authMW, cors(), function (req, res) 
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/video_${gameNumber}.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/video_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 

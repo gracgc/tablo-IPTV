@@ -33,7 +33,7 @@ router.get('/:gameNumber/:dateClient', cors(), function (req, res) {
 
         let dateClient = +req.params.dateClient;
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         DB.gameInfo.gameTime.resultCode = 0;
@@ -71,7 +71,7 @@ router.get('/timeout/:gameNumber', function (req, res) {
 
         let gameNumber = req.params.gameNumber;
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         DB.resultCode = 0;
@@ -91,7 +91,7 @@ router.put('/isRunning/:gameNumber', authMW, cors(), function (req, res) {
 
         let gameNumber = req.params.gameNumber;
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let isRunning = req.body.isRunning;
@@ -121,7 +121,7 @@ router.put('/isRunning/:gameNumber', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 
@@ -144,7 +144,7 @@ router.put('/isRunningTimeout/:gameNumber', authMW, cors(), function (req, res) 
 
         let gameNumber = req.params.gameNumber;
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let isRunning = req.body.isRunning;
@@ -164,7 +164,7 @@ router.put('/isRunningTimeout/:gameNumber', authMW, cors(), function (req, res) 
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 
@@ -185,7 +185,7 @@ router.put('/deadline/:gameNumber', authMW, cors(), function (req, res) {
 
         let gameNumber = req.params.gameNumber;
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
 
@@ -202,7 +202,7 @@ router.put('/deadline/:gameNumber', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname + `/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 

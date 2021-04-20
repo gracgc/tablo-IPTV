@@ -28,7 +28,7 @@ router.get('/', function (req, res) {
 
         let stadium = getStadium(requrl)
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_number.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_number.json`));
         let DB = JSON.parse(data);
 
         DB.resultCode = 0;
@@ -47,7 +47,7 @@ router.get('/start', function (req, res) {
         let stadium = getStadium(requrl)
 
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_number.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_number.json`));
         let DB = JSON.parse(data);
 
 
@@ -70,14 +70,14 @@ router.put('/', authMW, function (req, res) {
         let gameNumber = req.body.gameNumber;
 
 
-        let data = fs.readFileSync(path.join(__dirname + `/DB_${stadium}/game_number.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_number.json`));
         let DB = JSON.parse(data);
 
         DB.gameNumber = gameNumber;
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `/DB_${stadium}/game_number.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/game_number.json`), json, 'utf8');
 
 
         res.send({resultCode: 0});

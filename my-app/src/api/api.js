@@ -1,16 +1,16 @@
 import * as axios from "axios";
 import cookie from "js-cookie"
-import {useEffect, useState} from "react";
 
-// const secretToken = cookie.get('secretToken');
 
-let [secretToken, setSecretToken] = useState(cookie.get('secretToken'))
+const secretToken = cookie.get('secretToken');
 
-console.log(secretToken)
-
-useEffect(() => {
-    setSecretToken(cookie.get('secretToken'))
-}, [cookie.get('secretToken')])
+// let [secretToken, setSecretToken] = useState(cookie.get('secretToken'))
+//
+// console.log(secretToken)
+//
+// useEffect(() => {
+//     setSecretToken(cookie.get('secretToken'))
+// }, [cookie.get('secretToken')])
 
 
 const instance = axios.create({

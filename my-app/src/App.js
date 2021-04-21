@@ -25,6 +25,7 @@ import STB from "./components/ForClient/TabloEdit/STB";
 import PreLag from "./components/MenuPanel/Lag/PreLag";
 import PreLagClient from "./components/MenuPanel/Lag/PreLagClient";
 import {devicesAPI} from "./api/api";
+import cookie from "js-cookie"
 
 
 function App(props) {
@@ -90,6 +91,10 @@ function App(props) {
             history.push("/auth")
         }
     }, [isAuth])
+
+    useEffect(() => {
+
+    }, [cookie.get('secretToken')])
 
 
     return (

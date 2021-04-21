@@ -91,10 +91,8 @@ function App(props) {
     }, [isAuth])
 
     useEffect(() => {
-        if (!cookie.get('secretToken') && isAuth) {
-            window.location.reload()
-        }
-    }, [isAuth])
+        window.location.reload()
+    }, [])
 
 
     return (

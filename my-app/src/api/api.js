@@ -3,10 +3,12 @@ import cookie from "js-cookie"
 
 const secretToken = cookie.get('secretToken');
 
+console.log(secretToken)
+
 
 const instance = axios.create({
     withCredentials: true,
-    headers: {"Authorization": `Bearer ${secretToken || cookie.get('secretToken')}`},
+    headers: {"Authorization": `Bearer ${secretToken}`},
     baseURL: '/api/'
 });
 

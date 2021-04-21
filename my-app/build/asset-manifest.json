@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/static/css/main.1d2a4b60.chunk.css",
-    "main.js": "/static/js/main.37558c5e.chunk.js",
-    "main.js.map": "/static/js/main.37558c5e.chunk.js.map",
+    "main.js": "/static/js/main.ac738ddc.chunk.js",
+    "main.js.map": "/static/js/main.ac738ddc.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.83c3e0c4.js",
     "runtime-main.js.map": "/static/js/runtime-main.83c3e0c4.js.map",
-    "static/js/2.efed0f71.chunk.js": "/static/js/2.efed0f71.chunk.js",
-    "static/js/2.efed0f71.chunk.js.map": "/static/js/2.efed0f71.chunk.js.map",
+    "static/js/2.06764cdf.chunk.js": "/static/js/2.06764cdf.chunk.js",
+    "static/js/2.06764cdf.chunk.js.map": "/static/js/2.06764cdf.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.c9c2d4187798d9471ba075233c40b07a.js": "/precache-manifest.c9c2d4187798d9471ba075233c40b07a.js",
+    "precache-manifest.ea374f31bb8a49c01a01caa04ecc5b70.js": "/precache-manifest.ea374f31bb8a49c01a01caa04ecc5b70.js",
     "service-worker.js": "/service-worker.js",
     "static/css/main.1d2a4b60.chunk.css.map": "/static/css/main.1d2a4b60.chunk.css.map",
-    "static/js/2.efed0f71.chunk.js.LICENSE.txt": "/static/js/2.efed0f71.chunk.js.LICENSE.txt",
+    "static/js/2.06764cdf.chunk.js.LICENSE.txt": "/static/js/2.06764cdf.chunk.js.LICENSE.txt",
     "static/media/logoIPTVPORTAL.png": "/static/media/logoIPTVPORTAL.2c5cd2ef.png"
   },
   "entrypoints": [
     "static/js/runtime-main.83c3e0c4.js",
-    "static/js/2.efed0f71.chunk.js",
+    "static/js/2.06764cdf.chunk.js",
     "static/css/main.1d2a4b60.chunk.css",
-    "static/js/main.37558c5e.chunk.js"
+    "static/js/main.ac738ddc.chunk.js"
   ]
 }

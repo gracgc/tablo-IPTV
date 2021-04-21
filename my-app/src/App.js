@@ -90,9 +90,7 @@ function App(props) {
         }
     }, [isAuth])
 
-    useEffect(() => {
-        window.location.reload()
-    }, [])
+
 
 
     return (

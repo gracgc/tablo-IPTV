@@ -4,6 +4,13 @@ import cookie from "js-cookie"
 
 const secretToken = cookie.get('secretToken');
 
+let checkKey = setInterval(() => {
+    if (cookie.get('secretToken')) {
+        clearInterval(checkKey)
+    }
+}, 100)
+
+
 
 console.log(secretToken)
 

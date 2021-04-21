@@ -49,7 +49,6 @@ function App(props) {
     );
 
 
-
     useEffect(() => {
         socket.on("connect", () => {
 
@@ -68,7 +67,6 @@ function App(props) {
             })
         });
     }, [])
-
 
 
     useEffect(() => {
@@ -93,7 +91,7 @@ function App(props) {
     }, [isAuth])
 
     useEffect(() => {
-
+        window.location.reload()
     }, [cookie.get('secretToken')])
 
 

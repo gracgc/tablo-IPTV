@@ -2,13 +2,15 @@ import * as axios from "axios";
 import cookie from "js-cookie"
 
 
-const secretToken = cookie.get('secretToken');
+let secretToken = cookie.get('secretToken');
 
-let checkKey = setInterval(() => {
-    if (cookie.get('secretToken')) {
-        clearInterval(checkKey)
-    }
-}, 100)
+// let checkKey = setInterval(() => {
+//     if (cookie.get('secretToken')) {
+//         clearInterval(checkKey)
+//         secretToken = cookie.get('secretToken');
+//         console.log(secretToken)
+//     }
+// }, 100)
 
 
 

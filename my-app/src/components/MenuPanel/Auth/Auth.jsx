@@ -30,6 +30,7 @@ const AuthForm = (props) => {
     )
 };
 
+
 const LoginReduxForm = reduxForm({form: 'login'})(AuthForm);
 
 
@@ -59,6 +60,8 @@ const Auth = (props) => {
             history.push("/menu");
         }
     }, [isAuth])
+
+
 
     useEffect(() => {
         socket.on(`setDevicePage${socketID}`, deviceType => {

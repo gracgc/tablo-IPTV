@@ -92,7 +92,7 @@ function App(props) {
 
     useEffect(() => {
         window.location.reload()
-    }, [cookie.get('secretToken')])
+    }, [cookie.get('secretToken') !== undefined])
 
 
     return (

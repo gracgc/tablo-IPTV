@@ -4,25 +4,25 @@ import cookie from "js-cookie"
 
 let secretToken = cookie.get('secretToken');
 
-let checkKey = setInterval(() => {
-    if (cookie.get('secretToken')) {
-        clearInterval(checkKey)
-        secretToken = cookie.get('secretToken');
-        console.log(secretToken)
-    }
-}, 100)
-
-
-
-console.log(secretToken)
-
-
-
-const instance = axios.create({
+let instance = axios.create({
     withCredentials: true,
     headers: {"Authorization": `Bearer ${secretToken}`},
     baseURL: '/api/'
 });
+
+let checkKey = setInterval(() => {
+    if (cookie.get('secretToken')) {
+        clearInterval(checkKey)
+        secretToken = cookie.get('secretToken');
+        instance = axios.create({
+            withCredentials: true,
+            headers: {"Authorization": `Bearer ${secretToken}`},
+            baseURL: '/api/'
+        });
+    }
+}, 100)
+
+
 
 
 export const teamsAPI = {

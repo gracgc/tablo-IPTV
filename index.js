@@ -57,7 +57,6 @@ io.on('connection', (socket) => {
 
     let stadium = getStadium(requrl)
 
-    console.log(654)
 
     socket.join(stadium);
 

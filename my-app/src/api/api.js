@@ -107,6 +107,12 @@ export const logAPI = {
             .then(responce => {
                 return responce.data
             })
+    },
+    exportLog(gameNumber) {
+        return instance.get(`log/export/${gameNumber}`)
+            .then(responce => {
+                return responce.data
+            })
     }
 };
 

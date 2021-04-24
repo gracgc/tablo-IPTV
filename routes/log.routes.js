@@ -222,6 +222,38 @@ router.put('/cons/:gameNumber', authMW, cors(), function (req, res) {
     }
 });
 
+router.get('/export/:gameNumber', authMW, cors(), function (req, res) {
+    try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
+        let gameNumber = req.params.gameNumber;
+
+        let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_${gameNumber}.json`));
+        let DB = JSON.parse(data);
+
+        let logTXT = `События игры ${DB.gameInfo.gameName}` + '\n' + '\n'
+
+        DB.logData.gameLog.forEach((value) => {
+            logTXT += value.item  + '\n'
+        })
+
+        fs.writeFileSync(path.join(__dirname + `/DBs/DB_${stadium}/logTXT/${DB.gameInfo.gameName}_${gameNumber}_log.txt`), logTXT, 'utf8');
+
+        let exportLog = path.join(__dirname + `/DBs/DB_${stadium}/logTXT/${DB.gameInfo.gameName}_${gameNumber}_log.txt`);
+
+        res.sendFile(exportLog)
+
+
+    } catch (e) {
+        console.log(e)
+    }
+});
+
+
+
+
 router.options('/', cors());
 
 

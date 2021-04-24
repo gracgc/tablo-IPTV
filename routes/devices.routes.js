@@ -74,7 +74,6 @@ router.put('/add', cors(), function (req, res) {
             }
         }
 
-        console.log(DB.devices)
 
         io.to(stadium).emit(`getDevices`, DB.devices)
 

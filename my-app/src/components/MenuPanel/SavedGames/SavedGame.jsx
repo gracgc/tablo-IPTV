@@ -7,6 +7,8 @@ import c1920 from "./SavedGames_1920.module.css";
 import {useConfirm} from "material-ui-confirm";
 import {deleteGame} from "../../../redux/games_reducer";
 import GameMenu from "./GameMenu";
+import {logAPI} from "../../../api/api";
+import FileDownload from "js-file-download";
 
 
 const SavedGame = (props) => {
@@ -42,6 +44,13 @@ const SavedGame = (props) => {
             dispatch(putGameNumber(0))
         }
     };
+
+    const exportLog = () => {
+        logAPI.exportLog(props.savedGame.gameNumber).then(txt => {
+            FileDownload(txt, `События_${props.savedGame.gameName}_${props.savedGame.gameNumber}.txt`)
+            console.log(txt)
+        })
+    }
 
 
     return (
@@ -85,6 +94,9 @@ const SavedGame = (props) => {
                         Редактировать
                     </div>
                 </NavLink>
+                <div className={width === 1920 ? c1920.editButton : c.editButton} onClick={e => exportLog()}>
+                    События
+                </div>
             </div>
             }
         </div>

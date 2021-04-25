@@ -5,48 +5,62 @@
 
 .tablo1 {
     /*background-image: url("../../../content/img/TABLO-1.png");*/
-    background-color: black;
+    /*background-color: black;*/
     color: #c2d9ff;
     height: 720px;
     width: 1280px;
-    z-index: 1000;
 }
 
 
 .counter {
     position: absolute;
     text-align: center;
-    font-size: 64px;
-    box-sizing: border-box;
-    width: 400px;
+    font-size: 160px;
+    bottom: 100px;
 }
 
-.homeTeam {
-    left: 230px;
+.homeTeamCounter {
+    left: 430px;
 }
 
-.guestsTeam {
-    right: 230px;
+.guestsTeamCounter {
+    right: 430px;
+}
+
+.name {
+    position: absolute;
+    text-align: center;
+    font-size: 58px;
+    bottom: 0;
+}
+
+.homeTeamName {
+    left: 40px;
+}
+
+.guestsTeamName {
+    right: 40px;
 }
 
 .logo {
+    z-index: -1000;
     position: absolute;
     text-align: center;
 }
 
 
 .homeLogo {
-    width: 200px;
-    height: 200px;
-    bottom: 200px;
-    left: 200px;
+    width: 380px;
+    height: 380px;
+    bottom: 80px;
+    left: 0;
 }
 
 .guestsLogo {
-    width: 200px;
-    height: 200px;
-    bottom: 200px;
-    right: 200px;
+    width: 380px;
+    height: 380px;
+    bottom: 80px;
+    right: 0;
 }
 
 

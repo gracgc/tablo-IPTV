@@ -8,7 +8,7 @@ const {getVideoDurationInSeconds} = require('get-video-duration');
 const cyrillicToTranslit = require('cyrillic-to-translit-js');
 const config = require('config');
 
-// let url = `${config.get('baseUrl')}:${config.get('port')}`;
+let port = config.get('port')
 
 let stadiums = config.get('stadiums')
 
@@ -335,7 +335,7 @@ router.get('/current', function (req, res) {
         let stadium = getStadium(requrl)
 
 
-        let data = fs.readFileSync(path.join(__dirname, `DBs/DB_${stadium}/videos.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videos.json`));
         let DB = JSON.parse(data);
 
         res.send({currentVideo: DB.currentVideo, currentVideoStream: DB.currentVideoStream})
@@ -361,10 +361,10 @@ router.put('/current/:gameNumber', authMW, cors(), function (req, res) {
 
         let isEditor = req.body.isEditor;
 
-        let data = fs.readFileSync(path.join(__dirname, `DBs/DB_${stadium}/videos.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videos.json`));
         let DB = JSON.parse(data);
 
-        let data2 = fs.readFileSync(path.join(__dirname, `DBs/DB_${stadium}/video_${gameNumber}.json`));
+        let data2 = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/video_${gameNumber}.json`));
         let DB2 = JSON.parse(data2);
 
 
@@ -375,7 +375,7 @@ router.put('/current/:gameNumber', authMW, cors(), function (req, res) {
 
             let json = JSON.stringify(DB);
 
-            fs.writeFileSync(path.join(__dirname, `DBs/DB_${stadium}/videos.json`), json, 'utf8');
+            fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videos.json`), json, 'utf8');
 
             io.to(stadium).emit(`getCurrentVideo`, {currentVideo: DB.currentVideo, currentVideoStream: DB.currentVideoStream});
 
@@ -388,7 +388,7 @@ router.put('/current/:gameNumber', authMW, cors(), function (req, res) {
 
                 let json = JSON.stringify(DB);
 
-                fs.writeFileSync(path.join(__dirname, `DBs/DB_${stadium}/videos.json`), json, 'utf8');
+                fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videos.json`), json, 'utf8');
 
                 io.to(stadium).emit(`getCurrentVideo`, {currentVideo: DB.currentVideo, currentVideoStream: DB.currentVideoStream})
 
@@ -399,7 +399,7 @@ router.put('/current/:gameNumber', authMW, cors(), function (req, res) {
 
                     let json = JSON.stringify(DB);
 
-                    fs.writeFileSync(path.join(__dirname, `DBs/DB_${stadium}/videos.json`), json, 'utf8');
+                    fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videos.json`), json, 'utf8');
 
                     io.to(stadium).emit(`getCurrentVideo`, {currentVideo: null, currentVideoStream: DB.currentVideoStream})
 
@@ -424,7 +424,7 @@ router.put('/reset', authMW, cors(), function (req, res) {
         let stadium = getStadium(requrl)
 
 
-        let data = fs.readFileSync(path.join(__dirname, `DBs/DB_${stadium}/videos.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videos.json`));
         let DB = JSON.parse(data);
 
 
@@ -432,7 +432,7 @@ router.put('/reset', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname, `DBs/DB_${stadium}/videos.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videos.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 
@@ -454,10 +454,10 @@ router.get('/mp4', cors(), function (req, res) {
 
 
 
-        let dataLocal = fs.readFileSync(path.join(__dirname, `DBs/DB_${stadium}/videosMP4_local.json`));
+        let dataLocal = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videosMP4_local.json`));
         let DBLocal = JSON.parse(dataLocal);
 
-        let data = fs.readFileSync(path.join(__dirname, `DBs/DB_${stadium}/videosMP4.json`));
+        let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videosMP4.json`));
         let DB = JSON.parse(data);
 
 
@@ -483,7 +483,7 @@ router.get('/mp4/:videoName', cors(), function (req, res) {
 
         let videoName = req.params.videoName;
 
-        let video = path.join(__dirname + `DBs/DB_${stadium}/videosMP4/${videoName}.mp4`);
+        let video = path.join(__dirname + `/DBs/DB_${stadium}/videosMP4/${videoName}.mp4`);
 
         res.sendFile(video);
 
@@ -515,22 +515,22 @@ router.post('/mp4/:videoName', authMW, cors(), async function (req, res) {
         await video.mv(`${__dirname}/DBs/DB_${stadium}/videosMP4/${videoNameEN}.mp4`);
 
 
-        getVideoDurationInSeconds(`${req.get('host')}/api/videos/mp4/${videoNameEN}`).then((duration) => {
+        getVideoDurationInSeconds(`http://${req.get('host')}/api/videos/mp4/${videoNameEN}`).then((duration) => {
 
 
                 if (config.get('port') === 5000) {
-                    let data = fs.readFileSync(path.join(__dirname, `DBs/DB_${stadium}/videosMP4_local.json`));
+                    let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videosMP4_local.json`));
                     let DB = JSON.parse(data);
 
                     DB.videos.push({
                         videoName: videoName,
-                        videoURL: `${req.get('host')}/api/videos/mp4/${videoNameEN}`,
+                        videoURL: `http://${req.get('host')}/api/videos/mp4/${videoNameEN}`,
                         duration: duration * 1000
                     });
 
                     let json = JSON.stringify(DB);
 
-                    fs.writeFileSync(path.join(__dirname, `DBs/DB_${stadium}/videosMP4_local.json`), json, 'utf8');
+                    fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videosMP4_local.json`), json, 'utf8');
 
 
                     io.to(stadium).emit(`getVideosMP4`, DB.videos);
@@ -538,19 +538,19 @@ router.post('/mp4/:videoName', authMW, cors(), async function (req, res) {
                     res.send({resultCode: 0});
 
                 } else {
-                    let data = fs.readFileSync(path.join(__dirname, `DBs/DB_${stadium}/videosMP4.json`));
+                    let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videosMP4.json`));
                     let DB = JSON.parse(data);
 
                     DB.videos.push({
                         videoName: videoName,
-                        videoURL: `${req.get('host')}/api/videos/mp4/${videoNameEN}`,
+                        videoURL: `http://${req.get('host')}/api/videos/mp4/${videoNameEN}`,
                         duration: duration * 1000
                     });
 
 
                     let json = JSON.stringify(DB);
 
-                    fs.writeFileSync(path.join(__dirname, `DBs/DB_${stadium}/videosMP4.json`), json, 'utf8');
+                    fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videosMP4.json`), json, 'utf8');
 
 
                     io.to(stadium).emit(`getVideosMP4`, DB.videos);
@@ -585,18 +585,18 @@ router.put('/mp4/delete', authMW, cors(), async function (req, res) {
 
 
         fs.unlinkSync(path.join(__dirname +
-            `DBs/DB_${stadium}/videosMP4/${videoNameEN}.mp4`));
+            `/DBs/DB_${stadium}/videosMP4/${videoNameEN}.mp4`));
 
 
         if (config.get('port') === 5000) {
-            let data = fs.readFileSync(path.join(__dirname, `DBs/DB_${stadium}/videosMP4_local.json`));
+            let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videosMP4_local.json`));
             let DB = JSON.parse(data);
 
             DB.videos.splice(index, 1)
 
             let json = JSON.stringify(DB);
 
-            fs.writeFileSync(path.join(__dirname, `DBs/DB_${stadium}/videosMP4_local.json`), json, 'utf8');
+            fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videosMP4_local.json`), json, 'utf8');
 
 
             io.to(stadium).emit(`getVideosMP4`, DB.videos);
@@ -604,7 +604,7 @@ router.put('/mp4/delete', authMW, cors(), async function (req, res) {
             res.send({resultCode: 0});
 
         } else {
-            let data = fs.readFileSync(path.join(__dirname, `DBs/DB_${stadium}/videosMP4.json`));
+            let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videosMP4.json`));
             let DB = JSON.parse(data);
 
             DB.videos.splice(index, 1)
@@ -612,7 +612,7 @@ router.put('/mp4/delete', authMW, cors(), async function (req, res) {
 
             let json = JSON.stringify(DB);
 
-            fs.writeFileSync(path.join(__dirname, `DBs/DB_${stadium}/videosMP4.json`), json, 'utf8');
+            fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/videosMP4.json`), json, 'utf8');
 
 
             io.to(stadium).emit(`getVideosMP4`, DB.videos);
@@ -637,7 +637,7 @@ router.post('/sync/:gameNumber', authMW, cors(), function (req, res) {
 
         let dateClient = req.body.dateClient;
 
-        let data = fs.readFileSync(path.join(__dirname + `DBs/DB_${stadium}/video_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/video_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         DB.timeData.resultCode = 0;
@@ -660,7 +660,7 @@ router.put('/isRunning/:gameNumber', authMW, cors(), function (req, res) {
 
         let gameNumber = req.params.gameNumber;
 
-        let data = fs.readFileSync(path.join(__dirname + `DBs/DB_${stadium}/video_${gameNumber}.json`));
+        let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/video_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
 
@@ -681,7 +681,7 @@ router.put('/isRunning/:gameNumber', authMW, cors(), function (req, res) {
 
         let json = JSON.stringify(DB);
 
-        fs.writeFileSync(path.join(__dirname + `DBs/DB_${stadium}/video_${gameNumber}.json`), json, 'utf8');
+        fs.writeFileSync(path.join(__dirname + `/DBs/DB_${stadium}/video_${gameNumber}.json`), json, 'utf8');
 
         res.send({resultCode: 0});
 

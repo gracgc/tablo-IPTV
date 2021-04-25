@@ -7,6 +7,7 @@ import {getGame, setPresetAC} from "../../../redux/games_reducer";
 import socket from "../../../socket/socket";
 import classNames from 'classnames'
 import TabloTimer from "./TabloTimer";
+import tablo from './../../../content/img/tanlo.png';
 
 
 const TabloClient = (props) => {
@@ -40,6 +41,7 @@ const TabloClient = (props) => {
             {preset === 1 &&
             <div className={c.tablo1}>
 
+
                 <div>
                     <TabloTimer gameNumber={props.gameNumber} gameConsLog={props.gameConsLog}
                                 isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={preset}/>
@@ -47,22 +49,30 @@ const TabloClient = (props) => {
 
                 <div>
                     <div className={classNames(c.logo, c.homeLogo)}>
-                        <img src={props.homeTeam.logo} style={{width: '200px', height: '200px'}} alt=""/>
+                        <img src={props.homeTeam.logo} style={{width: 380, height: 380}} alt=""/>
                     </div>
                     <div className={classNames(c.logo, c.guestsLogo)}>
-                        <img src={props.guestsTeam.logo} style={{width: '200px', height: '200px'}} alt=""/>
+                        <img src={props.guestsTeam.logo} style={{width: 380, height: 380}} alt=""/>
                     </div>
                 </div>
                 <div>
-                    <div className={classNames(c.counter, c.homeTeam)}>
-                        {props.homeCounter} <br/>
+                    <div className={classNames(c.counter, c.homeTeamCounter)}>
+                        {props.homeCounter}
+                    </div>
+                    <div className={classNames(c.counter, c.guestsTeamCounter)}>
+                        {props.guestsCounter}
+                    </div>
+                    <div className={classNames(c.name, c.homeTeamName)}>
                         {props.homeTeam.name}
                     </div>
-                    <div className={classNames(c.counter, c.guestsTeam)}>
-                        {props.guestsCounter} <br/>
+                    <div className={classNames(c.name, c.guestsTeamName)}>
                         {props.guestsTeam.name}
                     </div>
                 </div>
+                <div style={{zIndex: -1, position: 'absolute', top: 0, width: 1280, height: 720}}>
+                    <img src={tablo} alt="" width={1280} height={720}/>
+                </div>
+
             </div>
             }
 

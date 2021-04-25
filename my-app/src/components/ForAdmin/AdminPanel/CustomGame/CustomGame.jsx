@@ -401,7 +401,7 @@ const CustomGame = (props) => {
                         </div>
                     </NavLink>
                 </div>
-                <div className={width === 1920 ? c1920.menuTitle : c.menuTitle}>ЗАДАЙТЕ НОВЫЕ ПАРАМЕТРЫ</div>
+                <div className={width === 1920 ? c1920.menuTitle : c.menuTitle}>ЗАДАЙТЕ ПАРАМЕТРЫ</div>
                 <div></div>
                 <div className={width === 1920 ? c1920.back : c.back}>
                     <NavLink to={`/adminPanel/${gameNumber}`}>

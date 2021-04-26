@@ -77,7 +77,7 @@ const TabloClient = (props) => {
                         {props.guestsTeam.name}
                     </div>
                 </div>
-                <div style={{zIndex: -1, position: 'fixed', top: 0, width: '100vw', height: '100vh'}}>
+                <div style={{zIndex: -1, position: 'fixed', top: 0}}>
                     <img src={tabloPNG} alt=""/>
                 </div>
 

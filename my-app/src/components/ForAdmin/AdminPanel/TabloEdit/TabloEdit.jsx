@@ -201,7 +201,7 @@ const TabloEdit = (props) => {
                 dispatch(addNewLog(gameNumber,
                     `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец ${period} периода`));
                 dispatch(addNewTempLog(gameNumber,
-                    `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец ${period} периода`));
+                    `Конец ${period} периода`));
             }
             if (period > 3) {
                 if (deadLine === 300000) {
@@ -222,7 +222,7 @@ const TabloEdit = (props) => {
                     dispatch(addNewLog(gameNumber,
                         `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец овертайма`));
                     dispatch(addNewTempLog(gameNumber,
-                        `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец овертайма`));
+                        `Конец овертайма`));
                 }
             } else {
                 tabloAPI.putTimerStatus(gameNumber, false,
@@ -232,7 +232,7 @@ const TabloEdit = (props) => {
                 dispatch(addNewLog(gameNumber,
                     `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец ${period} периода`));
                 dispatch(addNewTempLog(gameNumber,
-                    `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец ${period} периода`));
+                    `Конец ${period} периода`));
             }
         }
     }, [timeDif >= deadLine]);
@@ -248,7 +248,7 @@ const TabloEdit = (props) => {
             dispatch(addNewLog(gameNumber,
                 `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец таймаута`));
             dispatch(addNewTempLog(gameNumber,
-                `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - Конец таймаута`));
+                `Конец таймаута`));
         }
     }, [timeDifTimeout >= deadLineTimeout]);
 

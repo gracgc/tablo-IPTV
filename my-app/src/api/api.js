@@ -187,7 +187,13 @@ export const gameAPI = {
             .then(responce => {
                 return responce.data
             })
-    }
+    },
+    tabloPNG() {
+        return instance.get(`game/tabloPNG/getTablo`)
+            .then(responce => {
+                return responce.data
+            })
+    },
 };
 
 export const tabloAPI = {

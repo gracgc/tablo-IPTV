@@ -14,7 +14,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {authFalseAC, setIdAC} from "./redux/auth_reducer";
 import Cookies from "js-cookie"
 import SetDevice from "./components/MenuPanel/SetDevice/SetDevice";
-import {setSocketIDAC, setStadiumAC} from "./redux/app_reducer";
+import {getTabloPNG, setSocketIDAC, setStadiumAC} from "./redux/app_reducer";
 import {useHistory} from "react-router";
 import CustomGame from "./components/ForAdmin/AdminPanel/CustomGame/CustomGame";
 import Test from "./components/MenuPanel/Test/Test";
@@ -89,6 +89,10 @@ function App(props) {
             history.push("/auth")
         }
     }, [isAuth])
+
+    useEffect(() => {
+        dispatch(getTabloPNG())
+    }, [])
 
 
 

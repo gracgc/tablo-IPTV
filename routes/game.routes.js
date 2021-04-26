@@ -329,6 +329,30 @@ router.put('/reset/:gameNumber', authMW, cors(), function (req, res) {
     }
 })
 
+router.get('/tabloPNG/getTablo', function (req, res) {
+    try {
+
+        let tabloPNG = `http://${req.get('host')}/api/game/tabloPNG/tablo`
+
+        res.send(tabloPNG);
+
+    } catch (e) {
+        console.log(e)
+    }
+});
+
+router.get('/tabloPNG/tablo', function (req, res) {
+    try {
+
+        let img = path.join(__dirname + `/PNG/tablo.png`);
+
+        res.sendFile(img);
+
+    } catch (e) {
+        console.log(e)
+    }
+});
+
 
 router.options('/', cors());
 

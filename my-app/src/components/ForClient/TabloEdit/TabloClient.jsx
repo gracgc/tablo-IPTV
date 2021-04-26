@@ -8,6 +8,7 @@ import socket from "../../../socket/socket";
 import classNames from 'classnames'
 import TabloTimer from "./TabloTimer";
 import tablo from './../../../content/img/tanlo.png';
+import {gameAPI} from "../../../api/api";
 
 
 const TabloClient = (props) => {
@@ -18,7 +19,14 @@ const TabloClient = (props) => {
         (state => state.gamesPage.gameData.preset)
     );
 
+    const tabloPNG = useSelector(
+        (state => state.appPage.pngs.tabloPNG)
+    );
 
+
+    // useEffect(() => {
+    //     gameAPI.tabloPNG()
+    // }, [])
 
 
     useEffect(() => {
@@ -69,9 +77,9 @@ const TabloClient = (props) => {
                         {props.guestsTeam.name}
                     </div>
                 </div>
-                {/*<div style={{zIndex: -1, position: 'fixed', top: 0, width: '100vw', height: '100vh'}}>*/}
-                {/*    <img src={tablo} alt=""/>*/}
-                {/*</div>*/}
+                <div style={{zIndex: -1, position: 'fixed', top: 0, width: '100vw', height: '100vh'}}>
+                    <img src={tabloPNG} alt=""/>
+                </div>
 
             </div>
             }

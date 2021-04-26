@@ -5,14 +5,17 @@ const SET_GAME_NUMBER = 'app/SET_GAME_NUMBER';
 const PUT_GAME_NUMBER = 'app/PUT_GAME_NUMBER';
 const SET_SOCKET_ID = 'app/SET_SOCKET_ID';
 const SET_STADIUM = 'app/SET_STADIUM'
-const SET_LAG = 'app/SET_LAG';
+const SET_TABLO_PNG = 'app/SET_TABLO_PNG'
 
 
 let initialState = {
     gameNumber: 1,
     socketID: null,
     stadium: null,
-    lag: 0
+    lag: 0,
+    pngs: {
+        tabloPNG: null
+    }
 };
 
 const appReducer = (state = initialState, action) => {
@@ -47,6 +50,15 @@ const appReducer = (state = initialState, action) => {
                 stadium: action.stadium
             };
 
+        case SET_TABLO_PNG:
+
+            return {
+                ...state,
+                pngs: {
+                    ...state.pngs,
+                    tabloPNG: action.tabloPNG
+                }
+            };
 
 
         default:
@@ -58,8 +70,7 @@ export const setGameNumberAC = (gameNumber) => ({type: SET_GAME_NUMBER, gameNumb
 export const setSocketIDAC = (socketID) => ({type: SET_SOCKET_ID, socketID});
 export const setStadiumAC = (stadium) => ({type: SET_STADIUM, stadium});
 export const putGameNumberAC = (gameNumber) => ({type: PUT_GAME_NUMBER, gameNumber});
-
-
+export const setTabloPNGAC = (tabloPNG) => ({type: SET_TABLO_PNG, tabloPNG});
 
 
 export const getGameNumber = () => async (dispatch) => {
@@ -74,6 +85,13 @@ export const putGameNumber = (gameNumber) => async (dispatch) => {
     if (response.resultCode === 0) {
         dispatch(putGameNumberAC(+gameNumber));
     }
+};
+
+export const getTabloPNG = () => async (dispatch) => {
+    let response = await gameAPI.tabloPNG();
+
+    dispatch(setTabloPNGAC(response));
+
 };
 
 

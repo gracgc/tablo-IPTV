@@ -302,31 +302,48 @@ const TabloEdit = (props) => {
         <div className={width === 1920 ? c1920.tabloEdit : c.tabloEdit}>
             {props.history.location.pathname.indexOf('videoAdmin') === -1 &&
             <div>
-                {isRunningServer ?
+                {!isRunningServerTimeout ?
+                    <div>
+                        {isRunningServer ?
+                            <div className={width === 1920 ? c1920.gameButtons : c.gameButtons}>
+                                <div style={{backgroundColor: 'green'}}
+                                     className={width === 1920 ? c1920.gameButtons__Disabled : c.gameButtons__Disabled}>
+                                    СТАРТ
+                                </div>
+                                <div style={{backgroundColor: 'red'}}
+                                     className={width === 1920 ? c1920.gameButtons__Active : c.gameButtons__Active}
+                                     onClick={(e) => stopGame()}>
+                                    СТОП
+                                </div>
+                            </div>
+                            :
+                            <div className={width === 1920 ? c1920.gameButtons : c.gameButtons}>
+                                <div style={{backgroundColor: 'green'}}
+                                     className={width === 1920 ? c1920.gameButtons__Active : c.gameButtons__Active}
+                                     onClick={(e) => startGame()}>
+                                    СТАРТ
+                                </div>
+                                <div style={{backgroundColor: 'red'}}
+                                     className={width === 1920 ? c1920.gameButtons__Disabled : c.gameButtons__Disabled}>
+                                    СТОП
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    :
                     <div className={width === 1920 ? c1920.gameButtons : c.gameButtons}>
                         <div style={{backgroundColor: 'green'}} className={width === 1920 ? c1920.gameButtons__Disabled : c.gameButtons__Disabled}>
                             СТАРТ
                         </div>
                         <div style={{backgroundColor: 'red'}}
-                            className={classNames(width === 1920 ? c1920.gameButtons__Active : c.gameButtons__Active, width === 1920
-                                ? c1920.gameButtons__stop : c.gameButtons__stop)}
-                            onClick={(e) => stopGame()}>
-                            СТОП
-                        </div>
-                    </div>
-                    :
-                    <div className={width === 1920 ? c1920.gameButtons : c.gameButtons}>
-                        <div style={{backgroundColor: 'green'}} className={width === 1920 ? c1920.gameButtons__Active : c.gameButtons__Active}
-                             onClick={(e) => startGame()}>
-                            СТАРТ
-                        </div>
-                        <div style={{backgroundColor: 'red'}}
-                            className={classNames(width === 1920 ? c1920.gameButtons__Disabled : c.gameButtons__Disabled, width === 1920
-                                ? c1920.gameButtons__stop : c.gameButtons__stop)}>
+                             className={classNames(width === 1920 ? c1920.gameButtons__Disabled : c.gameButtons__Disabled, width === 1920
+                                 ? c1920.gameButtons__stop : c.gameButtons__stop)}>
                             СТОП
                         </div>
                     </div>
                 }
+
+
             </div>}
             <div className={width === 1920 ? c1920.tablo : c.tablo}>
                 <Tablo isShowLog={isShowLog} gameTempLog={gameTempLog} gameConsLog={gameConsLog}

@@ -24,7 +24,7 @@ let getStadium = (host) => {
 }
 
 
-router.get('/:gameNumber', function (req, res) {
+router.get('/:gameNumber', cors(), function (req, res) {
     try {
         let requrl = getHost(req.get('host'))
 
@@ -50,7 +50,7 @@ router.get('/:gameNumber', function (req, res) {
     }
 });
 
-router.get('/homelogo/:gameNumber/:dateNow', function (req, res) {
+router.get('/homelogo/:gameNumber/:dateNow', cors(), function (req, res) {
     try {
         let requrl = getHost(req.get('host'))
 
@@ -86,7 +86,7 @@ router.get('/guestslogo/:gameNumber/:dateNow', function (req, res) {
 });
 
 
-router.post('/homelogo/:gameNumber', async function (req, res) {
+router.post('/homelogo/:gameNumber', cors(), async function (req, res) {
     try {
         let requrl = getHost(req.get('host'))
 
@@ -124,7 +124,7 @@ router.post('/homelogo/:gameNumber', async function (req, res) {
     }
 });
 
-router.post('/guestslogo/:gameNumber', function (req, res) {
+router.post('/guestslogo/:gameNumber', cors(), function (req, res) {
     try {
         let requrl = getHost(req.get('host'))
 

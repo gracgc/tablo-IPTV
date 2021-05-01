@@ -116,31 +116,34 @@ const Cameras = (props) => {
                 <div className={width === 1920 ? c1920.addButton : c.addButton} onClick={e => setShowAddCameraForm(true)}>
                     +
                 </div>
-                {paginatorN > 0 ?
-                    <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
-                        changePaginatorN('-')
-                    }}>
-                        ←
-                    </div> :
-                    <div className={width === 1920 ? c1920.paginator : c.paginator} style={{opacity: '0.5'}}>
-                        ←
+                {videos.length !== 0 && <div style={{display: 'inline-flex'}}>
+                    {paginatorN > 0 ?
+                        <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
+                            changePaginatorN('-')
+                        }}>
+                            ←
+                        </div> :
+                        <div className={width === 1920 ? c1920.paginator : c.paginator} style={{opacity: '0.5'}}>
+                            ←
+                        </div>
+                    }
+                    <div className={width === 1920 ? c1920.cameras : c.cameras}>
+                        {videos.slice(paginatorScale * paginatorN, paginatorScale + paginatorScale * paginatorN)
+                            .map((v, index) =>
+                                <Camera v={v} index={index} paginatorForIndex={paginatorN * paginatorScale} currentVideoStream={currentVideoStream} setCurrentVideo={setCurrentVideo}/>
+                            )}
                     </div>
-                }
-                <div className={width === 1920 ? c1920.cameras : c.cameras}>
-                    {videos.slice(paginatorScale * paginatorN, paginatorScale + paginatorScale * paginatorN)
-                        .map((v, index) =>
-                            <Camera v={v} index={index} paginatorForIndex={paginatorN * paginatorScale} currentVideoStream={currentVideoStream} setCurrentVideo={setCurrentVideo}/>
-                        )}
-                </div>
-                {videos.slice(paginatorScale * (paginatorN + 1), paginatorScale + paginatorScale * (paginatorN + 1)).length !== 0 ?
-                    <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
-                        changePaginatorN('+')
-                    }}>
-                        →
-                    </div> :
-                    <div className={width === 1920 ? c1920.paginator : c.paginator} style={{opacity: '0.5'}}>
-                        →
-                    </div>}
+                    {videos.slice(paginatorScale * (paginatorN + 1), paginatorScale + paginatorScale * (paginatorN + 1)).length !== 0 ?
+                        <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
+                            changePaginatorN('+')
+                        }}>
+                            →
+                        </div> :
+                        <div className={width === 1920 ? c1920.paginator : c.paginator} style={{opacity: '0.5'}}>
+                            →
+                        </div>}
+                </div>}
+
             </div>
 
             {showAddCameraForm && <AddCameraReduxForm onSubmit={onSubmit} setShowAddCameraForm={setShowAddCameraForm}/>}

@@ -9,11 +9,11 @@ import {
     getVideosMP4,
     setVideosMP4DataAC
 } from "../../../../redux/videos_reducer";
-import {Field, reduxForm, reset} from "redux-form";
+import {Field, reduxForm, reset, stopSubmit} from "redux-form";
 import {Input} from "../../../../common/FormsControls/FormsControls";
 import Button from "@material-ui/core/Button";
 import * as axios from "axios";
-import {requiredShort} from "../../../../utils/validators";
+import {maxTime60, requiredShort} from "../../../../utils/validators";
 import VideoMP4 from "./VideoMP4";
 
 
@@ -21,10 +21,15 @@ const AddVideoMP4 = (props) => {
 
     let width = window.innerWidth;
 
+    // props.videos.find(v => v.videoName === value)
+
+
+
     return (
 
         <div className={width === 1920 ? c1920.addVideoForm : c.addVideoForm}>
-            <div className={width === 1920 ? c1920.exitForm : c.exitForm} onClick={e => props.setShowAddVideoForm(false)}>
+            <div className={width === 1920 ? c1920.exitForm : c.exitForm}
+                 onClick={e => props.setShowAddVideoForm(false)}>
                 ✘
             </div>
             <form onSubmit={props.handleSubmit}>
@@ -40,6 +45,7 @@ const AddVideoMP4 = (props) => {
                         <input
                             name="videoMP4"
                             type="file"
+                            accept=".mp4"
                             hidden
                             onChange={(e) => props.setVideoMP4(e.target.files[0])}
                         />
@@ -81,7 +87,6 @@ const VideosMP4 = (props) => {
     const [showAddVideoForm, setShowAddVideoForm] = useState(false);
 
 
-
     useEffect(() => {
         dispatch(getVideosMP4());
 
@@ -98,13 +103,13 @@ const VideosMP4 = (props) => {
 
         videoFormData.append('file', videoMP4);
 
-
-        axios.post(`/api/videos/mp4/${videoName}`, videoFormData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-
+        if (videoMP4.type.includes('mp4')) {
+            axios.post(`/api/videos/mp4/${videoName}`, videoFormData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        }
     };
 
     let changePaginatorN = (symbol) => {
@@ -116,11 +121,15 @@ const VideosMP4 = (props) => {
     };
 
     const onSubmit = (formData) => {
-        if (formData.videoName !== undefined && videoMP4) {
+        let sameName = videos.find(v => v.videoName === formData.videoName)
+        if (videoMP4 && !sameName) {
             uploadVideo(formData.videoName);
             dispatch(reset('addVideo'));
             setShowAddVideoForm(false)
+        } else {
+            dispatch(stopSubmit('addVideo', {videoName: 'Такое название уже есть'}))
         }
+
     };
 
 
@@ -128,38 +137,41 @@ const VideosMP4 = (props) => {
         <div className={width === 1920 ? c1920.camerasBlock : c.camerasBlock}>
             <div className={width === 1920 ? c1920.title : c.title}>Видеоматериалы</div>
             <div style={{display: 'inline-flex'}}>
-                <div className={width === 1920 ? c1920.addButton : c.addButton} onClick={e => setShowAddVideoForm(true)}>
+                <div className={width === 1920 ? c1920.addButton : c.addButton}
+                     onClick={e => setShowAddVideoForm(true)}>
                     +
                 </div>
-                {paginatorN > 0 ?
-                    <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
-                        changePaginatorN('-')
-                    }}>
-                        ←
-                    </div> :
-                    <div className={width === 1920 ? c1920.paginator : c.paginator} style={{opacity: '0.5'}}>
-                        ←
+                {videos.length !== 0 && <div style={{display: 'inline-flex'}}>
+                    {paginatorN > 0 ?
+                        <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
+                            changePaginatorN('-')
+                        }}>
+                            ←
+                        </div> :
+                        <div className={width === 1920 ? c1920.paginator : c.paginator} style={{opacity: '0.5'}}>
+                            ←
+                        </div>
+                    }
+                    <div className={width === 1920 ? c1920.videos : c.videos}>
+                        {videos.slice(paginatorScale * paginatorN, paginatorScale + paginatorScale * paginatorN)
+                            .map((v, index) =>
+                                <VideoMP4 v={v} index={index} setIsMouseDownOverDrop={props.setIsMouseDownOverDrop}
+                                          paginatorForIndex={paginatorN * paginatorScale}/>
+                            )}
                     </div>
-                }
-                <div className={width === 1920 ? c1920.videos : c.videos}>
-                    {videos.slice(paginatorScale * paginatorN, paginatorScale + paginatorScale * paginatorN)
-                        .map((v, index) =>
-                            <VideoMP4 v={v} index={index} setIsMouseDownOverDrop={props.setIsMouseDownOverDrop}
-                                      paginatorForIndex={paginatorN * paginatorScale}/>
-                        )}
-                </div>
-                {videos.slice(paginatorScale * (paginatorN + 1), paginatorScale + paginatorScale * (paginatorN + 1)).length !== 0 ?
-                    <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
-                        changePaginatorN('+')
-                    }}>
-                        →
-                    </div> :
-                    <div className={width === 1920 ? c1920.paginator : c.paginator} style={{opacity: '0.5'}}>
-                        →
-                    </div>}
+                    {videos.slice(paginatorScale * (paginatorN + 1), paginatorScale + paginatorScale * (paginatorN + 1)).length !== 0 ?
+                        <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
+                            changePaginatorN('+')
+                        }}>
+                            →
+                        </div> :
+                        <div className={width === 1920 ? c1920.paginator : c.paginator} style={{opacity: '0.5'}}>
+                            →
+                        </div>}
+                </div>}
             </div>
             {showAddVideoForm && <AddVideoReduxForm onSubmit={onSubmit} setShowAddVideoForm={setShowAddVideoForm}
-                                                    videoMP4={videoMP4} setVideoMP4={setVideoMP4}/>}
+                                                    videoMP4={videoMP4} setVideoMP4={setVideoMP4} videos={videos}/>}
 
         </div>
     )

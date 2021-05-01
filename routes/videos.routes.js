@@ -493,7 +493,7 @@ router.get('/mp4/:videoName', cors(), function (req, res) {
 });
 
 
-router.post('/mp4/:videoName', authMW, cors(), async function (req, res) {
+router.post('/mp4/:videoName', cors(), async function (req, res) {
     try {
         let requrl = getHost(req.get('host'))
 
@@ -504,6 +504,7 @@ router.post('/mp4/:videoName', authMW, cors(), async function (req, res) {
         const io = req.app.locals.io;
 
         let videoName = req.params.videoName;
+
 
 
         let video = req.files.file;

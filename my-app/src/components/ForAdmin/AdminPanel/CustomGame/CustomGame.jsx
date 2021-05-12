@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getTeams} from "../../../../redux/teams_reducer";
 import {Input} from "../../../../common/FormsControls/FormsControls";
 import {gameAPI, tabloAPI} from "../../../../api/api";
-import {customGame} from "../../../../redux/games_reducer";
+import {customGame, getGame} from "../../../../redux/games_reducer";
 import {maxTime, maxTime20, maxTime60, required, requiredShort} from "../../../../utils/validators";
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router";
@@ -25,6 +25,10 @@ const CustomGameForm = (props) => {
 
     const teams = useSelector(
         state => state.teamsPage.teams
+    );
+
+    const gameData = useSelector(
+        state => state.gamesPage.gameData
     );
 
     let dispatch = useDispatch();
@@ -48,6 +52,7 @@ const CustomGameForm = (props) => {
 
     useEffect(() => {
         dispatch(getTeams(props.gameNumber));
+        dispatch(getGame(props.gameNumber));
         homeTeamGamers.map(g => {
                 props.dispatch(change('customGame', `homeGamerName${g.id}`, g.fullName))
                 props.dispatch(change('customGame', `homeGamerNumber${g.id}`, g.gamerNumber))
@@ -68,9 +73,12 @@ const CustomGameForm = (props) => {
             setPeriod(r.period)
             props.dispatch(change('customGame', 'period', r.period));
         })
+        props.dispatch(change('customGame', 'gameName', gameData.gameName));
         props.dispatch(change('customGame', 'min', minutesTimer));
         props.dispatch(change('customGame', 'sec', secondsTimer));
+
     }, [timeMemTimer]);
+
 
     const choosePeriod = (period) => {
         setPeriod(period)
@@ -107,6 +115,12 @@ const CustomGameForm = (props) => {
                                component={Input}/>
                     </div>
                     <div className={width === 1920 ? c1920.customTime : c.customTime}>
+                        <div className={width === 1920 ? c1920.namePanel : c.namePanel}>
+                            <div className={width === 1920 ? c1920.panelName : c.panelName}>Название игры</div>
+                            <Field placeholder={'Название игры'} name={'gameName'}
+                                   validate={[required]}
+                                   component={Input}/>
+                        </div>
                         <div className={width === 1920 ? c1920.periodPanel : c.periodPanel}>
                             <div className={width === 1920 ? c1920.panelName : c.panelName}>Периоды</div>
                             {periods.map(p => <span className={period === p ? c.choosenPeriod : c.periods}
@@ -132,19 +146,27 @@ const CustomGameForm = (props) => {
                                 <PickColor setColor={props.setColorHome} color={props.colorHome}/>
                             </div>
 
+                            <div style={{display: 'inline-flex'}}>
+                                <Button
+                                    variant="contained"
+                                    component="label"
+                                >
+                                    Изменить лого
+                                    <input
+                                        name="homeLogo"
+                                        type="file"
+                                        hidden
+                                        onChange={(e) => props.setHomeLogo(e.target.files[0])}
+                                    />
+                                </Button>
 
-                            <Button
-                                variant="contained"
-                                component="label"
-                            >
-                                Изменить лого
-                                <input
-                                    name="homeLogo"
-                                    type="file"
-                                    hidden
-                                    onChange={(e) => props.setHomeLogo(e.target.files[0])}
-                                />
-                            </Button>
+                                <img style={{marginLeft: 25}} src={homeTeam.logo} alt=""
+                                     width={width === 1920 ? 50 : 40}
+                                     height={width === 1920 ? 50 : 40}/>
+
+
+                            </div>
+
                             {props.homeLogo &&
                             <span style={{marginLeft: '10px', color: 'green'}}>Лого загружен</span>}
                             <div className={width === 1920 ? c1920.panelName : c.panelName}>Игроки</div>
@@ -196,19 +218,24 @@ const CustomGameForm = (props) => {
                                        component={Input}/>
                                 <PickColor setColor={props.setColorGuests} color={props.colorGuests}/>
                             </div>
+                            <div style={{display: 'inline-flex'}}>
+                                <Button
+                                    variant="contained"
+                                    component="label"
+                                >
+                                    Изменить лого
+                                    <input
+                                        name="guestsLogo"
+                                        type="file"
+                                        hidden
+                                        onChange={(e) => props.setGuestsLogo(e.target.files[0])}
+                                    />
+                                </Button>
+                                <img style={{marginLeft: 25}} src={guestsTeam.logo} alt=""
+                                     width={width === 1920 ? 50 : 40}
+                                     height={width === 1920 ? 50 : 40}/>
+                            </div>
 
-                            <Button
-                                variant="contained"
-                                component="label"
-                            >
-                                Изменить лого
-                                <input
-                                    name="guestsLogo"
-                                    type="file"
-                                    hidden
-                                    onChange={(e) => props.setGuestsLogo(e.target.files[0])}
-                                />
-                            </Button>
                             {props.guestsLogo &&
                             <span style={{marginLeft: '10px', color: 'green'}}>Лого загружен</span>}
                             <div className={width === 1920 ? c1920.panelName : c.panelName}>Игроки</div>
@@ -307,9 +334,6 @@ const CustomGame = (props) => {
     let [colorGuests, setColorGuests] = useState(guestsTeam.color)
 
 
-
-
-
     let uploadLogo = (teamType, logo) => {
 
         let logoFormData = new FormData;
@@ -329,8 +353,7 @@ const CustomGame = (props) => {
 
     const onSubmit = (formData) => {
 
-
-        dispatch(customGame(gameNumber, formData.period, (formData.min * 60000 + formData.sec * 1000),
+        dispatch(customGame(gameNumber, formData.gameName, formData.period, (formData.min * 60000 + formData.sec * 1000),
             formData.homeName, colorHome,
             homeTeamGamers.map(g => ({
                 id: g.id,
@@ -395,20 +418,20 @@ const CustomGame = (props) => {
             <div className={width === 1920 ? c1920.menuHeader : c.menuHeader}>
                 <div className={width === 1920 ? c1920.back : c.back}>
                     <img src={logo} alt="" width={width === 1920 ? 70 : 50} height={width === 1920 ? 70 : 50}/>
-                    <NavLink to="/">
+                    <NavLink to={`/adminPanel/${gameNumber}`}>
                         <div className={width === 1920 ? c1920.backButton : c.backButton}>
-                            ВЕРНУТЬСЯ В МЕНЮ
+                            НАЗАД
                         </div>
                     </NavLink>
                 </div>
                 <div className={width === 1920 ? c1920.menuTitle : c.menuTitle}>ЗАДАЙТЕ ПАРАМЕТРЫ</div>
                 <div></div>
                 <div className={width === 1920 ? c1920.back : c.back}>
-                    <NavLink to={`/adminPanel/${gameNumber}`}>
-                        <div className={width === 1920 ? c1920.backButton : c.backButton}>
-                            НАЗАД В АДМИН ПАНЕЛЬ
-                        </div>
-                    </NavLink>
+                    {/*<NavLink to={`/adminPanel/${gameNumber}`}>*/}
+                    {/*    <div className={width === 1920 ? c1920.backButton : c.backButton}>*/}
+                    {/*        НАЗАД*/}
+                    {/*    </div>*/}
+                    {/*</NavLink>*/}
                 </div>
             </div>
             <div className={width === 1920 ? c1920.customGamePanel : c.customGamePanel}>

@@ -163,7 +163,7 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
         let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
-
+        let gameName = req.body.gameName;
         let period = req.body.period;
         let time = req.body.time;
         let homeName = req.body.homeName;
@@ -179,7 +179,7 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
             time = 1200000
         }
 
-
+        DB.gameInfo.gameName = gameName
         DB.gameInfo.gameTime.period = period
         DB.gameInfo.gameTime.smallOvertime = 0
         DB.gameInfo.gameTime.bigOvertime = 0

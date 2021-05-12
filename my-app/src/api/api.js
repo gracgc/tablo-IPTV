@@ -147,8 +147,9 @@ export const gameAPI = {
                 return responce.data
             })
     },
-    customGame(gameNumber, period, time, homeName, homeColor, homeGamers, guestsName, guestsColor, guestsGamers, additionalHomeGamers, additionalGuestsGamers) {
+    customGame(gameNumber, gameName, period, time, homeName, homeColor, homeGamers, guestsName, guestsColor, guestsGamers, additionalHomeGamers, additionalGuestsGamers) {
         return instance.put(`game/${gameNumber}`, {
+            gameName,
             period,
             time,
             homeName,

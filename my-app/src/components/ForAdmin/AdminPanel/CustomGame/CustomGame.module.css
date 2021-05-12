@@ -81,7 +81,7 @@ a {
 
 .customTime {
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 35% 30% 35%;
 }
 
 .timePanel {
@@ -91,6 +91,12 @@ a {
 }
 
 .periodPanel {
+    padding-top: 10px;
+    padding-left: 25px;
+    font-size: 22px;
+}
+
+.namePanel {
     padding-top: 10px;
     padding-left: 25px;
     font-size: 22px;

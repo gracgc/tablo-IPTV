@@ -72,8 +72,9 @@ const TeamInfo = (props) => {
                  style={{textAlign: props.teamType === 'guests' && 'right'}}>
                 <div style={{display: 'inline-flex'}}>
                     {props.teamType === 'home' &&
-                    <img src={props.logo} alt="" width={width === 1920 ? 180 : 120}
-                         height={width === 1920 ? 180 : 120}/>
+                        <img src={props.logo} alt="" width={width === 1920 ? 180 : 120}
+                                            height={width === 1920 ? 180 : 120}/>
+
                     }
 
                     <div style={{marginLeft: 30, marginRight: 30, textAlign: props.teamType === 'guests' && 'right'}}>

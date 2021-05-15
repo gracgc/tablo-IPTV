@@ -120,7 +120,7 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
     }
 });
 
-router.post('/temp/:gameNumber', authMW, cors(), function (req, res) {
+router.put('/temp/:gameNumber', authMW, cors(), function (req, res) {
     try {
         let requrl = getHost(req.get('host'))
 
@@ -128,20 +128,21 @@ router.post('/temp/:gameNumber', authMW, cors(), function (req, res) {
 
         let gameNumber = req.params.gameNumber;
 
+
         let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         let newLogItem = req.body.newLogItem;
 
-        let newLog = {
-            item: newLogItem
-        };
 
-        DB.logData.tabloLog.tempLog.push(newLog);
+
+
+        DB.logData.tabloLog.tempLog = newLogItem
+
 
         const io = req.app.locals.io;
 
-        io.to(stadium).emit(`getLog${gameNumber}`, DB.logData);
+        io.to(stadium).emit(`getTempLog${gameNumber}`, DB.logData.tabloLog.tempLog);
 
         let json = JSON.stringify(DB);
 
@@ -236,7 +237,7 @@ router.get('/export/:gameNumber', authMW, cors(), function (req, res) {
         let logTXT = `События игры ${DB.gameInfo.gameName}` + '\n' + '\n'
 
         DB.logData.gameLog.forEach((value) => {
-            logTXT += value.item  + '\n'
+            logTXT += value.item + '\n'
         })
 
         fs.writeFileSync(path.join(__dirname + `/DBs/DB_${stadium}/logTXT/${DB.gameInfo.gameName}_${gameNumber}_log.txt`), logTXT, 'utf8');
@@ -250,8 +251,6 @@ router.get('/export/:gameNumber', authMW, cors(), function (req, res) {
         console.log(e)
     }
 });
-
-
 
 
 router.options('/', cors());

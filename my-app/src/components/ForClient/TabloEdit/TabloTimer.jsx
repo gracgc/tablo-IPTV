@@ -199,8 +199,7 @@ const TabloTimer = (props) => {
 
             {props.preset === 1 &&
             <div>
-                {props.isShowLog ? <div className={c.tempLog}>{props.gameTempLog}</div> :
-                    <div className={c.tempLog}></div>}
+                <div className={c.tempLog}>{props.isShowLog && props.gameTempLog}</div>
 
                 <div className={c.timeout}>
                     {(isRunningServerTimeout && timeMemTimerTimeout !== 0) &&

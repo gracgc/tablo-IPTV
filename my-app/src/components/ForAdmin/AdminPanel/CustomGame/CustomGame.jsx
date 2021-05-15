@@ -105,6 +105,9 @@ const CustomGameForm = (props) => {
         }
     };
 
+    let [homeImgURL, setHomeImgURL] = useState()
+    let [guestsImgURL, setGuestsImgURL] = useState()
+
 
     return (
         <div>
@@ -156,11 +159,14 @@ const CustomGameForm = (props) => {
                                         name="homeLogo"
                                         type="file"
                                         hidden
-                                        onChange={(e) => props.setHomeLogo(e.target.files[0])}
+                                        onChange={(e) => {
+                                            props.setHomeLogo(e.target.files[0]);
+                                            setHomeImgURL(URL.createObjectURL(e.target.files[0]));
+                                        }}
                                     />
                                 </Button>
 
-                                <img style={{marginLeft: 25}} src={homeTeam.logo} alt=""
+                                <img style={{marginLeft: 25}} src={homeImgURL || homeTeam.logo} alt=""
                                      width={width === 1920 ? 50 : 40}
                                      height={width === 1920 ? 50 : 40}/>
 
@@ -228,10 +234,13 @@ const CustomGameForm = (props) => {
                                         name="guestsLogo"
                                         type="file"
                                         hidden
-                                        onChange={(e) => props.setGuestsLogo(e.target.files[0])}
+                                        onChange={(e) => {
+                                            props.setGuestsLogo(e.target.files[0])
+                                            setGuestsImgURL(URL.createObjectURL(e.target.files[0]));
+                                        }}
                                     />
                                 </Button>
-                                <img style={{marginLeft: 25}} src={guestsTeam.logo} alt=""
+                                <img style={{marginLeft: 25}} src={guestsImgURL || guestsTeam.logo} alt=""
                                      width={width === 1920 ? 50 : 40}
                                      height={width === 1920 ? 50 : 40}/>
                             </div>

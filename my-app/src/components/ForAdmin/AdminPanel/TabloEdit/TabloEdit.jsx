@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import {useDispatch, useSelector} from "react-redux";
 import Tablo from "./Tablo";
 import {getTeams, setTeamsAC, teamGoal} from "../../../../redux/teams_reducer";
-import {addNewLog, addNewTempLog} from "../../../../redux/log_reducer";
+import {addNewLog, addNewTempLog, addTempTabloLogAC} from "../../../../redux/log_reducer";
 import {compose} from "redux";
 import {withRouter} from "react-router-dom";
 import socket from "../../../../socket/socket";
@@ -16,13 +16,11 @@ import {setDifAC, setPingAC} from "../../../../redux/dif_reducer";
 import Dif from "../../../dif/Dif";
 
 
-
 const TabloEdit = (props) => {
 
     let lag = +window.localStorage.getItem('lag')
 
     let [tupit, setTupit] = useState(lag)
-
 
 
     useEffect(() => {
@@ -43,7 +41,6 @@ const TabloEdit = (props) => {
     );
 
 
-
     const homeTeam = useSelector(
         (state => state.teamsPage.teams.find(t => t.teamType === 'home'))
     );
@@ -61,17 +58,12 @@ const TabloEdit = (props) => {
     );
 
     const gameTempLog = useSelector(
-        state => state.logPage.logData.tabloLog.tempLog[state.logPage.logData.tabloLog.tempLog.length - 1].item
+        state => state.logPage.logData.tabloLog.tempLog
     );
 
     const gameConsLog = useSelector(
         state => state.logPage.logData.tabloLog.consLog
     );
-
-    const gameTempLogDep = useSelector(
-        state => state.logPage.logData.tabloLog.tempLog
-    );
-
 
 
     let [isShowLog, setIsShowLog] = useState(false);
@@ -79,9 +71,6 @@ const TabloEdit = (props) => {
     let [isRunningServer, setIsRunningServer] = useState(false);
 
     let [isRunningServerTimeout, setIsRunningServerTimeout] = useState(false);
-
-
-
 
 
     let [period, setPeriod] = useState();
@@ -181,13 +170,16 @@ const TabloEdit = (props) => {
     }, []);
 
     useEffect(() => {
-        setIsShowLog(true);
-        setTimeout(() => {
-            setIsShowLog(false);
-        }, 5000)
-    }, [gameTempLogDep.length]);
+        socket.on(`getTempLog${gameNumber}`, log => {
+                dispatch(addTempTabloLogAC(log))
+                setIsShowLog(true);
+                setTimeout(() => {
+                    setIsShowLog(false);
+                }, 5000)
+            }
+        );
 
-
+    }, []);
 
 
     useEffect(() => {
@@ -296,8 +288,6 @@ const TabloEdit = (props) => {
     };
 
 
-
-
     return (
         <div className={width === 1920 ? c1920.tabloEdit : c.tabloEdit}>
             {props.history.location.pathname.indexOf('videoAdmin') === -1 &&
@@ -332,7 +322,8 @@ const TabloEdit = (props) => {
                     </div>
                     :
                     <div className={width === 1920 ? c1920.gameButtons : c.gameButtons}>
-                        <div style={{backgroundColor: 'green'}} className={width === 1920 ? c1920.gameButtons__Disabled : c.gameButtons__Disabled}>
+                        <div style={{backgroundColor: 'green'}}
+                             className={width === 1920 ? c1920.gameButtons__Disabled : c.gameButtons__Disabled}>
                             СТАРТ
                         </div>
                         <div style={{backgroundColor: 'red'}}

@@ -49,6 +49,9 @@ const CreateGameForm = (props) => {
         setMenuIsOpen(false);
     };
 
+    let [homeImgURL, setHomeImgURL] = useState()
+    let [guestsImgURL, setGuestsImgURL] = useState()
+
     return (
         <div>
             <form onSubmit={props.handleSubmit}>
@@ -95,21 +98,28 @@ const CreateGameForm = (props) => {
                                 </div>
 
                             </div>
-                            <Button
-                                variant="contained"
-                                component="label"
-                            >
-                                Добавить лого
-                                <input
-                                    name="homeLogo"
-                                    type="file"
-                                    hidden
-                                    onChange={(e) => props.setHomeLogo(e.target.files[0])}
-                                />
-                            </Button>
-                            {!props.homeLogo
-                                ? <span style={{marginLeft: '10px', color: 'red'}}>Добавьте лого!</span>
-                                : <span style={{marginLeft: '10px', color: 'green'}}>Лого загружен</span>}
+                            <div style={{display: 'inline-flex'}}>
+                                <Button
+                                    variant="contained"
+                                    component="label"
+                                >
+                                    Добавить лого
+                                    <input
+                                        name="homeLogo"
+                                        type="file"
+                                        hidden
+                                        onChange={(e) => {
+                                            props.setHomeLogo(e.target.files[0]);
+                                            setHomeImgURL(URL.createObjectURL(e.target.files[0]));
+                                        }}
+                                    />
+                                </Button>
+                                {!props.homeLogo
+                                    ? <span style={{marginLeft: '10px', color: 'red'}}>Добавьте лого</span>
+                                    : <img style={{marginLeft: 25}} src={homeImgURL} alt=""
+                                           width={width === 1920 ? 50 : 40}
+                                           height={width === 1920 ? 50 : 40}/>}
+                            </div>
                             <div className={width === 1920 ? c1920.formTitle : c.formTitle}>Игроки</div>
                             <div className={width === 1920 ? c1920.homeGamers : c.homeGamers}>
                                 {props.numberOfHomePlayers.map(n => <div
@@ -149,21 +159,28 @@ const CreateGameForm = (props) => {
 
                                 </div>
                             </div>
-                            <Button
-                                variant="contained"
-                                component="label"
-                            >
-                                Добавить лого
-                                <input
-                                    name="guestsLogo"
-                                    type="file"
-                                    hidden
-                                    onChange={(e) => props.setGuestsLogo(e.target.files[0])}
-                                />
-                            </Button>
-                            {!props.guestsLogo
-                                ? <span style={{marginLeft: '10px', color: 'red'}}>Добавьте лого!</span>
-                                : <span style={{marginLeft: '10px', color: 'green'}}>Лого загружен</span>}
+                            <div style={{display: 'inline-flex'}}>
+                                <Button
+                                    variant="contained"
+                                    component="label"
+                                >
+                                    Добавить лого
+                                    <input
+                                        name="guestsLogo"
+                                        type="file"
+                                        hidden
+                                        onChange={(e) => {
+                                            props.setGuestsLogo(e.target.files[0]);
+                                            setGuestsImgURL(URL.createObjectURL(e.target.files[0]));
+                                        }}
+                                    />
+                                </Button>
+                                {!props.guestsLogo
+                                    ? <span style={{marginLeft: '10px', color: 'red'}}>Добавьте лого</span>
+                                    : <img style={{marginLeft: 25}} src={guestsImgURL} alt=""
+                                           width={width === 1920 ? 50 : 40}
+                                           height={width === 1920 ? 50 : 40}/>}
+                            </div>
                             <div className={width === 1920 ? c1920.formTitle : c.formTitle}>Игроки</div>
                             <div className={width === 1920 ? c1920.homeGamers : c.homeGamers}>
                                 {props.numberOfGuestsPlayers.map(n => <div
@@ -255,8 +272,6 @@ const CreateGame = (props) => {
     useEffect(() => {
         dispatch(getSavedGames());
     }, []);
-
-
 
 
     const onSubmit = (formData) => {

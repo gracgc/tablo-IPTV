@@ -15,9 +15,7 @@ let initialState = {
             {item: "", id: 0}
         ],
         tabloLog: {
-            tempLog: [
-                {item: ""}
-            ],
+            tempLog: "",
             consLog: [
                 {item: ""}
             ]
@@ -66,7 +64,7 @@ const logReducer = (state = initialState, action) => {
                     ...state.logData,
                     tabloLog: {
                         ...state.logData.tabloLog,
-                        tempLog: [...state.logData.tabloLog.tempLog, action.newLogItem]
+                        tempLog: action.newLogItem
                     }
                 }
             };

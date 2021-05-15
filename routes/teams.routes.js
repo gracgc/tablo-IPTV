@@ -36,10 +36,9 @@ router.get('/:gameNumber', cors(), function (req, res) {
         let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
-        if (DB.gameInfo.gameName !== 'Быстрая игра') {
-            DB.teams.find(t => t.teamType === 'home').logo = `http://${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
-            DB.teams.find(t => t.teamType === 'guests').logo = `http://${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
-        }
+
+        DB.teams.find(t => t.teamType === 'home').logo = `http://${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').logo = `http://${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
 
         DB.teams.resultCode = 0;
@@ -61,6 +60,8 @@ router.get('/homelogo/:gameNumber/:dateNow', cors(), function (req, res) {
         let img = path.join(__dirname + `/DBs/DB_${stadium}/img/home_logo_${gameNumber}.png`);
 
         res.sendFile(img);
+
+
 
     } catch (e) {
         console.log(e)
@@ -85,6 +86,27 @@ router.get('/guestslogo/:gameNumber/:dateNow', function (req, res) {
     }
 });
 
+router.get('/fastGameLogo/:gameNumber', cors(), async function (req, res) {
+    try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
+        let gameNumber = req.params.gameNumber;
+
+        fs.createReadStream(path.join(__dirname + `/PNG/logoFastGame.png`)).pipe(fs.createWriteStream(path.join(__dirname + `/DBs/DB_${stadium}/img/home_logo_${gameNumber}.png`)));
+
+        fs.createReadStream(path.join(__dirname + `/PNG/logoFastGame.png`)).pipe(fs.createWriteStream(path.join(__dirname + `/DBs/DB_${stadium}/img/guests_logo_${gameNumber}.png`)));
+
+
+        res.send({resultCode: 0});
+
+
+    } catch (e) {
+        console.log(e)
+    }
+});
+
 
 router.post('/homelogo/:gameNumber', cors(), async function (req, res) {
     try {
@@ -96,7 +118,6 @@ router.post('/homelogo/:gameNumber', cors(), async function (req, res) {
 
 
         let img = req.files.file
-
 
 
         img.name = `home_logo_${gameNumber}.png`
@@ -136,7 +157,6 @@ router.post('/guestslogo/:gameNumber', cors(), function (req, res) {
         let img = req.files.file
 
 
-
         img.name = `guests_logo_${gameNumber}.png`
 
         img.mv(`${__dirname}/DBs/DB_${stadium}/img/${img.name}`)
@@ -156,7 +176,6 @@ router.post('/guestslogo/:gameNumber', cors(), function (req, res) {
         console.log(e)
     }
 });
-
 
 
 router.post('/:gameNumber', authMW, cors(), function (req, res) {
@@ -225,7 +244,6 @@ router.put('/gamerGoal/:gameNumber', authMW, cors(), function (req, res) {
         let stadium = getStadium(requrl)
 
         let gameNumber = req.params.gameNumber;
-
 
 
         let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_${gameNumber}.json`));

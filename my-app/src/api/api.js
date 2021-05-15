@@ -91,7 +91,7 @@ export const logAPI = {
             })
     },
     postTempLog(gameNumber, newLogItem) {
-        return instance.post(`log/temp/${gameNumber}`, {newLogItem})
+        return instance.put(`log/temp/${gameNumber}`, {newLogItem})
             .then(responce => {
                 return responce.data
             })

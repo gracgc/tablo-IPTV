@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import TabloClient from "./TabloClient";
 import {compose} from "redux";
 import {withRouter} from "react-router-dom";
-import {getLog, setLogDataAC} from "../../../redux/log_reducer";
+import {addTempTabloLogAC, getLog, setLogDataAC} from "../../../redux/log_reducer";
 import {getTeams, setTeamsAC} from "../../../redux/teams_reducer";
 import socket from "../../../socket/socket";
 import {tabloAPI} from "../../../api/api";
@@ -35,16 +35,13 @@ const TabloEditClient = (props) => {
         );
 
         const gameTempLog = useSelector(
-            state => state.logPage.logData.tabloLog.tempLog[state.logPage.logData.tabloLog.tempLog.length - 1].item
+            state => state.logPage.logData.tabloLog.tempLog
         );
 
         const gameConsLog = useSelector(
             state => state.logPage.logData.tabloLog.consLog
         );
 
-        const gameTempLogDep = useSelector(
-            state => state.logPage.logData.tabloLog.tempLog
-        );
 
 
         let [isShowLog, setIsShowLog] = useState(false);
@@ -82,11 +79,16 @@ const TabloEditClient = (props) => {
 
 
         useEffect(() => {
-            setIsShowLog(true);
-            setTimeout(() => {
-                setIsShowLog(false);
-            }, 5000)
-        }, [gameTempLogDep.length]);
+            socket.on(`getTempLog${gameNumber}`, log => {
+                    dispatch(addTempTabloLogAC(log))
+                setIsShowLog(true);
+                setTimeout(() => {
+                    setIsShowLog(false);
+                }, 5000)
+                }
+            );
+
+        }, []);
 
 
 

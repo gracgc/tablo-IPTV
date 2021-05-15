@@ -10,7 +10,8 @@ import socket from "../../../socket/socket";
 import {useConfirm} from "material-ui-confirm";
 import {useHistory} from "react-router";
 import {gameAPI, teamsAPI} from "../../../api/api";
-
+import logo from "./../../../content/img/logoFastGame.png"
+const axios = require('axios');
 
 
 
@@ -33,8 +34,6 @@ const SavedGames = (props) => {
     let history = useHistory();
 
 
-
-
     useEffect(() => {
         dispatch(getSavedGames());
         dispatch(getGameNumber())
@@ -51,10 +50,18 @@ const SavedGames = (props) => {
     }, []);
 
 
+
+
     let currentGame = savedGames.find(g => g.gameNumber === gameNumber)
 
 
     let lastGameNumber = savedGames.length
+
+    let uploadLogo = (teamType) => {
+
+        axios.get(`/api/teams/fastGameLogo/${lastGameNumber + 1}`)
+
+    }
 
 
     let createFastGame = async () => {
@@ -80,6 +87,8 @@ const SavedGames = (props) => {
         });
 
         let r = await createFastGame()
+
+        axios.get(`/api/teams/fastGameLogo/${lastGameNumber + 1}`)
 
         if (r.responseGame.resultCode === 0 && r.responseTeam.resultCode === 0) {
             dispatch(putGameNumber(lastGameNumber + 1))

@@ -97,11 +97,7 @@ router.post('/', authMW, cors(), function (req, res) {
             logData: {
                 gameLog: [],
                 tabloLog: {
-                    tempLog: [
-                        {
-                            item: ""
-                        }
-                    ],
+                    tempLog: "",
                     consLog: []
                 }
             },
@@ -271,11 +267,7 @@ router.put('/reset/:gameNumber', authMW, cors(), function (req, res) {
         DB.logData = {
             gameLog: [],
             tabloLog: {
-                tempLog: [
-                    {
-                        item: ""
-                    }
-                ],
+                tempLog: "",
                 consLog: []
             }
         }

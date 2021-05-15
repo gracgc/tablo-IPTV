@@ -1,27 +1,31 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f0b84115acaa6b9b5cb70c749fda4247",
+    "revision": "6fa4d6c3ebbcef536e69e661fe045cd1",
     "url": "/index.html"
   },
   {
-    "revision": "a9647b5fac535c454813",
-    "url": "/static/css/main.dd549de7.chunk.css"
+    "revision": "cb6ed260bfedd87cb8ef",
+    "url": "/static/css/main.02986a7c.chunk.css"
   },
   {
-    "revision": "37737279f751a488cbb8",
-    "url": "/static/js/2.349180c2.chunk.js"
+    "revision": "61b00385bf9825c19c07",
+    "url": "/static/js/2.fcc7aa2f.chunk.js"
   },
   {
     "revision": "793d54e67d44b21720550a1d7c35cc9d",
-    "url": "/static/js/2.349180c2.chunk.js.LICENSE.txt"
+    "url": "/static/js/2.fcc7aa2f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "a9647b5fac535c454813",
-    "url": "/static/js/main.4d341830.chunk.js"
+    "revision": "cb6ed260bfedd87cb8ef",
+    "url": "/static/js/main.02572531.chunk.js"
   },
   {
     "revision": "73635f645c271e35ff15",
     "url": "/static/js/runtime-main.83c3e0c4.js"
+  },
+  {
+    "revision": "b9bad3cfab4105b28585df9a28f3c9ba",
+    "url": "/static/media/logoFastGame.b9bad3cf.png"
   },
   {
     "revision": "2c5cd2ef6f6b690ccc564b29c376a895",

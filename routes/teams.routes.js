@@ -40,6 +40,9 @@ router.get('/:gameNumber', cors(), function (req, res) {
         DB.teams.find(t => t.teamType === 'home').logo = `http://${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `http://${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
+        DB.teams.find(t => t.teamType === 'home').goalGIF = `http://${req.get('host')}/api/teams/homeGoalGIF/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').goalGIF = `http://${req.get('host')}/api/teams/guestsGoalGIF/${gameNumber}/${Date.now()}`;
+
 
         DB.teams.resultCode = 0;
 
@@ -49,7 +52,7 @@ router.get('/:gameNumber', cors(), function (req, res) {
     }
 });
 
-router.get('/homelogo/:gameNumber/:dateNow', cors(), function (req, res) {
+router.get('/homeLogo/:gameNumber/:dateNow', cors(), function (req, res) {
     try {
         let requrl = getHost(req.get('host'))
 
@@ -68,7 +71,7 @@ router.get('/homelogo/:gameNumber/:dateNow', cors(), function (req, res) {
     }
 });
 
-router.get('/guestslogo/:gameNumber/:dateNow', function (req, res) {
+router.get('/guestsLogo/:gameNumber/:dateNow', function (req, res) {
     try {
         let requrl = getHost(req.get('host'))
 
@@ -77,6 +80,43 @@ router.get('/guestslogo/:gameNumber/:dateNow', function (req, res) {
         let gameNumber = req.params.gameNumber;
 
         let img = path.join(__dirname + `/DBs/DB_${stadium}/img/guests_logo_${gameNumber}.png`);
+
+
+        res.sendFile(img);
+
+    } catch (e) {
+        console.log(e)
+    }
+});
+
+router.get('/homeGoalGIF/:gameNumber/:dateNow', cors(), function (req, res) {
+    try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
+        let gameNumber = req.params.gameNumber;
+
+        let img = path.join(__dirname + `/DBs/DB_${stadium}/gif/home_goal_${gameNumber}.gif`);
+
+        res.sendFile(img);
+
+
+
+    } catch (e) {
+        console.log(e)
+    }
+});
+
+router.get('/guestsGoalGIF/:gameNumber/:dateNow', function (req, res) {
+    try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
+        let gameNumber = req.params.gameNumber;
+
+        let img = path.join(__dirname + `/DBs/DB_${stadium}/gif/guests_goal_${gameNumber}.gif`);
 
 
         res.sendFile(img);
@@ -292,6 +332,7 @@ router.put('/teamGoal/:gameNumber', authMW, cors(), function (req, res) {
 
         let gameNumber = req.params.gameNumber;
 
+        const io = req.app.locals.io;
 
         let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
@@ -317,12 +358,16 @@ router.put('/teamGoal/:gameNumber', authMW, cors(), function (req, res) {
 
         res.send({resultCode: 0})
 
-        const io = req.app.locals.io;
+
 
         DB.teams.find(t => t.teamType === 'home').logo = `http://${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `http://${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
         io.to(stadium).emit(`getTeams${gameNumber}`, DB.teams);
+
+        if (DB.gameInfo.gameTime.isRunning && symbol === '+') {
+            io.to(stadium).emit(`switchTimer${gameNumber}`, '');
+        }
 
     } catch (e) {
         console.log(e)
@@ -458,6 +503,8 @@ router.put('/penalty/:gameNumber', authMW, cors(), function (req, res) {
         console.log(e)
     }
 });
+
+
 
 
 router.options('/', cors());

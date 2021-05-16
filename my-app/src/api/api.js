@@ -375,5 +375,10 @@ export const videosAPI = {
             timeDif,
             timeMem
         })
+    },
+    playGoalGIF(gameNumber, teamType) {
+        return instance.post(`videos/goalGIF/${gameNumber}`, {
+            teamType
+        })
     }
 };

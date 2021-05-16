@@ -94,6 +94,7 @@ router.put('/isRunning/:gameNumber', authMW, cors(), function (req, res) {
         let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
+
         let isRunning = req.body.isRunning;
         let timeDif = req.body.timeDif;
         let timeMem = req.body.timeMem;
@@ -135,6 +136,8 @@ router.put('/isRunning/:gameNumber', authMW, cors(), function (req, res) {
         console.log(e)
     }
 });
+
+
 
 router.put('/isRunningTimeout/:gameNumber', authMW, cors(), function (req, res) {
     try {

@@ -5,6 +5,7 @@ import TeamGamers from "./TeamGamers";
 import {addNewLog, addNewTempLog} from "../../../../../redux/log_reducer";
 import {useDispatch} from "react-redux";
 import {tabloAPI} from "../../../../../api/api";
+import {videosAPI} from "../../../../../api/api";
 import {teamGoal} from "../../../../../redux/teams_reducer";
 import {useConfirm} from "material-ui-confirm";
 import TabloEdit from "../../TabloEdit/TabloEdit";
@@ -62,6 +63,7 @@ const TeamInfo = (props) => {
                 `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - ГОЛ для ${props.name}!`));
             dispatch(addNewTempLog(props.gameNumber,
                 `ГОЛ для ${props.name}!`))
+            videosAPI.playGoalGIF(props.gameNumber, teamType)
         }
     }
 

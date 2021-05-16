@@ -43,10 +43,12 @@ const TabloEditClient = (props) => {
         );
 
 
-
         let [isShowLog, setIsShowLog] = useState(false);
 
+        let [isHomeGoalGIF, setIsHomeGoalGIF] = useState(false)
 
+
+        let [isGuestsGoalGIF, setIsGuestsGoalGIF] = useState(false)
 
 
         useEffect(() => {
@@ -58,48 +60,87 @@ const TabloEditClient = (props) => {
             );
         }, [])
 
+        console.log(1)
 
         useEffect(() => {
 
-            ////LOG LOAD///
             dispatch(getLog(gameNumber));
+            dispatch(getTeams(gameNumber));
+
+        }, [gameNumber, isHomeGoalGIF, isGuestsGoalGIF])
+
+        useEffect(() => {
             socket.on(`getLog${gameNumber}`, log => {
                     dispatch(setLogDataAC(log))
                 }
             );
-            ////TEAMS LOAD///
-            dispatch(getTeams(gameNumber));
+
             socket.on(`getTeams${gameNumber}`, teams => {
                     dispatch(setTeamsAC(teams))
                 }
             );
 
-        }, [gameNumber])
-
+        }, [])
 
 
         useEffect(() => {
             socket.on(`getTempLog${gameNumber}`, log => {
                     dispatch(addTempTabloLogAC(log))
-                setIsShowLog(true);
-                setTimeout(() => {
-                    setIsShowLog(false);
-                }, 5000)
+                    setIsShowLog(true);
+                    setTimeout(() => {
+                        setIsShowLog(false);
+                    }, 5000)
                 }
             );
 
         }, []);
 
 
+        useEffect(() => {
+            socket.on(`playGoalGIF_home${gameNumber}`, res => {
+
+                    setIsHomeGoalGIF(true)
+                    setIsGuestsGoalGIF(false)
+                    setTimeout(() => {
+                        setIsHomeGoalGIF(false)
+                    }, 5000)
+                }
+            );
+
+            socket.on(`playGoalGIF_guests${gameNumber}`, res => {
+                    setIsGuestsGoalGIF(true)
+                    setIsHomeGoalGIF(false)
+                    setTimeout(() => {
+                        setIsGuestsGoalGIF(false)
+                    }, 5000)
+                }
+            );
+
+        }, []);
 
 
         return (
+
             <div className={c.tabloEdit}>
+                {isHomeGoalGIF &&
+                <div>
+                    <img src={homeTeam.goalGIF} alt="" style={{width: 700}}/>
+                </div>
+                }
+                {isGuestsGoalGIF &&
+                <div>
+                    <img src={guestsTeam.goalGIF} alt="" style={{width: 700}}/>
+                </div>
+                }
+                {(!isHomeGoalGIF && !isGuestsGoalGIF) &&
                 <TabloClient isShowLog={isShowLog} gameTempLog={gameTempLog} gameConsLog={gameConsLog}
                              homeTeam={homeTeam} guestsTeam={guestsTeam}
                              homeCounter={homeCounter} guestsCounter={guestsCounter}
-                             gameNumber={gameNumber} />
+                             gameNumber={gameNumber}/>
+                }
             </div>
+
+
         )
     }
 ;

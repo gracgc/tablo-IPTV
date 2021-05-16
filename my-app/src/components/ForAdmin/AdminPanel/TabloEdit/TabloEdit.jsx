@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import c from './TabloEdit.module.css'
 import c1920 from './TabloEdit_1920.module.css'
 import {useState, useEffect} from 'react';
@@ -38,6 +38,10 @@ const TabloEdit = (props) => {
 
     const dif = useSelector(
         (state => state.difPage.dif)
+    );
+
+    const ping = useSelector(
+        (state => state.difPage.ping)
     );
 
 
@@ -161,13 +165,8 @@ const TabloEdit = (props) => {
             }
         );
 
-        ////TEAMS LOAD///
-        dispatch(getTeams(gameNumber));
-        socket.on(`getTeams${gameNumber}`, teams => {
-                dispatch(setTeamsAC(teams))
-            }
-        );
     }, []);
+
 
     useEffect(() => {
         socket.on(`getTempLog${gameNumber}`, log => {
@@ -258,16 +257,6 @@ const TabloEdit = (props) => {
     }, 33);
 
 
-    const addTeamGoal = async (teamType, teamName, symbol) => {
-        dispatch(teamGoal(gameNumber, teamType, symbol));
-        if (symbol === '+') {
-            dispatch(addNewLog(gameNumber,
-                `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - ГОЛ для ${teamName}!`));
-            dispatch(addNewTempLog(gameNumber,
-                `ГОЛ для ${teamName}!`))
-        }
-    };
-
     const startGame = () => {
         tabloAPI.putTimerStatus(gameNumber, true, timeDif,
             timeMem,
@@ -286,6 +275,28 @@ const TabloEdit = (props) => {
         dispatch(addNewLog(gameNumber,
             `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - СТОП`));
     };
+
+    let [isSwitch, setIsSwitch] = useState(false)
+
+    useEffect(() => {
+
+        socket.on(`switchTimer${gameNumber}`, res => {
+            setIsSwitch(true)
+            }
+        );
+
+    }, [])
+
+    useEffect(() => {
+        if (isSwitch) {
+            tabloAPI.putTimerStatus(gameNumber, false,
+                timeMem + (Date.now() + dif + ping) - startTime,
+                timeMem + ((Date.now() + dif + ping) - startTime),
+                deadLine - (timeMem + ((Date.now() + dif + ping) - startTime)),
+                deadLine, period, smallOvertime, bigOvertime);
+            setIsSwitch(false)
+        }
+    }, [isSwitch])
 
 
     return (
@@ -344,7 +355,6 @@ const TabloEdit = (props) => {
                        timeMem={timeMem}
                        period={period}
                        isRunningServer={isRunningServer}
-                       addTeamGoal={addTeamGoal}
                        gameNumber={gameNumber} ms={ms}/>
             </div>
             {props.history.location.pathname.indexOf('videoAdmin') === -1 &&

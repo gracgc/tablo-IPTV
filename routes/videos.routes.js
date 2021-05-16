@@ -697,6 +697,26 @@ router.put('/isRunning/:gameNumber', authMW, cors(), function (req, res) {
     }
 });
 
+router.post('/goalGIF/:gameNumber', authMW, cors(), function (req, res) {
+    try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
+        let gameNumber = req.params.gameNumber;
+
+        let teamType = req.body.teamType;
+
+        const io = req.app.locals.io;
+
+        io.to(stadium).emit(`playGoalGIF_${teamType}${gameNumber}`, '');
+
+
+    } catch (e) {
+        console.log(e)
+    }
+});
+
 
 router.options('/', cors());
 

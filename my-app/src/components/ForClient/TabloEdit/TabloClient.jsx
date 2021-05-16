@@ -24,10 +24,6 @@ const TabloClient = (props) => {
     );
 
 
-    // useEffect(() => {
-    //     gameAPI.tabloPNG()
-    // }, [])
-
 
     useEffect(() => {
         dispatch(getGame(props.gameNumber));
@@ -42,6 +38,7 @@ const TabloClient = (props) => {
         });
 
     }, []);
+
 
 
     return (

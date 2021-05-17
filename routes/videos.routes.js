@@ -505,11 +505,13 @@ router.post('/mp4/:videoName', cors(), async function (req, res) {
 
         let videoName = req.params.videoName;
 
+        let videoNameSplit = videoName.split(' ').join('_')
+
 
 
         let video = req.files.file;
 
-        let videoNameEN = cyrillicToTranslit().transform(videoName);
+        let videoNameEN = cyrillicToTranslit().transform(videoNameSplit);
 
         video.name = `${videoNameEN}.mp4`;
 
@@ -582,7 +584,9 @@ router.put('/mp4/delete', authMW, cors(), async function (req, res) {
 
         let videoName = req.body.videoName;
 
-        let videoNameEN = cyrillicToTranslit().transform(videoName);
+        let videoNameSplit = videoName.split(' ').join('_')
+
+        let videoNameEN = cyrillicToTranslit().transform(videoNameSplit);
 
 
         fs.unlinkSync(path.join(__dirname +

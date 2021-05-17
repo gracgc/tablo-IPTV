@@ -29,15 +29,11 @@ router.get('/', function (req, res) {
 
         let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/saved_games.json`));
         let DB = JSON.parse(data);
-        //
 
-        if (!data) {
-            res.send({resultCode: 10});
-            console.log('Games is not exist')
-        } else {
-            DB.resultCode = 0;
-            res.send(DB)
-        }
+
+        DB.resultCode = 0;
+        res.send(DB)
+
 
     } catch (e) {
         console.log(e)
@@ -66,17 +62,14 @@ router.post('/', authMW, cors(), function (req, res) {
 
         DB.savedGames.push(game);
 
-        if (!gameName || !gameNumber || !gameType) {
-            res.send({resultCode: 10});
-            console.log('Not enought data')
-        } else {
-            let json = JSON.stringify(DB);
 
-            fs.writeFileSync(path.join(__dirname +
-                `/DBs/DB_${stadium}/saved_games.json`), json, 'utf8');
+        let json = JSON.stringify(DB);
 
-            res.send({resultCode: 0})
-        }
+        fs.writeFileSync(path.join(__dirname +
+            `/DBs/DB_${stadium}/saved_games.json`), json, 'utf8');
+
+        res.send({resultCode: 0})
+
 
     } catch (e) {
         console.log(e)
@@ -99,16 +92,19 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
 
         fs.unlinkSync(path.join(__dirname +
             `/DBs/DB_${stadium}/video_${gameNumber}.json`));
-        
-        try {
-            fs.unlinkSync(path.join(__dirname +
-                `/DBs/DB_${stadium}/img/home_logo_${gameNumber}.png`));
 
-            fs.unlinkSync(path.join(__dirname +
-                `/DBs/DB_${stadium}/img/guests_logo_${gameNumber}.png`));
-        } catch (e) {
-            
-        }
+
+        fs.unlinkSync(path.join(__dirname +
+            `/DBs/DB_${stadium}/img/home_logo_${gameNumber}.png`));
+
+        fs.unlinkSync(path.join(__dirname +
+            `/DBs/DB_${stadium}/img/guests_logo_${gameNumber}.png`));
+
+        fs.unlinkSync(path.join(__dirname +
+            `/DBs/DB_${stadium}/gif/home_goal_${gameNumber}.gif`));
+
+        fs.unlinkSync(path.join(__dirname +
+            `/DBs/DB_${stadium}/gif/guests_goal_${gameNumber}.gif`));
 
 
         let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/saved_games.json`));
@@ -134,7 +130,6 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
         fs.writeFileSync(path.join(__dirname, `/DBs/DB_${stadium}/game_number.json`), json2, 'utf8');
 
         res.send({resultCode: 0});
-
 
 
         io.to(stadium).emit(`getSavedGames`, DB.savedGames)

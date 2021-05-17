@@ -55,13 +55,9 @@ const SavedGames = (props) => {
     let currentGame = savedGames.find(g => g.gameNumber === gameNumber)
 
 
-    let lastGameNumber = savedGames.length
+    let lastGameNumber = Math.max.apply(Math, savedGames.map(sg => sg.gameNumber));
 
-    let uploadLogo = (teamType) => {
 
-        axios.get(`/api/teams/fastGameLogo/${lastGameNumber + 1}`)
-
-    }
 
 
     let createFastGame = async () => {
@@ -88,7 +84,7 @@ const SavedGames = (props) => {
 
         let r = await createFastGame()
 
-        axios.get(`/api/teams/fastGameLogo/${lastGameNumber + 1}`)
+        axios.post(`/api/teams/fastGameLogo/${lastGameNumber + 1}`, {isHomeLogo: true, isGuestsLogo: true, isHomeGif: true, isGuestsGif: true})
 
         if (r.responseGame.resultCode === 0 && r.responseTeam.resultCode === 0) {
             dispatch(putGameNumber(lastGameNumber + 1))
@@ -118,7 +114,7 @@ const SavedGames = (props) => {
                 </div>
                 {currentGame &&
                 <div className={width === 1920 ? c1920.currentGame : c.currentGame}>
-                    Текущая игра: {currentGame.gameNumber} — {currentGame.gameName} — {currentGame.gameType}
+                    Текущая игра: {currentGame.gameName} — {currentGame.gameType}
                     <NavLink to={'/adminPanel/' + currentGame.gameNumber}>
                         <div className={c.curentGameMenu}>Админ</div>
                     </NavLink>

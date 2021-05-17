@@ -108,6 +108,9 @@ const CustomGameForm = (props) => {
     let [homeImgURL, setHomeImgURL] = useState()
     let [guestsImgURL, setGuestsImgURL] = useState()
 
+    let [homeGifURL, setHomeGifURL] = useState()
+    let [guestsGifURL, setGuestsGifURL] = useState()
+
 
     return (
         <div>
@@ -149,32 +152,64 @@ const CustomGameForm = (props) => {
                                 <PickColor setColor={props.setColorHome} color={props.colorHome}/>
                             </div>
 
+
+
                             <div style={{display: 'inline-flex'}}>
-                                <Button
-                                    variant="contained"
-                                    component="label"
-                                >
-                                    Изменить лого
-                                    <input
-                                        name="homeLogo"
-                                        type="file"
-                                        hidden
-                                        onChange={(e) => {
-                                            props.setHomeLogo(e.target.files[0]);
-                                            setHomeImgURL(URL.createObjectURL(e.target.files[0]));
-                                        }}
-                                    />
-                                </Button>
+                                <div style={{display: 'inline-flex'}}>
+                                    <Button
+                                        variant="contained"
+                                        component="label"
+                                    >
+                                        Изменить лого
+                                        <input
+                                            name="homeLogo"
+                                            type="file"
+                                            accept=".jpg, .png"
+                                            hidden
+                                            onChange={(e) => {
+                                                props.setHomeLogo(e.target.files[0]);
+                                                setHomeImgURL(URL.createObjectURL(e.target.files[0]));
+                                            }}
+                                        />
+                                    </Button>
 
-                                <img style={{marginLeft: 25}} src={homeImgURL || homeTeam.logo} alt=""
-                                     width={width === 1920 ? 50 : 40}
-                                     height={width === 1920 ? 50 : 40}/>
+                                    <img style={{marginLeft: 25}} src={homeImgURL || homeTeam.logo} alt=""
+                                         width={width === 1920 ? 50 : 40}
+                                         height={width === 1920 ? 50 : 40}/>
 
+                                </div>
+
+
+
+                                <div style={{display: 'inline-flex', marginLeft: 20}}>
+                                    <Button
+                                        variant="contained"
+                                        component="label"
+                                    >
+                                        Изменить анимацию
+                                        <input
+                                            name="homeGif"
+                                            type="file"
+                                            accept=".gif"
+                                            hidden
+                                            onChange={(e) => {
+                                                props.setHomeGif(e.target.files[0]);
+                                                setHomeGifURL(URL.createObjectURL(e.target.files[0]));
+                                            }}
+                                        />
+                                    </Button>
+
+                                    <img style={{marginLeft: 25}} src={homeGifURL || homeTeam.goalGIF} alt=""
+                                         width={width === 1920 ? 50 : 40}
+                                         height={width === 1920 ? 50 : 40}/>
+
+                                </div>
 
                             </div>
 
-                            {props.homeLogo &&
-                            <span style={{marginLeft: '10px', color: 'green'}}>Лого загружен</span>}
+
+
+
                             <div className={width === 1920 ? c1920.panelName : c.panelName}>Игроки</div>
 
 
@@ -225,28 +260,56 @@ const CustomGameForm = (props) => {
                                 <PickColor setColor={props.setColorGuests} color={props.colorGuests}/>
                             </div>
                             <div style={{display: 'inline-flex'}}>
-                                <Button
-                                    variant="contained"
-                                    component="label"
-                                >
-                                    Изменить лого
-                                    <input
-                                        name="guestsLogo"
-                                        type="file"
-                                        hidden
-                                        onChange={(e) => {
-                                            props.setGuestsLogo(e.target.files[0])
-                                            setGuestsImgURL(URL.createObjectURL(e.target.files[0]));
-                                        }}
-                                    />
-                                </Button>
-                                <img style={{marginLeft: 25}} src={guestsImgURL || guestsTeam.logo} alt=""
-                                     width={width === 1920 ? 50 : 40}
-                                     height={width === 1920 ? 50 : 40}/>
+                                <div style={{display: 'inline-flex'}}>
+                                    <Button
+                                        variant="contained"
+                                        component="label"
+                                    >
+                                        Изменить лого
+                                        <input
+                                            name="guestsLogo"
+                                            type="file"
+                                            accept=".jpg, .png"
+                                            hidden
+                                            onChange={(e) => {
+                                                props.setGuestsLogo(e.target.files[0])
+                                                setGuestsImgURL(URL.createObjectURL(e.target.files[0]));
+                                            }}
+                                        />
+                                    </Button>
+                                    <img style={{marginLeft: 25}} src={guestsImgURL || guestsTeam.logo} alt=""
+                                         width={width === 1920 ? 50 : 40}
+                                         height={width === 1920 ? 50 : 40}/>
+                                </div>
+
+                                <div style={{display: 'inline-flex', marginLeft: 20}}>
+                                    <Button
+                                        variant="contained"
+                                        component="label"
+                                    >
+                                        Изменить анимацию
+                                        <input
+                                            name="guestsGif"
+                                            type="file"
+                                            accept=".gif"
+                                            hidden
+                                            onChange={(e) => {
+                                                props.setGuestsGif(e.target.files[0]);
+                                                setGuestsGifURL(URL.createObjectURL(e.target.files[0]));
+                                            }}
+                                        />
+                                    </Button>
+
+                                    <img style={{marginLeft: 25}} src={guestsGifURL || guestsTeam.goalGIF} alt=""
+                                         width={width === 1920 ? 50 : 40}
+                                         height={width === 1920 ? 50 : 40}/>
+
+                                </div>
                             </div>
 
-                            {props.guestsLogo &&
-                            <span style={{marginLeft: '10px', color: 'green'}}>Лого загружен</span>}
+
+
+
                             <div className={width === 1920 ? c1920.panelName : c.panelName}>Игроки</div>
 
 
@@ -339,24 +402,69 @@ const CustomGame = (props) => {
     let [homeLogo, setHomeLogo] = useState()
     let [guestsLogo, setGuestsLogo] = useState()
 
+    let [homeGif, setHomeGif] = useState()
+    let [guestsGif, setGuestsGif] = useState()
+
     let [colorHome, setColorHome] = useState(homeTeam.color)
     let [colorGuests, setColorGuests] = useState(guestsTeam.color)
 
 
-    let uploadLogo = (teamType, logo) => {
-
-        let logoFormData = new FormData;
-
-        logoFormData.append('file', logo)
 
 
-        if (logo) {
-            axios.post(`/api/teams/${teamType}Logo/${gameNumber}`, logoFormData, {
+    let uploadLogo = (homeLogo, guestsLogo) => {
+
+        let homeLogoFormData = new FormData;
+
+        homeLogoFormData.append('file', homeLogo)
+
+        let guestsLogoFormData = new FormData;
+
+        guestsLogoFormData.append('file', guestsLogo)
+
+        if (homeLogo) {
+            axios.post(`/api/teams/homeLogo/${gameNumber}`, homeLogoFormData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             })
         }
+
+        if (guestsLogo) {
+            axios.post(`/api/teams/guestsLogo/${gameNumber}`, guestsLogoFormData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        }
+
+    }
+
+    let uploadGoalGIF = (homeGif, guestsGif) => {
+
+        let homeGifFormData = new FormData;
+
+        homeGifFormData.append('file', homeGif)
+
+        let guestsGifFormData = new FormData;
+
+        guestsGifFormData.append('file', guestsGif)
+
+        if (homeGif) {
+            axios.post(`/api/teams/homeGoalGIF/${gameNumber}`, homeGifFormData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        }
+
+        if (guestsGif) {
+            axios.post(`/api/teams/guestsGoalGIF/${gameNumber}`, guestsGifFormData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        }
+
     }
 
 
@@ -397,8 +505,9 @@ const CustomGame = (props) => {
             }))
         ))
 
-        uploadLogo('home', homeLogo)
-        uploadLogo('guests', guestsLogo)
+        uploadLogo(homeLogo, guestsLogo)
+
+        uploadGoalGIF(homeGif, guestsGif)
 
 
         setSuccessSave(true)
@@ -459,6 +568,10 @@ const CustomGame = (props) => {
                                      setColorHome={setColorHome}
                                      colorGuests={colorGuests}
                                      setColorGuests={setColorGuests}
+                                     homeGif={homeGif}
+                                     guestsGif={guestsGif}
+                                     setHomeGif={setHomeGif}
+                                     setGuestsGif={setGuestsGif}
                 />
             </div>
 

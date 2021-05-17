@@ -126,7 +126,7 @@ router.get('/guestsGoalGIF/:gameNumber/:dateNow', function (req, res) {
     }
 });
 
-router.get('/fastGameLogo/:gameNumber', cors(), async function (req, res) {
+router.post('/fastGameLogo/:gameNumber', cors(), async function (req, res) {
     try {
         let requrl = getHost(req.get('host'))
 
@@ -134,9 +134,21 @@ router.get('/fastGameLogo/:gameNumber', cors(), async function (req, res) {
 
         let gameNumber = req.params.gameNumber;
 
-        fs.createReadStream(path.join(__dirname + `/PNG/logoFastGame.png`)).pipe(fs.createWriteStream(path.join(__dirname + `/DBs/DB_${stadium}/img/home_logo_${gameNumber}.png`)));
+        let isHomeLogo = req.body.isHomeLogo
+        let isGuestsLogo = req.body.isGuestsLogo
 
-        fs.createReadStream(path.join(__dirname + `/PNG/logoFastGame.png`)).pipe(fs.createWriteStream(path.join(__dirname + `/DBs/DB_${stadium}/img/guests_logo_${gameNumber}.png`)));
+        let isHomeGif = req.body.isHomeGif
+        let isGuestsGif = req.body.isGuestsGif
+
+        if (isHomeLogo) {
+            fs.createReadStream(path.join(__dirname + `/PNG/logoFastGame.png`)).pipe(fs.createWriteStream(path.join(__dirname + `/DBs/DB_${stadium}/img/home_logo_${gameNumber}.png`)));
+        } if (isGuestsLogo) {
+            fs.createReadStream(path.join(__dirname + `/PNG/logoFastGame.png`)).pipe(fs.createWriteStream(path.join(__dirname + `/DBs/DB_${stadium}/img/guests_logo_${gameNumber}.png`)));
+        } if (isHomeGif) {
+            fs.createReadStream(path.join(__dirname + `/GIF/gifFastGame.gif`)).pipe(fs.createWriteStream(path.join(__dirname + `/DBs/DB_${stadium}/gif/home_goal_${gameNumber}.gif`)));
+        } if (isGuestsGif) {
+            fs.createReadStream(path.join(__dirname + `/GIF/gifFastGame.gif`)).pipe(fs.createWriteStream(path.join(__dirname + `/DBs/DB_${stadium}/gif/guests_goal_${gameNumber}.gif`)));
+        }
 
 
         res.send({resultCode: 0});
@@ -216,6 +228,56 @@ router.post('/guestslogo/:gameNumber', cors(), function (req, res) {
         console.log(e)
     }
 });
+
+router.post('/homeGoalGIF/:gameNumber', cors(), async function (req, res) {
+    try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
+        let gameNumber = req.params.gameNumber;
+
+
+        let gif = req.files.file
+
+
+        gif.name = `home_goal_${gameNumber}.gif`
+
+        await gif.mv(`${__dirname}/DBs/DB_${stadium}/gif/${gif.name}`)
+
+
+        res.send({resultCode: 0});
+
+
+    } catch (e) {
+        console.log(e)
+    }
+});
+
+router.post('/guestsGoalGIF/:gameNumber', cors(), function (req, res) {
+    try {
+        let requrl = getHost(req.get('host'))
+
+        let stadium = getStadium(requrl)
+
+        let gameNumber = req.params.gameNumber;
+
+
+        let gif = req.files.file
+
+        gif.name = `guests_goal_${gameNumber}.gif`
+
+        gif.mv(`${__dirname}/DBs/DB_${stadium}/gif/${gif.name}`)
+
+
+        res.send({resultCode: 0});
+
+
+    } catch (e) {
+        console.log(e)
+    }
+});
+
 
 
 router.post('/:gameNumber', authMW, cors(), function (req, res) {

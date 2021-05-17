@@ -89,7 +89,7 @@ const SavedGame = (props) => {
                      onClick={(e) => deleteGameForever(props.savedGame.gameNumber, props.savedGame.gameNumber === props.gameNumber)}>
                     Удалить
                 </div>
-                <NavLink to={`/customGame/${props.gameNumber}`}>
+                <NavLink to={`/customGame/${props.savedGame.gameNumber}`}>
                     <div className={width === 1920 ? c1920.editButton : c.editButton}>
                         Редактировать
                     </div>

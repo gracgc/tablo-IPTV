@@ -52,6 +52,10 @@ const CreateGameForm = (props) => {
     let [homeImgURL, setHomeImgURL] = useState()
     let [guestsImgURL, setGuestsImgURL] = useState()
 
+
+    let [homeGifURL, setHomeGifURL] = useState()
+    let [guestsGifURL, setGuestsGifURL] = useState()
+
     return (
         <div>
             <form onSubmit={props.handleSubmit}>
@@ -107,6 +111,7 @@ const CreateGameForm = (props) => {
                                     <input
                                         name="homeLogo"
                                         type="file"
+                                        accept=".jpg, .png"
                                         hidden
                                         onChange={(e) => {
                                             props.setHomeLogo(e.target.files[0]);
@@ -117,6 +122,29 @@ const CreateGameForm = (props) => {
                                 {!props.homeLogo
                                     ? <span style={{marginLeft: '10px', color: 'red'}}>Добавьте лого</span>
                                     : <img style={{marginLeft: 25}} src={homeImgURL} alt=""
+                                           width={width === 1920 ? 50 : 40}
+                                           height={width === 1920 ? 50 : 40}/>}
+                            </div>
+                            <div style={{display: 'inline-flex', marginTop: 20}}>
+                                <Button
+                                    variant="contained"
+                                    component="label"
+                                >
+                                    Анимация гола
+                                    <input
+                                        name="homeGif"
+                                        type="file"
+                                        accept=".gif"
+                                        hidden
+                                        onChange={(e) => {
+                                            props.setHomeGif(e.target.files[0]);
+                                            setHomeGifURL(URL.createObjectURL(e.target.files[0]));
+                                        }}
+                                    />
+                                </Button>
+                                {!props.homeGif
+                                    ? <span style={{marginLeft: '10px', color: 'red'}}>Добавьте анимацию</span>
+                                    : <img style={{marginLeft: 25}} src={homeGifURL} alt=""
                                            width={width === 1920 ? 50 : 40}
                                            height={width === 1920 ? 50 : 40}/>}
                             </div>
@@ -168,6 +196,7 @@ const CreateGameForm = (props) => {
                                     <input
                                         name="guestsLogo"
                                         type="file"
+                                        accept=".jpg, .png"
                                         hidden
                                         onChange={(e) => {
                                             props.setGuestsLogo(e.target.files[0]);
@@ -178,6 +207,29 @@ const CreateGameForm = (props) => {
                                 {!props.guestsLogo
                                     ? <span style={{marginLeft: '10px', color: 'red'}}>Добавьте лого</span>
                                     : <img style={{marginLeft: 25}} src={guestsImgURL} alt=""
+                                           width={width === 1920 ? 50 : 40}
+                                           height={width === 1920 ? 50 : 40}/>}
+                            </div>
+                            <div style={{display: 'inline-flex', marginTop: 20}}>
+                                <Button
+                                    variant="contained"
+                                    component="label"
+                                >
+                                    Анимация гола
+                                    <input
+                                        name="guestsGif"
+                                        type="file"
+                                        accept=".gif"
+                                        hidden
+                                        onChange={(e) => {
+                                            props.setGuestsGif(e.target.files[0]);
+                                            setGuestsGifURL(URL.createObjectURL(e.target.files[0]));
+                                        }}
+                                    />
+                                </Button>
+                                {!props.guestsGif
+                                    ? <span style={{marginLeft: '10px', color: 'red'}}>Добавьте анимацию</span>
+                                    : <img style={{marginLeft: 25}} src={guestsGifURL} alt=""
                                            width={width === 1920 ? 50 : 40}
                                            height={width === 1920 ? 50 : 40}/>}
                             </div>
@@ -223,6 +275,10 @@ const CreateGameReduxForm = reduxForm({form: 'createGame'})(CreateGameForm);
 
 const CreateGame = (props) => {
 
+    const savedGames = useSelector(
+        state => state.gamesPage.savedGames
+    );
+
     let width = window.innerWidth;
 
     let history = useHistory();
@@ -233,6 +289,9 @@ const CreateGame = (props) => {
     let [homeLogo, setHomeLogo] = useState()
     let [guestsLogo, setGuestsLogo] = useState()
 
+    let [homeGif, setHomeGif] = useState()
+    let [guestsGif, setGuestsGif] = useState()
+
     let [colorHome, setColorHome] = useState('#ffffff')
     let [colorGuests, setColorGuests] = useState('#ffffff')
 
@@ -240,9 +299,8 @@ const CreateGame = (props) => {
 
     let [successMessage, setSuccessMessage] = useState(false);
 
-    let lastGameNumber = useSelector(
-        state => state.gamesPage.savedGames.length
-    );
+
+    let lastGameNumber = Math.max.apply(Math, savedGames.map(sg => sg.gameNumber));
 
     let dispatch = useDispatch();
 
@@ -256,17 +314,50 @@ const CreateGame = (props) => {
 
         guestsLogoFormData.append('file', guestsLogo)
 
-        axios.post(`/api/teams/homeLogo/${lastGameNumber + 1}`, homeLogoFormData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
+        if (homeLogo) {
+            axios.post(`/api/teams/homeLogo/${lastGameNumber + 1}`, homeLogoFormData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        }
 
-        axios.post(`/api/teams/guestsLogo/${lastGameNumber + 1}`, guestsLogoFormData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
+        if (guestsLogo) {
+            axios.post(`/api/teams/guestsLogo/${lastGameNumber + 1}`, guestsLogoFormData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        }
+
+    }
+
+    let uploadGoalGIF = (homeGif, guestsGif) => {
+
+        let homeGifFormData = new FormData;
+
+        homeGifFormData.append('file', homeGif)
+
+        let guestsGifFormData = new FormData;
+
+        guestsGifFormData.append('file', guestsGif)
+
+        if (homeGif) {
+            axios.post(`/api/teams/homeGoalGIF/${lastGameNumber + 1}`, homeGifFormData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        }
+
+        if (guestsGif) {
+            axios.post(`/api/teams/guestsGoalGIF/${lastGameNumber + 1}`, guestsGifFormData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        }
+
     }
 
     useEffect(() => {
@@ -275,44 +366,46 @@ const CreateGame = (props) => {
 
 
     const onSubmit = (formData) => {
-        if (!homeLogo || !guestsLogo) {
-            dispatch(stopSubmit('createGame', {_error: ''}))
-        } else {
-            dispatch(createNewGame(formData.gameName, lastGameNumber + 1, formData.gameType,
-                formData.homeTeamName,
-                colorHome,
-                numberOfHomePlayers.map(n => ({
-                    id: n,
-                    fullName: eval(`formData.homeGamer${n}`),
-                    gamerNumber: eval(`formData.homeNumber${n}`),
-                    status: "in game",
-                    onField: (n <= 6),
-                    goals: 0,
-                    timeOfPenalty: 0,
-                    whenWasPenalty: 0
-                })),
-                formData.guestsTeamName,
-                colorGuests,
-                numberOfGuestsPlayers.map(n => ({
-                    id: n,
-                    fullName: eval(`formData.guestsGamer${n}`),
-                    gamerNumber: eval(`formData.guestsNumber${n}`),
-                    status: "in game",
-                    onField: (n <= 6),
-                    goals: 0,
-                    timeOfPenalty: 0,
-                    whenWasPenalty: 0
-                }))
-            ));
 
-            uploadLogo(homeLogo, guestsLogo)
+        axios.post(`/api/teams/fastGameLogo/${lastGameNumber + 1}`, {isHomeLogo: !homeLogo, isGuestsLogo: !guestsLogo, isHomeGif: !homeGif, isGuestsGif: !guestsGif})
 
-            setSuccessMessage(true);
 
-            setTimeout(() => {
-                history.push('/menu');
-            }, 2000)
-        }
+        dispatch(createNewGame(formData.gameName, lastGameNumber + 1, formData.gameType,
+            formData.homeTeamName,
+            colorHome,
+            numberOfHomePlayers.map(n => ({
+                id: n,
+                fullName: eval(`formData.homeGamer${n}`),
+                gamerNumber: eval(`formData.homeNumber${n}`),
+                status: "in game",
+                onField: (n <= 6),
+                goals: 0,
+                timeOfPenalty: 0,
+                whenWasPenalty: 0
+            })),
+            formData.guestsTeamName,
+            colorGuests,
+            numberOfGuestsPlayers.map(n => ({
+                id: n,
+                fullName: eval(`formData.guestsGamer${n}`),
+                gamerNumber: eval(`formData.guestsNumber${n}`),
+                status: "in game",
+                onField: (n <= 6),
+                goals: 0,
+                timeOfPenalty: 0,
+                whenWasPenalty: 0
+            }))
+        ));
+
+        uploadLogo(homeLogo, guestsLogo)
+
+        uploadGoalGIF(homeGif, guestsGif)
+
+        setSuccessMessage(true);
+
+        setTimeout(() => {
+            history.push('/menu');
+        }, 2000)
 
 
     };
@@ -356,6 +449,10 @@ const CreateGame = (props) => {
                                      setColorHome={setColorHome}
                                      colorGuests={colorGuests}
                                      setColorGuests={setColorGuests}
+                                     homeGif={homeGif}
+                                     guestsGif={guestsGif}
+                                     setHomeGif={setHomeGif}
+                                     setGuestsGif={setGuestsGif}
                 />
             </div>
         </div>

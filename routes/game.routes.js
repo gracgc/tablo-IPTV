@@ -34,12 +34,9 @@ router.get('/:gameNumber', function (req, res) {
         let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
-        if (!data) {
-            res.send({resultCode: 10});
-            console.log('Game is not exist')
-        }
 
         DB.gameInfo.resultCode = 0;
+
         res.send(DB.gameInfo)
 
 
@@ -159,6 +156,9 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
         let data = fs.readFileSync(path.join(__dirname, `/DBs/DB_${stadium}/game_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
+        let data2 = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/saved_games.json`));
+        let DB2 = JSON.parse(data2);
+
         let gameName = req.body.gameName;
         let period = req.body.period;
         let time = req.body.time;
@@ -174,6 +174,9 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
         if (time > 1200000) {
             time = 1200000
         }
+
+
+        DB2.savedGames.find(sg => sg.gameNumber === +gameNumber).gameName = gameName
 
         DB.gameInfo.gameName = gameName
         DB.gameInfo.gameTime.period = period
@@ -207,6 +210,11 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
         fs.writeFileSync(path.join(__dirname +
             `/DBs/DB_${stadium}/game_${gameNumber}.json`), json, 'utf8');
 
+        let json2 = JSON.stringify(DB2);
+
+        fs.writeFileSync(path.join(__dirname +
+            `/DBs/DB_${stadium}/saved_games.json`), json2, 'utf8');
+
         res.send({resultCode: 0});
 
         const io = req.app.locals.io;
@@ -216,9 +224,14 @@ router.put('/:gameNumber', authMW, cors(), function (req, res) {
         DB.teams.find(t => t.teamType === 'home').logo = `http://${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `http://${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
+        DB.teams.find(t => t.teamType === 'home').goalGIF = `http://${req.get('host')}/api/teams/homeGoalGIF/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').goalGIF = `http://${req.get('host')}/api/teams/guestsGoalGIF/${gameNumber}/${Date.now()}`;
+
         io.to(stadium).emit(`getTeams${gameNumber}`, DB.teams)
 
         io.to(stadium).emit(`getTime${gameNumber}`, DB.gameInfo.gameTime)
+
+        io.to(stadium).emit(`getSavedGames`, DB2.savedGames)
 
     } catch
         (e) {
@@ -308,6 +321,9 @@ router.put('/reset/:gameNumber', authMW, cors(), function (req, res) {
 
         DB.teams.find(t => t.teamType === 'home').logo = `http://${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `http://${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
+
+        DB.teams.find(t => t.teamType === 'home').goalGIF = `http://${req.get('host')}/api/teams/homeGoalGIF/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').goalGIF = `http://${req.get('host')}/api/teams/guestsGoalGIF/${gameNumber}/${Date.now()}`;
 
         io.to(stadium).emit(`getTeams${gameNumber}`, DB.teams)
 

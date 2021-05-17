@@ -24,7 +24,6 @@ const AddVideoMP4 = (props) => {
     // props.videos.find(v => v.videoName === value)
 
 
-
     return (
 
         <div className={width === 1920 ? c1920.addVideoForm : c.addVideoForm}>
@@ -103,13 +102,13 @@ const VideosMP4 = (props) => {
 
         videoFormData.append('file', videoMP4);
 
-        if (videoMP4.type.includes('mp4')) {
-            axios.post(`/api/videos/mp4/${videoName}`, videoFormData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-        }
+
+        axios.post(`/api/videos/mp4/${videoName}`, videoFormData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+
     };
 
     let changePaginatorN = (symbol) => {

@@ -427,9 +427,9 @@ router.put('/teamGoal/:gameNumber', authMW, cors(), function (req, res) {
 
         io.to(stadium).emit(`getTeams${gameNumber}`, DB.teams);
 
-        if (DB.gameInfo.gameTime.isRunning && symbol === '+') {
-            io.to(stadium).emit(`switchTimer${gameNumber}`, '');
-        }
+        // if (DB.gameInfo.gameTime.isRunning && symbol === '+') {
+        //     io.to(stadium).emit(`switchTimer${gameNumber}`, '');
+        // }
 
     } catch (e) {
         console.log(e)

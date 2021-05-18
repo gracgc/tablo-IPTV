@@ -276,27 +276,27 @@ const TabloEdit = (props) => {
             `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - СТОП`));
     };
 
-    let [isSwitch, setIsSwitch] = useState(false)
+
+
+    // useEffect(() => {
+    //
+    //     socket.on(`switchTimer${gameNumber}`, res => {
+    //         setIsSwitch(true)
+    //         }
+    //     );
+    //
+    // }, [])
 
     useEffect(() => {
-
-        socket.on(`switchTimer${gameNumber}`, res => {
-            setIsSwitch(true)
-            }
-        );
-
-    }, [])
-
-    useEffect(() => {
-        if (isSwitch) {
+        if (props.isSwitch) {
             tabloAPI.putTimerStatus(gameNumber, false,
-                timeMem + (Date.now() + dif + ping) - startTime,
-                timeMem + ((Date.now() + dif + ping) - startTime),
-                deadLine - (timeMem + ((Date.now() + dif + ping) - startTime)),
+                timeMem + (Date.now() + dif) - startTime,
+                timeMem + ((Date.now() + dif) - startTime),
+                deadLine - (timeMem + ((Date.now() + dif) - startTime)),
                 deadLine, period, smallOvertime, bigOvertime);
-            setIsSwitch(false)
+            props.setIsSwitch(false)
         }
-    }, [isSwitch])
+    }, [props.isSwitch])
 
 
     return (

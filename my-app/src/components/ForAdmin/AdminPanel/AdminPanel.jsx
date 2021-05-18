@@ -16,7 +16,7 @@ const AdminPanel = (props) => {
 
     let gameNumber = props.match.params.gameNumber;
 
-    let [goalStop, setGoalStop] = useState(false)
+    let [isSwitch, setIsSwitch] = useState(false)
 
     let [isRunningServer, setIsRunningServer] = useState(false);
     let [isRunningServerTimeout, setIsRunningServerTimeout] = useState(false);
@@ -91,13 +91,13 @@ const AdminPanel = (props) => {
                               teamGamers={homeTeamGamers} teamCounter={homeTeamInfo.counter}
                               name={homeTeamInfo.name} timeOut={homeTeamInfo.timeOut} teamType={homeTeamInfo.teamType}
                               gameNumber={gameNumber} isRunningServerTimeout={isRunningServerTimeout} logo={homeTeamInfo.logo}
-                              color={homeTeamInfo.color}
+                              color={homeTeamInfo.color} setIsSwitch={setIsSwitch}
 
                     />
                 </div>
                 <div className={c.addPanel}>
                     <div>
-                        <TabloEdit/>
+                        <TabloEdit isSwitch={isSwitch} setIsSwitch={setIsSwitch}/>
                     </div>
                     <div>
                         <Log period={period} timeMem={timeMem}/>
@@ -114,7 +114,7 @@ const AdminPanel = (props) => {
                               teamType={guestsTeamInfo.teamType}
                               gameNumber={gameNumber} isRunningServerTimeout={isRunningServerTimeout}
                               logo={guestsTeamInfo.logo}
-                              color={guestsTeamInfo.color}
+                              color={guestsTeamInfo.color} setIsSwitch={setIsSwitch}
                     />
                 </div>
             </div>

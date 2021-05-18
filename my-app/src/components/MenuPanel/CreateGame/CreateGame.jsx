@@ -300,7 +300,7 @@ const CreateGame = (props) => {
     let [successMessage, setSuccessMessage] = useState(false);
 
 
-    let lastGameNumber = Math.max.apply(Math, savedGames.map(sg => sg.gameNumber));
+    let lastGameNumber = savedGames.length !== 0 ? Math.max.apply(Math, savedGames.map(sg => sg.gameNumber)) : 0;
 
     let dispatch = useDispatch();
 

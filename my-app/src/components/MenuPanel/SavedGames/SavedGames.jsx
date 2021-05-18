@@ -55,7 +55,7 @@ const SavedGames = (props) => {
     let currentGame = savedGames.find(g => g.gameNumber === gameNumber)
 
 
-    let lastGameNumber = Math.max.apply(Math, savedGames.map(sg => sg.gameNumber));
+    let lastGameNumber = savedGames.length !== 0 ? Math.max.apply(Math, savedGames.map(sg => sg.gameNumber)) : 0;
 
 
 

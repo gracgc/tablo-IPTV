@@ -61,9 +61,9 @@ const TeamInfo = (props) => {
             dispatch(teamGoal(props.gameNumber, teamType, symbol));
             dispatch(addNewLog(props.gameNumber,
                 `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - ГОЛ для ${props.name}!`));
-            dispatch(addNewTempLog(props.gameNumber,
-                `ГОЛ для ${props.name}!`))
-            videosAPI.playGoalGIF(props.gameNumber, teamType)
+            // dispatch(addNewTempLog(props.gameNumber,
+            //     `ГОЛ для ${props.name}!`))
+            // videosAPI.playGoalGIF(props.gameNumber, teamType)
             if (props.isRunningServer) {
                 props.setIsSwitch(true)
             }

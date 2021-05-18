@@ -296,6 +296,7 @@ const TabloEdit = (props) => {
                 deadLine, period, smallOvertime, bigOvertime);
             props.setIsSwitch(false)
         }
+
     }, [props.isSwitch])
 
 

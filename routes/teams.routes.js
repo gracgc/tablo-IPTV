@@ -142,11 +142,14 @@ router.post('/fastGameLogo/:gameNumber', cors(), async function (req, res) {
 
         if (isHomeLogo) {
             fs.createReadStream(path.join(__dirname + `/PNG/logoFastGame.png`)).pipe(fs.createWriteStream(path.join(__dirname + `/DBs/DB_${stadium}/img/home_logo_${gameNumber}.png`)));
-        } if (isGuestsLogo) {
+        }
+        if (isGuestsLogo) {
             fs.createReadStream(path.join(__dirname + `/PNG/logoFastGame.png`)).pipe(fs.createWriteStream(path.join(__dirname + `/DBs/DB_${stadium}/img/guests_logo_${gameNumber}.png`)));
-        } if (isHomeGif) {
+        }
+        if (isHomeGif) {
             fs.createReadStream(path.join(__dirname + `/GIF/gifFastGame.gif`)).pipe(fs.createWriteStream(path.join(__dirname + `/DBs/DB_${stadium}/gif/home_goal_${gameNumber}.gif`)));
-        } if (isGuestsGif) {
+        }
+        if (isGuestsGif) {
             fs.createReadStream(path.join(__dirname + `/GIF/gifFastGame.gif`)).pipe(fs.createWriteStream(path.join(__dirname + `/DBs/DB_${stadium}/gif/guests_goal_${gameNumber}.gif`)));
         }
 
@@ -407,6 +410,7 @@ router.put('/teamGoal/:gameNumber', authMW, cors(), function (req, res) {
 
         if (symbol === '+') {
             team.counter = team.counter + 1;
+            io.to(stadium).emit(`playGoalGIF_${teamType}${gameNumber}`, '');
         }
         if (symbol === '-' && team.counter > 0) {
             team.counter = team.counter - 1;
@@ -426,6 +430,7 @@ router.put('/teamGoal/:gameNumber', authMW, cors(), function (req, res) {
         DB.teams.find(t => t.teamType === 'guests').logo = `http://${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
         io.to(stadium).emit(`getTeams${gameNumber}`, DB.teams);
+
 
         // if (DB.gameInfo.gameTime.isRunning && symbol === '+') {
         //     io.to(stadium).emit(`switchTimer${gameNumber}`, '');

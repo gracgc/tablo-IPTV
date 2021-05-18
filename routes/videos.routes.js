@@ -701,7 +701,7 @@ router.put('/isRunning/:gameNumber', authMW, cors(), function (req, res) {
     }
 });
 
-router.post('/goalGIF/:gameNumber', authMW, cors(), function (req, res) {
+router.put('/goalGIF/:gameNumber', authMW, cors(), function (req, res) {
     try {
         let requrl = getHost(req.get('host'))
 

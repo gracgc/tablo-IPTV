@@ -377,7 +377,7 @@ export const videosAPI = {
         })
     },
     playGoalGIF(gameNumber, teamType) {
-        return instance.post(`videos/goalGIF/${gameNumber}`, {
+        return instance.put(`videos/goalGIF/${gameNumber}`, {
             teamType
         })
     }

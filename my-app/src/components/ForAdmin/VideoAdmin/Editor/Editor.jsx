@@ -331,7 +331,7 @@ const Editor = (props) => {
                         </div>
                     }
                     <div className={c.playerTime}>
-                        {minutes}:{seconds}:{ms}
+                        {minutes}:{seconds}
                     </div>
                 </div>
                 }

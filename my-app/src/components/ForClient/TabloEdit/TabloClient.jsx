@@ -85,7 +85,7 @@ const TabloClient = (props) => {
             <div className={c2.tablo2}>
                 <div className={classNames(c2.counter2, c2.homeTeam2)}>
                     {props.homeCounter} <br/>
-                    {props.homeTeam.name}
+                    {props.homeTeam.name.slice(0, 5).toUpperCase()}
                 </div>
                 <div className={c2.time2}>
                     <TabloTimer gameNumber={props.gameNumber} gameConsLog={props.gameConsLog}
@@ -93,7 +93,7 @@ const TabloClient = (props) => {
                 </div>
                 <div className={classNames(c2.counter2, c2.guestsTeam2)}>
                     {props.guestsCounter} <br/>
-                    {props.guestsTeam.name}
+                    {props.guestsTeam.name.slice(0, 5).toUpperCase()}
                 </div>
 
                 <div className={c2.homeLogo}>

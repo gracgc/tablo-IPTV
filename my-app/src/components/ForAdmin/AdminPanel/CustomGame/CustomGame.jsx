@@ -8,13 +8,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {getTeams} from "../../../../redux/teams_reducer";
 import {Input} from "../../../../common/FormsControls/FormsControls";
 import {gameAPI, tabloAPI} from "../../../../api/api";
-import {customGame, getGame} from "../../../../redux/games_reducer";
+import {customGame, getGame, getSavedGames, setSavedGamesAC} from "../../../../redux/games_reducer";
 import {maxTime, maxTime20, maxTime60, required, requiredShort} from "../../../../utils/validators";
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router";
 import {useConfirm} from "material-ui-confirm";
 import logo from "../Info/logoIPTVPORTAL.png";
 import PickColor from "../../../PickColor/PickColor";
+import {getGameNumber, setGameNumberAC} from "../../../../redux/app_reducer";
+import socket from "../../../../socket/socket";
 
 const axios = require('axios');
 
@@ -530,13 +532,29 @@ const CustomGame = (props) => {
         }, 1000)
     }
 
+    let currentGameNumber = useSelector(
+        state => state.appPage.gameNumber
+    );
+
+
+    useEffect(() => {
+        dispatch(getGameNumber())
+
+        socket.on(`getGameNumber`, gameNumber => {
+                dispatch(setGameNumberAC(gameNumber));
+            }
+        );
+
+    }, []);
+    
+
 
     return (
         <div className={c.customGame}>
             <div className={width === 1920 ? c1920.menuHeader : c.menuHeader}>
                 <div className={width === 1920 ? c1920.back : c.back}>
                     <img src={logo} alt="" width={width === 1920 ? 70 : 50} height={width === 1920 ? 70 : 50}/>
-                    <NavLink to={`/adminPanel/${gameNumber}`}>
+                    <NavLink to={currentGameNumber === +gameNumber ? `/adminPanel/${gameNumber}` : `/`}>
                         <div className={width === 1920 ? c1920.backButton : c.backButton}>
                             НАЗАД
                         </div>

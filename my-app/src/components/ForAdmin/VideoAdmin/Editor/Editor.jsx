@@ -143,7 +143,7 @@ const Editor = (props) => {
     let deletedDuration = allVideos.slice(0, deletedN).map(v => v.duration).reduce((sum, current) => sum + current, 0);
 
 
-    let scale = duration / (width === 1920 ? 1000 : 660);
+    let scale = duration / (width === 1920 ? 1200 : 780);
 
     let editorStyle = {
         msWidth: (timeDif - deletedDuration) / scale
@@ -277,14 +277,14 @@ const Editor = (props) => {
                         types={['video']}
                         onDrop={(e) => onDrop(e)}
                     >
-                        <div className={videos.length === 0
-                            ? (width === 1920 ? c1920.droppableVideoFullWidth : c.droppableVideoFullWidth)
-                            : (width === 1920 ? c1920.droppableVideo : c.droppableVideo)} style={{
+                        {videos.length === 0 &&
+                        < div className={(width === 1920 ? c1920.droppableVideoFullWidth : c.droppableVideoFullWidth)} style={{
                             backgroundColor: props.isMouseDownOverDrop && '#defff0',
                             border: props.isMouseDownOverDrop && '2px solid'
                         }}>
                             Перетаскивать сюда из видеоматериалов
-                        </div>
+                            </div>
+                        }
                     </Droppable>
 
 

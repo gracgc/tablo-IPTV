@@ -123,13 +123,13 @@ const TabloEditClient = (props) => {
 
             <div className={c.tabloEdit}>
                 {isHomeGoalGIF &&
-                <div>
-                    <img src={homeTeam.goalGIF} alt="" style={{width: 700}}/>
+                <div style={{margin: 'auto', maxWidth: 1280, maxHeight: 720, width: 1280, height: 720}}>
+                    <img src={homeTeam.goalGIF} alt="" style={{maxWidth: 1280, maxHeight: 720, width: 1280, height: 720}}/>
                 </div>
                 }
                 {isGuestsGoalGIF &&
-                <div>
-                    <img src={guestsTeam.goalGIF} alt="" style={{width: 700}}/>
+                <div style={{margin: 'auto', maxWidth: 1280, maxHeight: 720, width: 1280, height: 720}}>
+                    <img src={guestsTeam.goalGIF} alt="" style={{maxWidth: 1280, maxHeight: 720, width: 1280, height: 720}}/>
                 </div>
                 }
                 {(!isHomeGoalGIF && !isGuestsGoalGIF) &&

@@ -23,7 +23,6 @@ const Presets = (props) => {
 
 
 
-
     useEffect(() => {
         dispatch(getGame(gameNumber));
 
@@ -41,7 +40,9 @@ const Presets = (props) => {
         {preset: 4, name: 'Заглушка'},
         {preset: 5, name: 'Игроки 1'},
         {preset: 6, name: 'Игроки 2'},
+        {preset: 7, name: 'Сводка матча'},
     ]
+
 
     return (
         <div className={width === 1920 ? c1920.presets : c.presets}>

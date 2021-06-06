@@ -60,7 +60,6 @@ const TabloEditClient = (props) => {
             );
         }, [])
 
-        console.log(1)
 
         useEffect(() => {
 

@@ -21,5 +21,6 @@
 }
 
 .preset:hover {
-    border: #3a5985 3px solid;
+    width: 285px;
+    font-size: 25px;
 }

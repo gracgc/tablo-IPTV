@@ -175,28 +175,31 @@ a {
 .customGameButton {
     position: absolute;
     float: right;
-    left: 100px;
-    bottom: 30px;
+    left: 350px;
+    bottom: 50px;
     width: 400px;
     text-align: center;
-    padding: 20px;
     font-weight: bold;
     font-size: 30px;
-    border: solid 2px black;
+    color: #2079A3;
+    text-decoration-color: #2079A3;
+    text-decoration-line: underline;
     cursor: pointer;
+    background: #2A2B2B;
+    border:none;
 }
 
 .resetButton {
     position: absolute;
     float: right;
     left: 860px;
-    bottom: 30px;
+    bottom: 50px;
     width: 560px;
     text-align: center;
-    padding: 20px;
     font-weight: bold;
     font-size: 30px;
-    border: solid 2px white;
-    color: white;
+    color: #2079A3;
+    text-decoration-color: #2079A3;
+    text-decoration-line: underline;
     cursor: pointer;
 }

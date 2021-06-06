@@ -9,6 +9,7 @@ import classNames from 'classnames'
 import TabloTimer from "./TabloTimer";
 import tablo from './../../../content/img/tanlo.png';
 import {gameAPI} from "../../../api/api";
+import Summary from "./Summary";
 
 
 const TabloClient = (props) => {
@@ -140,6 +141,12 @@ const TabloClient = (props) => {
                 <div className={c3.gamers}>
                     {props.guestsTeam.gamers.map(g => <div>{g.gamerNumber} {g.fullName}</div>)}
                 </div>
+            </div>
+            }
+            {preset === 7 &&
+            <div className={c3.tablo3}>
+                <Summary homeTeam={props.homeTeam} guestsTeam={props.guestsTeam}/>
+
             </div>
             }
         </div>

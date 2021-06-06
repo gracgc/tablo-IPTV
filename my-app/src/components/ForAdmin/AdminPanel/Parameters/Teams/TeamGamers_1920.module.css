@@ -29,7 +29,7 @@
     position: absolute;
     border: solid 1px;
     background-color: #fff3eb;
-    margin-left: 100px;
+    margin-left: 140px;
     font-size: 28px;
     cursor: pointer;
     width: 170px;
@@ -52,8 +52,8 @@
     position: absolute;
     border: solid 1px;
     background-color: #fff3eb;
-    margin-left: 140px;
-    /*margin-top: -40px;*/
+    margin-left: 146px;
+    margin-top: 0;
     font-size: 28px;
     cursor: pointer;
     width: 200px;

@@ -34,5 +34,6 @@
 }
 
 .preset:hover {
-    border: #3a5985 3px solid;
+    width: 185px;
+    font-size: 18px;
 }

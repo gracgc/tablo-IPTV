@@ -70,20 +70,17 @@ a {
 
 .createGameButton {
     position: absolute;
-    left: 60px;
-    bottom: 30px;
-    width: 450px;
+    left: 140px;
+    bottom: 50px;
     text-align: center;
-    padding: 20px;
     font-weight: bold;
-    font-size: 20px;
-    border: solid 3px black;
-    background: #8cede5;
+    font-size: 24px;
+    color: #2079A3;
+    text-decoration-color: #2079A3;
+    text-decoration-line: underline;
+    cursor: pointer;
 }
 
-.createGameButton:hover {
-    background: #D5DEEF;
-}
 
 .devicesButton {
     position: absolute;
@@ -106,25 +103,19 @@ a {
 
 
 
-
 .createFastGameButton {
     position: absolute;
-    left: 620px;
-    bottom: 30px;
-    width: 200px;
+    left: 500px;
+    bottom: 50px;
     text-align: center;
-    padding: 20px;
     font-weight: bold;
-    font-size: 20px;
-    border: solid 3px black;
-    background-color: #8cede5;
+    font-size: 24px;
+    color: #2079A3;
+    text-decoration-color: #2079A3;
+    text-decoration-line: underline;
     cursor: pointer;
-    color: black;
 }
 
-.createFastGameButton:hover {
-    background: #D5DEEF;
-}
 
 .menuTitle {
     position: relative;

@@ -74,7 +74,7 @@ const CreateGameForm = (props) => {
                                    validate={[required]}
                                    component={InputReadOnly}/>
                             <div style={{cursor: "pointer"}} onClick={(e) => openGameTypeMenu()}>
-                                <strong style={{fontSize: '125%'}}>Выбрать игру ▼</strong>
+                                <strong style={width === 1920 ? {fontSize: 32} : {fontSize: 18}}>Выбрать игру ▼</strong>
                                 {menuIsOpen && props.gameTypes.map(g =>
                                     <div className={width === 1920 ? c1920.gameTypeMenu : c.gameTypeMenu}
                                          onClick={(e) => {
@@ -262,7 +262,8 @@ const CreateGameForm = (props) => {
                     </div>
                 </div>
                 <div className={width === 1920 ? c1920.createGameInput : c.createGameInput}>
-                    <button className={width === 1920 ? c1920.createGameButton : c.createGameButton}>Создать новую игру
+                    <button className={width === 1920 ? c1920.createGameButton : c.createGameButton}>
+                        Создать новую игру
                     </button>
                 </div>
             </form>

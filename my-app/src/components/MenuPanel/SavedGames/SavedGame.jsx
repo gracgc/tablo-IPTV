@@ -48,7 +48,6 @@ const SavedGame = (props) => {
     const exportLog = () => {
         logAPI.exportLog(props.savedGame.gameNumber).then(txt => {
             FileDownload(txt, `События_${props.savedGame.gameName}_${props.savedGame.gameNumber}.txt`)
-            console.log(txt)
         })
     }
 

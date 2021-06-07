@@ -29,17 +29,14 @@ a {
 }
 
 .curentGameMenu {
-    border: 3px solid;
-    background: #D5DEEF;
     margin-left: 20px;
     padding: 0 5px;
+    color: #2079A3;
+    text-decoration-color: #2079A3;
+    text-decoration-line: underline;
     cursor: pointer;
 }
 
-.curentGameMenu:hover {
-    background-color: #130757;
-    color: white;
-}
 
 .menu {
     position: absolute;
@@ -70,11 +67,11 @@ a {
 
 .createGameButton {
     position: absolute;
-    left: 140px;
+    left: 100px;
     bottom: 50px;
     text-align: center;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 26px;
     color: #2079A3;
     text-decoration-color: #2079A3;
     text-decoration-line: underline;
@@ -84,32 +81,26 @@ a {
 
 .devicesButton {
     position: absolute;
-    right: 30px;
-    bottom: 30px;
-    width: 200px;
+    right: 50px;
+    bottom: 50px;
     text-align: center;
-    padding: 20px;
     font-weight: bold;
-    font-size: 20px;
-    border: solid 3px black;
-    background-color: #130757;
-    color: white;
-}
-
-
-.devicesButton:hover {
-    background: #040e1c;
+    font-size: 26px;
+    color: #2079A3;
+    text-decoration-color: #2079A3;
+    text-decoration-line: underline;
+    cursor: pointer;
 }
 
 
 
 .createFastGameButton {
     position: absolute;
-    left: 500px;
+    left: 460px;
     bottom: 50px;
     text-align: center;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 26px;
     color: #2079A3;
     text-decoration-color: #2079A3;
     text-decoration-line: underline;

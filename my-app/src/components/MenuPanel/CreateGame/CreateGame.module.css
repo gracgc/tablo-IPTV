@@ -64,15 +64,16 @@ a {
 
 .createGameButton {
     position: absolute;
-    top: 105%;
-    left: 5%;
-    width: 30%;
+    top: 500px;
     text-align: center;
-    padding: 1%;
     font-weight: bold;
-    font-size: 22px;
-    border: solid 2px black;
+    font-size: 26px;
+    color: #2079A3;
+    text-decoration-color: #2079A3;
+    text-decoration-line: underline;
     cursor: pointer;
+    background: #2A2B2B;
+    border:none;
 }
 
 .createGameInputPanel {
@@ -150,7 +151,7 @@ a {
 
 .formTitle {
     padding-bottom: 10px;
-    font-size: 120%;
+    font-size: 18px;
 }
 
 .successMessage {
@@ -170,7 +171,12 @@ a {
     padding-top: 1%;
     padding-bottom: 1%;
     padding-left: 5%;
+    font-size: 16px;
     font-weight: bold;
     background-color: white;
     color: black;
+}
+
+.gameTypeMenu:hover {
+    background-color: #d1d1d1;
 }

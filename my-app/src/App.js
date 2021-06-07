@@ -2,30 +2,32 @@ import React, {useEffect} from 'react';
 import './App.css';
 import {Route, withRouter, Switch, Redirect} from "react-router-dom";
 import {compose} from "redux";
-import AdminPanel from "./components/ForAdmin/AdminPanel/AdminPanel";
-import CreateGame from "./components/MenuPanel/CreateGame/CreateGame";
-import SavedGames from "./components/MenuPanel/SavedGames/SavedGames";
-import TabloEditClient from "./components/ForClient/TabloEdit/TabloEditClient";
 import socket from "./socket/socket";
-import Tablo0 from "./components/ForClient/TabloEdit/Tablo0";
 import {ConfirmProvider} from "material-ui-confirm";
-import Auth from "./components/MenuPanel/Auth/Auth";
 import {useDispatch, useSelector} from "react-redux";
 import {authFalseAC, setIdAC} from "./redux/auth_reducer";
 import Cookies from "js-cookie"
-import SetDevice from "./components/MenuPanel/SetDevice/SetDevice";
-import {getTabloPNG, setSocketIDAC, setStadiumAC} from "./redux/app_reducer";
+import {getTabloPNG, setSocketIDAC} from "./redux/app_reducer";
 import {useHistory} from "react-router";
-import CustomGame from "./components/ForAdmin/AdminPanel/CustomGame/CustomGame";
-import Test from "./components/MenuPanel/Test/Test";
-import VideoAdmin from "./components/ForAdmin/VideoAdmin/VideoAdmin";
-import Lag from "./components/MenuPanel/Lag/Lag";
-import LagClient from "./components/MenuPanel/Lag/LagClient";
-import STB from "./components/ForClient/TabloEdit/STB";
-import PreLag from "./components/MenuPanel/Lag/PreLag";
-import PreLagClient from "./components/MenuPanel/Lag/PreLagClient";
 import {devicesAPI} from "./api/api";
-import cookie from "js-cookie"
+import STB from "./components/ForClient/TabloEdit/STB";
+import Tablo0 from "./components/ForClient/TabloEdit/Tablo0";
+import TabloEditClient from "./components/ForClient/TabloEdit/TabloEditClient";
+
+
+
+const CreateGame = React.lazy(() => import('./components/MenuPanel/CreateGame/CreateGame'));
+const SavedGames = React.lazy(() => import('./components/MenuPanel/SavedGames/SavedGames'));
+const AdminPanel = React.lazy(() => import('./components/ForAdmin/AdminPanel/AdminPanel'));
+const VideoAdmin = React.lazy(() => import('./components/ForAdmin/VideoAdmin/VideoAdmin'));
+const SetDevice = React.lazy(() => import('./components/MenuPanel/SetDevice/SetDevice'));
+const Auth = React.lazy(() => import('./components/MenuPanel/Auth/Auth'));
+const CustomGame = React.lazy(() => import('./components/ForAdmin/AdminPanel/CustomGame/CustomGame'));
+const Test = React.lazy(() => import('./components/MenuPanel/Test/Test'));
+const Lag = React.lazy(() => import('./components/MenuPanel/Lag/Lag'));
+const LagClient = React.lazy(() => import('./components/MenuPanel/Lag/LagClient'));
+const PreLag = React.lazy(() => import('./components/MenuPanel/Lag/PreLag'));
+const PreLagClient = React.lazy(() => import('./components/MenuPanel/Lag/PreLagClient'));
 
 
 function App(props) {
@@ -95,8 +97,6 @@ function App(props) {
     }, [])
 
 
-
-
     return (
         <ConfirmProvider>
             <div className='app'>
@@ -104,31 +104,98 @@ function App(props) {
                 <Switch>
                     <Route exact path='/'
                            render={() => <Redirect to={"/menu"}/>}/>
+
                     <Route exact path='/adminPanel'
                            render={() => <Redirect to={"/menu"}/>}/>
-                    <Route path='/createGame' render={() => <CreateGame/>}/>
-                    <Route exact path='/adminPanel'
-                           render={() => <SavedGames/>}/>
 
-                    <Route path='/adminPanel/:gameNumber?'
-                           render={() => <AdminPanel/>}/>
-                    <Route path='/videoAdmin/:gameNumber?'
-                           render={() => <VideoAdmin/>}/>
+                    <Route exact path='/videoAdmin'
+                           render={() => <Redirect to={"/menu"}/>}/>
 
-                    <Route path='/menu' render={() => <SavedGames/>}/>
-                    <Route path='/settings' render={() => <SetDevice/>}/>
+                    <Route exact path='/customGame'
+                           render={() => <Redirect to={"/menu"}/>}/>
 
                     <Route exact path='/tabloClient'
                            render={() => <Tablo0/>}/>
+
                     <Route exact path='/tabloClient/0' render={() => <Tablo0/>}/>
+
                     <Route path='/tabloClient/:gameNumber?' render={() => <TabloEditClient/>}/>
-                    <Route path='/auth' render={() => <Auth/>}/>
-                    <Route path='/customGame/:gameNumber?' render={() => <CustomGame/>}/>
-                    <Route path='/test' render={() => <Test/>}/>
-                    <Route path='/lag' render={() => <Lag/>}/>
-                    <Route path='/lagClient' render={() => <LagClient/>}/>
-                    <Route path='/prelag' render={() => <PreLag/>}/>
-                    <Route path='/prelagClient' render={() => <PreLagClient/>}/>
+
+
+                    <Route path='/menu' render={() => {
+                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                            <SavedGames/>
+                        </React.Suspense>
+                    }}/>
+
+                    <Route path='/createGame' render={() => {
+                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                            <CreateGame/>
+                        </React.Suspense>
+                    }}/>
+
+                    <Route path='/adminPanel/:gameNumber?' render={() => {
+                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                            <AdminPanel/>
+                        </React.Suspense>
+                    }}/>
+
+                    <Route path='/videoAdmin/:gameNumber?' render={() => {
+                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                            <VideoAdmin/>
+                        </React.Suspense>
+                    }}/>
+
+                    <Route path='/settings' render={() => {
+                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                            <SetDevice/>
+                        </React.Suspense>
+                    }}/>
+
+
+                    <Route path='/auth' render={() => {
+                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                            <Auth/>
+                        </React.Suspense>
+                    }}/>
+
+                    <Route path='/customGame/:gameNumber?' render={() => {
+                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                            <CustomGame/>
+                        </React.Suspense>
+                    }}/>
+
+                    <Route path='/test' render={() => {
+                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                            <Test/>
+                        </React.Suspense>
+                    }}/>
+
+                    <Route path='/lag' render={() => {
+                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                            <Lag/>
+                        </React.Suspense>
+                    }}/>
+
+                    <Route path='/lagClient' render={() => {
+                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                            <LagClient/>
+                        </React.Suspense>
+                    }}/>
+
+                    <Route path='/prelag' render={() => {
+                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                            <PreLag/>
+                        </React.Suspense>
+                    }}/>
+
+                    <Route path='/prelagClient' render={() => {
+                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                            <PreLagClient/>
+                        </React.Suspense>
+                    }}/>
+
+
                 </Switch>
             </div>
         </ConfirmProvider>

@@ -10,7 +10,6 @@ import socket from "../../../socket/socket";
 import {useConfirm} from "material-ui-confirm";
 import {useHistory} from "react-router";
 import {gameAPI, teamsAPI} from "../../../api/api";
-import logo from "./../../../content/img/logoFastGame.png"
 const axios = require('axios');
 
 

@@ -10,11 +10,13 @@ import socket from "../../../socket/socket";
 import {useConfirm} from "material-ui-confirm";
 import {useHistory} from "react-router";
 import {gameAPI, teamsAPI} from "../../../api/api";
+import Loading from "../../Loading/Loading";
+
 const axios = require('axios');
 
 
-
 const SavedGames = (props) => {
+
 
     const savedGames = useSelector(
         state => state.gamesPage.savedGames
@@ -34,8 +36,8 @@ const SavedGames = (props) => {
 
 
     useEffect(() => {
-        dispatch(getSavedGames());
-        dispatch(getGameNumber())
+        // dispatch(getSavedGames());
+        // dispatch(getGameNumber())
 
         socket.on(`getGameNumber`, gameNumber => {
                 dispatch(setGameNumberAC(gameNumber));
@@ -49,14 +51,10 @@ const SavedGames = (props) => {
     }, []);
 
 
-
-
     let currentGame = savedGames.find(g => g.gameNumber === gameNumber)
 
 
     let lastGameNumber = savedGames.length !== 0 ? Math.max.apply(Math, savedGames.map(sg => sg.gameNumber)) : 0;
-
-
 
 
     let createFastGame = async () => {
@@ -83,7 +81,12 @@ const SavedGames = (props) => {
 
         let r = await createFastGame()
 
-        axios.post(`/api/teams/fastGameLogo/${lastGameNumber + 1}`, {isHomeLogo: true, isGuestsLogo: true, isHomeGif: true, isGuestsGif: true})
+        axios.post(`/api/teams/fastGameLogo/${lastGameNumber + 1}`, {
+            isHomeLogo: true,
+            isGuestsLogo: true,
+            isHomeGif: true,
+            isGuestsGif: true
+        })
 
         if (r.responseGame.resultCode === 0 && r.responseTeam.resultCode === 0) {
             dispatch(putGameNumber(lastGameNumber + 1))
@@ -102,52 +105,52 @@ const SavedGames = (props) => {
 
 
     return (
+
         <div className={width === 1920 ? c1920.savedGames : c.savedGames}>
-            <span className={width === 1920 ? c1920.menuTitle : c.menuTitle}>Список игр</span>
-            <div className={width === 1920 ? c1920.iptv : c.iptv}>IPTV PORTAL <br/> TABLO beta</div>
+                    <span className={width === 1920 ? c1920.menuTitle : c.menuTitle}>Список игр</span>
+                    <div className={width === 1920 ? c1920.iptv : c.iptv}>IPTV PORTAL <br/> TABLO beta</div>
 
-            <div className={width === 1920 ? c1920.menu : c.menu}>
-                <div className={width === 1920 ? c1920.search : c.search}>
-                    Поиск по названию: <input className={width === 1920 ? c1920.searchInput : c.searchInput} type="text"
-                                              ref={searchGame} onChange={(e) => search()}/>
-                </div>
-                {currentGame &&
-                <div className={width === 1920 ? c1920.currentGame : c.currentGame}>
-                    Текущая игра: {currentGame.gameName} — {currentGame.gameType}
-                    <NavLink to={'/adminPanel/' + currentGame.gameNumber}>
-                        <div className={c.curentGameMenu}>Админ</div>
+                    <div className={width === 1920 ? c1920.menu : c.menu}>
+                        <div className={width === 1920 ? c1920.search : c.search}>
+                            Поиск по названию: <input className={width === 1920 ? c1920.searchInput : c.searchInput}
+                                                      type="text"
+                                                      ref={searchGame} onChange={(e) => search()}/>
+                        </div>
+                        {currentGame &&
+                        <div className={width === 1920 ? c1920.currentGame : c.currentGame}>
+                            Текущая игра: {currentGame.gameName} — {currentGame.gameType}
+                            <NavLink to={'/adminPanel/' + currentGame.gameNumber}>
+                                <div className={c.curentGameMenu}>Админ</div>
+                            </NavLink>
+                            <NavLink to={'/videoAdmin/' + currentGame.gameNumber}>
+                                <div className={c.curentGameMenu}>Видео-админ</div>
+                            </NavLink>
+                        </div>}
+                        <div className={width === 1920 ? c1920.navbar : c.navbar}>
+                            {savedGames.length !== 0 && savedGames.map(sg => (sg.gameName.toLowerCase().indexOf(searchWord) !== -1) &&
+                                <SavedGame gameNumber={gameNumber} savedGame={sg} savedGames={savedGames}/>)}
+                        </div>
+
+                    </div>
+
+
+                    <NavLink to="/devices">
+                        <div className={width === 1920 ? c1920.devicesButton : c.devicesButton}>
+                            Назначения устройств
+                        </div>
                     </NavLink>
-                    <NavLink to={'/videoAdmin/' + currentGame.gameNumber}>
-                        <div className={c.curentGameMenu}>Видео-админ</div>
+
+                    <NavLink to="/createGame">
+                        <div className={width === 1920 ? c1920.createGameButton : c.createGameButton}>
+                            Создать новую игру
+                        </div>
                     </NavLink>
-                </div>}
-                <div className={width === 1920 ? c1920.navbar : c.navbar}>
-                    {savedGames.length !== 0 && savedGames.map(sg => (sg.gameName.toLowerCase().indexOf(searchWord) !== -1) &&
-                        <SavedGame gameNumber={gameNumber} savedGame={sg} savedGames={savedGames}/>)}
-                </div>
-
-            </div>
 
 
-            <NavLink to="/settings">
-                <div className={width === 1920 ? c1920.devicesButton : c.devicesButton}>
-                    Назначения устройств
-                </div>
-            </NavLink>
-
-            <NavLink to="/createGame">
-                <div className={width === 1920 ? c1920.createGameButton : c.createGameButton}>
-                    Создать новую игру
-                </div>
-            </NavLink>
-
-
-            <div className={width === 1920 ? c1920.createFastGameButton : c.createFastGameButton}
-                 onClick={(e) => fastGameAlert()}>
-                Быстрая игра
-            </div>
-
-
+                    <div className={width === 1920 ? c1920.createFastGameButton : c.createFastGameButton}
+                         onClick={(e) => fastGameAlert()}>
+                        Быстрая игра
+                    </div>
         </div>
     )
 };

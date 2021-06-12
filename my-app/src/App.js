@@ -13,11 +13,12 @@ import {devicesAPI} from "./api/api";
 import STB from "./components/ForClient/TabloEdit/STB";
 import Tablo0 from "./components/ForClient/TabloEdit/Tablo0";
 import TabloEditClient from "./components/ForClient/TabloEdit/TabloEditClient";
-
+import Loading from "./components/Loading/Loading";
 
 
 const CreateGame = React.lazy(() => import('./components/MenuPanel/CreateGame/CreateGame'));
 const SavedGames = React.lazy(() => import('./components/MenuPanel/SavedGames/SavedGames'));
+const SavedGamesPreload = React.lazy(() => import('./components/MenuPanel/Preload/SavedGamesPreload'));
 const AdminPanel = React.lazy(() => import('./components/ForAdmin/AdminPanel/AdminPanel'));
 const VideoAdmin = React.lazy(() => import('./components/ForAdmin/VideoAdmin/VideoAdmin'));
 const SetDevice = React.lazy(() => import('./components/MenuPanel/SetDevice/SetDevice'));
@@ -96,6 +97,10 @@ function App(props) {
         dispatch(getTabloPNG())
     }, [])
 
+    const isFetchingGame = useSelector(
+        state => state.gamesPage.isFetching
+    );
+
 
     return (
         <ConfirmProvider>
@@ -123,74 +128,74 @@ function App(props) {
 
 
                     <Route path='/menu' render={() => {
-                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
-                            <SavedGames/>
+                        return <React.Suspense fallback={<Loading/>}>
+                            <SavedGamesPreload/>
                         </React.Suspense>
                     }}/>
 
                     <Route path='/createGame' render={() => {
-                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                        return <React.Suspense fallback={<Loading/>}>
                             <CreateGame/>
                         </React.Suspense>
                     }}/>
 
                     <Route path='/adminPanel/:gameNumber?' render={() => {
-                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                        return <React.Suspense fallback={<Loading/>}>
                             <AdminPanel/>
                         </React.Suspense>
                     }}/>
 
                     <Route path='/videoAdmin/:gameNumber?' render={() => {
-                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                        return <React.Suspense fallback={<Loading/>}>
                             <VideoAdmin/>
                         </React.Suspense>
                     }}/>
 
-                    <Route path='/settings' render={() => {
-                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                    <Route path='/devices' render={() => {
+                        return <React.Suspense fallback={<Loading/>}>
                             <SetDevice/>
                         </React.Suspense>
                     }}/>
 
 
                     <Route path='/auth' render={() => {
-                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                        return <React.Suspense fallback={<Loading/>}>
                             <Auth/>
                         </React.Suspense>
                     }}/>
 
                     <Route path='/customGame/:gameNumber?' render={() => {
-                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                        return <React.Suspense fallback={<Loading/>}>
                             <CustomGame/>
                         </React.Suspense>
                     }}/>
 
                     <Route path='/test' render={() => {
-                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                        return <React.Suspense fallback={<Loading/>}>
                             <Test/>
                         </React.Suspense>
                     }}/>
 
                     <Route path='/lag' render={() => {
-                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                        return <React.Suspense fallback={<Loading/>}>
                             <Lag/>
                         </React.Suspense>
                     }}/>
 
                     <Route path='/lagClient' render={() => {
-                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                        return <React.Suspense fallback={<Loading/>}>
                             <LagClient/>
                         </React.Suspense>
                     }}/>
 
                     <Route path='/prelag' render={() => {
-                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                        return <React.Suspense fallback={<Loading/>}>
                             <PreLag/>
                         </React.Suspense>
                     }}/>
 
                     <Route path='/prelagClient' render={() => {
-                        return <React.Suspense fallback={<div style={{backgroundColor: '#2A2B2B', width: '100vw', height: '100vh'}}>Loading...</div>}>
+                        return <React.Suspense fallback={<Loading/>}>
                             <PreLagClient/>
                         </React.Suspense>
                     }}/>

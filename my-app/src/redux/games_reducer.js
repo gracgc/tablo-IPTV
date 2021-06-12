@@ -4,24 +4,13 @@ const SET_GAME_DATA = 'games/SET_GAME_DATA';
 const SET_PRESET = 'games/SET_PRESET';
 const SET_SAVED_GAMES = 'games/SET_SAVED_GAMES';
 const CREATE_NEW_GAME = 'games/CREATE_NEW_GAME';
+const IS_FETCHING = 'games/IS_FETCHING';
+const FETCHING_RESET = 'games/FETCHING_RESET';
 
 let initialState = {
-    gameData: {
-        gameName: "",
-        gameNumber: null,
-        gameType: "",
-        preset: 1,
-        gameStatus: "",
-        gameTime: null
-    },
-    savedGames: [
-        {
-            gameName: "",
-            gameNumber: 1,
-            gameType: "",
-            dateOfCreation: "",
-        }
-    ]
+    gameData: null,
+    savedGames: null,
+    isFetching: 0
 };
 
 const gamesReducer = (state = initialState, action) => {
@@ -64,6 +53,20 @@ const gamesReducer = (state = initialState, action) => {
                 savedGames: [...state.savedGames, newGame]
             };
 
+        case IS_FETCHING:
+
+            if (state.isFetching === -1) {
+                state.isFetching = 0
+            }
+
+
+            return {
+                ...state,
+                isFetching: state.isFetching + action.isFetching
+            };
+
+
+
         default:
             return state;
     }
@@ -74,20 +77,25 @@ export const setPresetAC = (preset) => ({type: SET_PRESET, preset});
 export const setSavedGamesAC = (savedGames) => ({type: SET_SAVED_GAMES, savedGames});
 export const createNewGameAC = (gameName, gameNumber, gameType) =>
     ({type: CREATE_NEW_GAME, gameName, gameNumber, gameType});
+export const isFetchingAC = (isFetching) => ({type: IS_FETCHING, isFetching});
 
 
 
 export const getGame = (gameNumber) => async (dispatch) => {
+    dispatch(isFetchingAC(1))
     let response = await gameAPI.getGame(gameNumber);
     if (response.resultCode === 0) {
         dispatch(setGameDataAC(response));
+        dispatch(isFetchingAC(-1))
     }
 };
 
 export const getSavedGames = () => async (dispatch) => {
+    dispatch(isFetchingAC(1))
     let response = await gameAPI.getSavedGames();
     if (response.resultCode === 0) {
         dispatch(setSavedGamesAC(response.savedGames));
+        dispatch(isFetchingAC(-1))
     }
 };
 
@@ -100,13 +108,13 @@ export const deleteGame = (gameNumber) => async (dispatch) => {
 
 export const createNewGame =
     (gameName, gameNumber, gameType, homeName, homeColor, homeGamers, guestsName, guestsColor, guestsGamers) => async (dispatch) => {
-    let responseGame = await gameAPI.createNewGame(gameName, gameNumber, gameType);
-    let responseTeam = await teamsAPI.createTeams(gameNumber, homeName, homeColor, homeGamers, guestsName, guestsColor, guestsGamers);
+        let responseGame = await gameAPI.createNewGame(gameName, gameNumber, gameType);
+        let responseTeam = await teamsAPI.createTeams(gameNumber, homeName, homeColor, homeGamers, guestsName, guestsColor, guestsGamers);
 
-    // if (responseGame.resultCode === 0 && responseTeam.resultCode === 0) {
-    //     dispatch(createNewGameAC(gameName, gameNumber, gameType));
-    // }
-};
+        // if (responseGame.resultCode === 0 && responseTeam.resultCode === 0) {
+        //     dispatch(createNewGameAC(gameName, gameNumber, gameType));
+        // }
+    };
 
 export const customGame =
     (gameNumber, gameName, period, time, homeName, homeColor, homeGamers, guestsName, guestsColor, guestsGamers, additionalHomeGamers, additionalGuestsGamers) => async (dispatch) => {

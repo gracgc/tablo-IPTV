@@ -66,17 +66,16 @@ const Editor = (props) => {
             let serverPing = Math.round((Date.now() - r.dateClient) / 2);
             let timeSyncServer = r.dateServer - r.dateClient
 
-            console.log(r)
 
             dispatch(setDifAC(timeSyncServer + serverPing + tupit))
             dispatch(setPingAC(serverPing))
 
-            setIsRunningServer(r.timeData.isRunning);
+            setIsRunningServer(r.isRunning);
             return r
         }).then(r => {
-            setStartTime(r.timeData.runningTime);
-            setTimeMem(r.timeData.timeMem);
-            setTimeDif(r.timeData.timeMem);
+            setStartTime(r.runningTime);
+            setTimeMem(r.timeMem);
+            setTimeDif(r.timeMem);
         });
 
 

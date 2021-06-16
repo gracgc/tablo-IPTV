@@ -632,7 +632,7 @@ router.put('/mp4/delete', authMW, cors(), async function (req, res) {
 });
 
 
-router.post('/sync/:gameNumber', authMW, cors(), function (req, res) {
+router.get('/sync/:gameNumber/:dateClient', authMW, cors(), function (req, res) {
     try {
         let requrl = getHost(req.get('host'))
 
@@ -640,16 +640,16 @@ router.post('/sync/:gameNumber', authMW, cors(), function (req, res) {
 
         let gameNumber = req.params.gameNumber;
 
-        let dateClient = req.body.dateClient;
+        let dateClient = +req.params.dateClient;
 
         let data = fs.readFileSync(path.join(__dirname + `/DBs/DB_${stadium}/video_${gameNumber}.json`));
         let DB = JSON.parse(data);
 
         DB.timeData.resultCode = 0;
         DB.timeData.dateClient = dateClient;
-        DB.timeData.timeSync = Date.now() - dateClient;
+        DB.timeData.dateServer = Date.now();
 
-        res.send(DB);
+        res.send(DB.timeData);
 
     } catch (e) {
         console.log(e)

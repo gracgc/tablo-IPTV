@@ -14,43 +14,17 @@ import Summary from "./Summary";
 
 const TabloClient = (props) => {
 
-    const dispatch = useDispatch();
-
-    const preset = useSelector(
-        (state => state.gamesPage.gameData.preset)
-    );
-
-    const tabloPNG = useSelector(
-        (state => state.appPage.pngs.tabloPNG)
-    );
-
-
-
-    useEffect(() => {
-        dispatch(getGame(props.gameNumber));
-    }, [props.gameNumber]);
-
-
-
-    useEffect(() => {
-
-        socket.on(`getPreset${props.gameNumber}`, preset => {
-            dispatch(setPresetAC(preset))
-        });
-
-    }, []);
-
 
 
     return (
         <div className={c.tablo}>
-            {preset === 1 &&
+            {props.preset === 1 &&
             <div className={c.tablo1}>
 
 
                 <div>
                     <TabloTimer gameNumber={props.gameNumber} gameConsLog={props.gameConsLog}
-                                isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={preset}/>
+                                isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={props.preset}/>
                 </div>
 
                 <div>
@@ -76,13 +50,13 @@ const TabloClient = (props) => {
                     </div>
                 </div>
                 <div style={{zIndex: -1, position: 'fixed', top: 0}}>
-                    <img src={tabloPNG} alt=""/>
+                    <img src={props.tabloPNG} alt=""/>
                 </div>
 
             </div>
             }
 
-            {preset === 2 &&
+            {props.preset === 2 &&
             <div className={c2.tablo2}>
                 <div className={classNames(c2.counter2, c2.homeTeam2)}>
                     {props.homeCounter} <br/>
@@ -90,7 +64,7 @@ const TabloClient = (props) => {
                 </div>
                 <div className={c2.time2}>
                     <TabloTimer gameNumber={props.gameNumber} gameConsLog={props.gameConsLog}
-                                isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={preset}/>
+                                isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={props.preset}/>
                 </div>
                 <div className={classNames(c2.counter2, c2.guestsTeam2)}>
                     {props.guestsCounter} <br/>
@@ -106,16 +80,16 @@ const TabloClient = (props) => {
 
             </div>
             }
-            {preset === 3 &&
+            {props.preset === 3 &&
             <div>
             </div>
             }
-            {preset === 4 &&
+            {props.preset === 4 &&
             <div className={c.tablo1}>
                 <div className={c.tablo0}>TABLO</div>
             </div>
             }
-            {preset === 5 &&
+            {props.preset === 5 &&
             <div className={c3.tablo3}>
                 <div className={c3.teamName}>
                     {props.homeTeam.name} <br/>
@@ -129,7 +103,7 @@ const TabloClient = (props) => {
 
             </div>
             }
-            {preset === 6 &&
+            {props.preset === 6 &&
             <div className={c3.tablo3}>
                 <div className={c3.teamName}>
                     {props.guestsTeam.name} <br/>
@@ -143,7 +117,7 @@ const TabloClient = (props) => {
                 </div>
             </div>
             }
-            {preset === 7 &&
+            {props.preset === 7 &&
             <div className={c3.tablo3}>
                 <Summary homeTeam={props.homeTeam} guestsTeam={props.guestsTeam}/>
 

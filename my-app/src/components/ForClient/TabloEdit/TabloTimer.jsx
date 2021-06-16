@@ -1,4 +1,4 @@
-import React, {createRef, useMemo, useRef} from 'react'
+import React from 'react'
 import c from './TabloClient1.module.css'
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
@@ -8,13 +8,10 @@ import socket from "../../../socket/socket";
 import {tabloAPI} from "../../../api/api";
 import useInterval from 'use-interval'
 import TabloEventClient from "./TabloEventClient";
-import STB from "./STB";
 import {setDifAC, setPingAC} from "../../../redux/dif_reducer";
 import Dif from "../../dif/Dif";
-import Cookies from "js-cookie";
-import {useHistory} from "react-router";
 import {setTimeDataAC} from "../../../redux/tablo_reducer";
-import {devicesAPI} from "../../../api/api";
+
 
 
 const TabloTimer = (props) => {
@@ -41,8 +38,6 @@ const TabloTimer = (props) => {
     let dispatch = useDispatch();
 
     let [gameNumber, setGameNumber] = useState(props.gameNumber);
-
-    // let [isNull, setIsNull] = useState()
 
 
     let [isRunningServer, setIsRunningServer] = useState(false);

@@ -32,6 +32,8 @@ const AdminPanelPreload = (props) => {
     );
 
 
+
+
     useEffect(() => {
 
         dispatch(getTeams(gameNumber));

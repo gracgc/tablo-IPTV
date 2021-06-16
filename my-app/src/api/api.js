@@ -24,7 +24,6 @@ let checkKey = setInterval(() => {
 
 
 
-
 export const teamsAPI = {
     getTeams(gameNumber) {
         return instance.get(`teams/${gameNumber}`)
@@ -365,7 +364,8 @@ export const videosAPI = {
             })
     },
     getVideoTime(gameNumber, dateClient) {
-        return instance.post(`videos/sync/${gameNumber}`, {dateClient}).then(responce => {
+        return instance.get(`videos/sync/${gameNumber}/${dateClient}`)
+            .then(responce => {
             return responce.data
         })
     },

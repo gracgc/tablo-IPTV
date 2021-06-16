@@ -2,14 +2,13 @@ import React, {useEffect, useState} from "react";
 import c from './CustomGame.module.css'
 import c1920 from './CustomGame_1920.module.css'
 import {NavLink, withRouter} from "react-router-dom";
-import {change, Field, reduxForm, stopSubmit} from "redux-form";
+import {change, Field, reduxForm} from "redux-form";
 import {compose} from "redux";
-import {useDispatch, useSelector} from "react-redux";
-import {getTeams} from "../../../../redux/teams_reducer";
+import {useDispatch} from "react-redux";
 import {Input} from "../../../../common/FormsControls/FormsControls";
 import {gameAPI, tabloAPI} from "../../../../api/api";
-import {customGame, getGame, getSavedGames, setSavedGamesAC} from "../../../../redux/games_reducer";
-import {maxTime, maxTime20, maxTime60, required, requiredShort} from "../../../../utils/validators";
+import {customGame} from "../../../../redux/games_reducer";
+import {maxTime20, maxTime60, required, requiredShort} from "../../../../utils/validators";
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router";
 import {useConfirm} from "material-ui-confirm";
@@ -25,15 +24,6 @@ const CustomGameForm = (props) => {
 
     let width = window.innerWidth;
 
-    const teams = useSelector(
-        state => state.teamsPage.teams
-    );
-
-    const gameData = useSelector(
-        state => state.gamesPage.gameData
-    );
-
-    let dispatch = useDispatch();
 
 
     let [period, setPeriod] = useState();
@@ -41,9 +31,9 @@ const CustomGameForm = (props) => {
 
     const periods = [1, 2, 3, 4]
 
-    const homeTeam = teams.find(t => t.teamType === 'home');
+    const homeTeam = props.teams.find(t => t.teamType === 'home');
 
-    const guestsTeam = teams.find(t => t.teamType === 'guests');
+    const guestsTeam = props.teams.find(t => t.teamType === 'guests');
 
     const homeTeamGamers = homeTeam.gamers;
 
@@ -53,8 +43,6 @@ const CustomGameForm = (props) => {
     let minutesTimer = Math.floor(timeMemTimer / (1000 * 60));
 
     useEffect(() => {
-        dispatch(getTeams(props.gameNumber));
-        dispatch(getGame(props.gameNumber));
         homeTeamGamers.map(g => {
                 props.dispatch(change('customGame', `homeGamerName${g.id}`, g.fullName))
                 props.dispatch(change('customGame', `homeGamerNumber${g.id}`, g.gamerNumber))
@@ -75,9 +63,15 @@ const CustomGameForm = (props) => {
             setPeriod(r.period)
             props.dispatch(change('customGame', 'period', r.period));
         })
-        props.dispatch(change('customGame', 'gameName', gameData.gameName));
-        props.dispatch(change('customGame', 'min', minutesTimer));
-        props.dispatch(change('customGame', 'sec', secondsTimer));
+
+        props.dispatch(change('customGame', 'gameName', props.gameData.gameName));
+
+        if (minutesTimer && secondsTimer) {
+            props.dispatch(change('customGame', 'min', minutesTimer));
+            props.dispatch(change('customGame', 'sec', secondsTimer));
+        }
+
+
 
     }, [timeMemTimer]);
 
@@ -384,17 +378,13 @@ const CustomGame = (props) => {
 
     let gameNumber = props.match.params.gameNumber;
 
-    const teams = useSelector(
-        state => state.teamsPage.teams
-    );
+    const homeTeam = props.teams.find(t => t.teamType === 'home');
 
-    const homeTeam = teams.find(t => t.teamType === 'home');
+    const guestsTeam = props.teams.find(t => t.teamType === 'guests');
 
-    const guestsTeam = teams.find(t => t.teamType === 'guests');
+    const homeTeamGamers = props.teams.find(t => t.teamType === 'home').gamers;
 
-    const homeTeamGamers = teams.find(t => t.teamType === 'home').gamers;
-
-    const guestsTeamGamers = teams.find(t => t.teamType === 'guests').gamers;
+    const guestsTeamGamers = props.teams.find(t => t.teamType === 'guests').gamers;
 
     let [successSave, setSuccessSave] = useState(false);
 
@@ -532,13 +522,9 @@ const CustomGame = (props) => {
         }, 1000)
     }
 
-    let currentGameNumber = useSelector(
-        state => state.appPage.gameNumber
-    );
 
 
     useEffect(() => {
-        dispatch(getGameNumber())
 
         socket.on(`getGameNumber`, gameNumber => {
                 dispatch(setGameNumberAC(gameNumber));
@@ -554,7 +540,7 @@ const CustomGame = (props) => {
             <div className={width === 1920 ? c1920.menuHeader : c.menuHeader}>
                 <div className={width === 1920 ? c1920.back : c.back}>
                     <img src={logo} alt="" width={width === 1920 ? 70 : 50} height={width === 1920 ? 70 : 50}/>
-                    <NavLink to={currentGameNumber === +gameNumber ? `/adminPanel/${gameNumber}` : `/`}>
+                    <NavLink to={props.currentGameNumber === +gameNumber ? `/adminPanel/${gameNumber}` : `/`}>
                         <div className={width === 1920 ? c1920.backButton : c.backButton}>
                             НАЗАД
                         </div>
@@ -570,9 +556,11 @@ const CustomGame = (props) => {
                     {/*</NavLink>*/}
                 </div>
             </div>
-            <div className={width === 1920 ? c1920.customGamePanel : c.customGamePanel}>
+            <div>
                 <CustomGameReduxForm onSubmit={onSubmit}
                                      gameNumber={gameNumber}
+                                     teams={props.teams}
+                                     gameData={props.gameData}
                                      successSave={successSave}
                                      numberOfAdditionalHomePlayers={numberOfAdditionalHomePlayers}
                                      setNumberOfAdditionalHomePlayers={setNumberOfAdditionalHomePlayers}

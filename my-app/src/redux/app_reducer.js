@@ -6,6 +6,7 @@ const PUT_GAME_NUMBER = 'app/PUT_GAME_NUMBER';
 const SET_SOCKET_ID = 'app/SET_SOCKET_ID';
 const SET_STADIUM = 'app/SET_STADIUM'
 const SET_TABLO_PNG = 'app/SET_TABLO_PNG'
+const IS_FETCHING = 'app/IS_FETCHING';
 
 
 let initialState = {
@@ -15,7 +16,8 @@ let initialState = {
     lag: 0,
     pngs: {
         tabloPNG: null
-    }
+    },
+    isFetching: 0
 };
 
 const appReducer = (state = initialState, action) => {
@@ -60,6 +62,14 @@ const appReducer = (state = initialState, action) => {
                 }
             };
 
+        case IS_FETCHING:
+
+
+            return {
+                ...state,
+                isFetching: state.isFetching + action.isFetching
+            };
+
 
         default:
             return state;
@@ -71,12 +81,15 @@ export const setSocketIDAC = (socketID) => ({type: SET_SOCKET_ID, socketID});
 export const setStadiumAC = (stadium) => ({type: SET_STADIUM, stadium});
 export const putGameNumberAC = (gameNumber) => ({type: PUT_GAME_NUMBER, gameNumber});
 export const setTabloPNGAC = (tabloPNG) => ({type: SET_TABLO_PNG, tabloPNG});
+export const isFetchingAC = (isFetching) => ({type: IS_FETCHING, isFetching});
 
 
 export const getGameNumber = () => async (dispatch) => {
+    dispatch(isFetchingAC(1))
     let response = await gameAPI.getGameNumber();
     if (response.resultCode !== 10) {
         dispatch(setGameNumberAC(response.gameNumber));
+        dispatch(isFetchingAC(-1))
     }
 };
 

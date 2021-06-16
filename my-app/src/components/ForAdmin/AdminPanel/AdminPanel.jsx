@@ -26,17 +26,17 @@ const AdminPanel = (props) => {
 
     let [period, setPeriod] = useState();
 
-    const teams = useSelector(
-        state => state.teamsPage.teams
-    );
+    // const teams = useSelector(
+    //     state => state.teamsPage.teams
+    // );
 
-    const homeTeamGamers = teams.find(t => t.teamType === 'home').gamers;
+    const homeTeamGamers = props.teams.find(t => t.teamType === 'home').gamers;
 
-    const guestsTeamGamers = teams.find(t => t.teamType === 'guests').gamers;
+    const guestsTeamGamers = props.teams.find(t => t.teamType === 'guests').gamers;
 
-    const homeTeamInfo = teams.find(t => t.teamType === 'home');
+    const homeTeamInfo = props.teams.find(t => t.teamType === 'home');
 
-    const guestsTeamInfo = teams.find(t => t.teamType === 'guests');
+    const guestsTeamInfo = props.teams.find(t => t.teamType === 'guests');
 
 
     const dispatch = useDispatch();
@@ -66,8 +66,8 @@ const AdminPanel = (props) => {
                 setIsRunningServerTimeout(time.isRunning);
             }
         );
-
-        dispatch(getTeams(gameNumber));
+        //
+        // dispatch(getTeams(gameNumber));
 
         socket.on(`getTeams${gameNumber}`, teams => {
                 dispatch(setTeamsAC(teams))
@@ -82,7 +82,7 @@ const AdminPanel = (props) => {
 
         <div className={c.adminPanel}>
             <div className={c.info}>
-                <Info/>
+                <Info gameData={props.gameData}/>
             </div>
             <div className={c.mainPanel}>
                 <div>

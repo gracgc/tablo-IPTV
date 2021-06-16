@@ -17,21 +17,16 @@ const Presets = (props) => {
 
     const dispatch = useDispatch();
 
-    const preset = useSelector(
-        (state => state.gamesPage.gameData.preset)
-    );
-
-
 
     useEffect(() => {
-        dispatch(getGame(gameNumber));
-
 
         socket.on(`getPreset${gameNumber}`, preset => {
             dispatch(setPresetAC(preset))
         });
+
     }, [])
 
+    let preset = props.gameData.preset
 
     let presets = [
         {preset: 1, name: 'Только табло'},

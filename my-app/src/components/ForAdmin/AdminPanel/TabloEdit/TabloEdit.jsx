@@ -5,7 +5,6 @@ import {useState, useEffect} from 'react';
 import classNames from 'classnames';
 import {useDispatch, useSelector} from "react-redux";
 import Tablo from "./Tablo";
-import {getTeams, setTeamsAC, teamGoal} from "../../../../redux/teams_reducer";
 import {addNewLog, addNewTempLog, addTempTabloLogAC} from "../../../../redux/log_reducer";
 import {compose} from "redux";
 import {withRouter} from "react-router-dom";
@@ -38,10 +37,6 @@ const TabloEdit = (props) => {
 
     const dif = useSelector(
         (state => state.difPage.dif)
-    );
-
-    const ping = useSelector(
-        (state => state.difPage.ping)
     );
 
 
@@ -109,7 +104,6 @@ const TabloEdit = (props) => {
 
     useEffect(() => {
         tabloAPI.getTimerStatus(gameNumber, Date.now()).then(r => {
-
 
             let serverPing = Math.round((Date.now() - r.dateClient) / 2);
             let timeSyncServer = r.dateServer - r.dateClient
@@ -276,16 +270,6 @@ const TabloEdit = (props) => {
             `${minutesStopwatch}:${secondsStopwatch < 10 ? '0' : ''}${secondsStopwatch} - СТОП`));
     };
 
-
-
-    // useEffect(() => {
-    //
-    //     socket.on(`switchTimer${gameNumber}`, res => {
-    //         setIsSwitch(true)
-    //         }
-    //     );
-    //
-    // }, [])
 
     useEffect(() => {
         if (props.isSwitch) {

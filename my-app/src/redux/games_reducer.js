@@ -5,7 +5,7 @@ const SET_PRESET = 'games/SET_PRESET';
 const SET_SAVED_GAMES = 'games/SET_SAVED_GAMES';
 const CREATE_NEW_GAME = 'games/CREATE_NEW_GAME';
 const IS_FETCHING = 'games/IS_FETCHING';
-const FETCHING_RESET = 'games/FETCHING_RESET';
+
 
 let initialState = {
     gameData: null,
@@ -55,16 +55,10 @@ const gamesReducer = (state = initialState, action) => {
 
         case IS_FETCHING:
 
-            if (state.isFetching === -1) {
-                state.isFetching = 0
-            }
-
-
             return {
                 ...state,
                 isFetching: state.isFetching + action.isFetching
             };
-
 
 
         default:

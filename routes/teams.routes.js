@@ -44,9 +44,8 @@ router.get('/:gameNumber', cors(), function (req, res) {
         DB.teams.find(t => t.teamType === 'guests').goalGIF = `http://${req.get('host')}/api/teams/guestsGoalGIF/${gameNumber}/${Date.now()}`;
 
 
-        DB.teams.resultCode = 0;
+        res.send({teams: DB.teams, resultCode: 0})
 
-        res.send(DB.teams)
     } catch (e) {
         console.log(e)
     }

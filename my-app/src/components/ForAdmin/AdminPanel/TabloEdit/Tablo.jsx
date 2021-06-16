@@ -12,8 +12,12 @@ const Tablo = (props) => {
     return (
         <div  style={{border: props.isRunningServer ? 'green solid 1px' : 'red solid 1px'}} className={width === 1920 ? c1920.tablo : c.tablo}>
             <div className={width === 1920 ? c1920.time : c.time}>
-                {props.minutesTimer <= 0 ? 0 : props.minutesTimer}:{props.secondsTimer < 10 ? '0' : ''}
-                {props.secondsTimer <= 0 ? 0 : props.secondsTimer}
+
+                {props.timeMem !== undefined && <div>
+                    {props.minutesTimer <= 0 ? 0 : props.minutesTimer}:{props.secondsTimer < 10 ? '0' : ''}
+                    {props.secondsTimer <= 0 ? 0 : props.secondsTimer}
+                </div>}
+
                 {/*:{props.ms}*/}
             </div>
             <div className={width === 1920 ? c1920.tempLog : c.tempLog}>{props.isShowLog && props.gameTempLog}</div>

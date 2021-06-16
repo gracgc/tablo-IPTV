@@ -34,10 +34,6 @@ const Info = (props) => {
     );
 
 
-    const gameData = useSelector(
-        state => state.gamesPage.gameData
-    );
-
     let width = window.innerWidth;
 
     let [isRunningServer, setIsRunningServer] = useState(false);
@@ -61,8 +57,6 @@ const Info = (props) => {
 
 
     useEffect(() => {
-        dispatch(getGame(gameNumber));
-
         socket.on(`getGame${gameNumber}`, game => {
             dispatch(setGameDataAC(game))
         });
@@ -126,24 +120,26 @@ const Info = (props) => {
             <div className={width === 1920 ? c1920.back : c.back}>
 
                 <img src={logo} alt="" width={width === 1920 ? 70 : 50} height={width === 1920 ? 70 : 50}/>
-                <NavLink to="/">
+                <NavLink to="/menu">
                     <div className={width === 1920 ? c1920.backButton : c.backButton}>
                         ВЕРНУТЬСЯ В МЕНЮ
                     </div>
                 </NavLink>
             </div>
             <div className={width === 1920 ? c1920.nameAndType : c.nameAndType}>
-                <strong>{gameData.gameName}</strong> <br/>
-                {gameData.gameType}
+                <strong>{props.gameData.gameName}</strong> <br/>
+                {props.gameData.gameType}
             </div>
             <div className={width === 1920 ? c1920.statusAndTime : c.statusAndTime}>
                 <div>
                     {period > 3 ? <strong>Овертайм {''}</strong> : <strong>Период {period} {''}</strong>}
-                    — {gameData.gameStatus === 'Going' ? <span style={{color: 'green'}}>Идет</span> : <span style={{color: 'red'}}>Остановлена</span>}
+                    — {props.gameData.gameStatus === 'Going' ? <span style={{color: 'green'}}>Идет</span> : <span style={{color: 'red'}}>Остановлена</span>}
                 </div>
                 <div style={{float: 'right'}}>
                     <strong>Время </strong>
-                    — {minutesStopwatch}:{secondsStopwatch < 10 ? '0' : ''}{secondsStopwatch}
+                    {timeMem !== undefined && <span>
+                         — {minutesStopwatch}:{secondsStopwatch < 10 ? '0' : ''}{secondsStopwatch}
+                    </span>}
                 </div>
 
             </div>

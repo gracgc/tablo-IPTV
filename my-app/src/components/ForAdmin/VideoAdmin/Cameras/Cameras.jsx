@@ -7,7 +7,7 @@ import {videosAPI} from "../../../../api/api";
 import {useDispatch, useSelector} from "react-redux";
 import {setPresetAC} from "../../../../redux/games_reducer";
 import socket from "../../../../socket/socket";
-import {getCurrentVideo, getVideos, setVideosDataAC} from "../../../../redux/videos_reducer";
+import {getVideos, setVideosDataAC} from "../../../../redux/videos_reducer";
 import {Field, reduxForm, reset} from "redux-form";
 import {Input} from "../../../../common/FormsControls/FormsControls";
 import {requiredShort} from "../../../../utils/validators";
@@ -56,20 +56,7 @@ const Cameras = (props) => {
     const paginatorScale = 4;
 
 
-    let videos = useSelector(
-        (state => state.videosPage.videos)
-    );
-
-    let currentVideoStream = useSelector(
-        (state => state.videosPage.currentVideoStream)
-    );
-
-
-
-
     useEffect(() => {
-        dispatch(getVideos());
-        dispatch(getCurrentVideo());
 
         socket.on(`getPreset${gameNumber}`, preset => {
             dispatch(setPresetAC(preset))
@@ -116,7 +103,7 @@ const Cameras = (props) => {
                 <div className={width === 1920 ? c1920.addButton : c.addButton} onClick={e => setShowAddCameraForm(true)}>
                     +
                 </div>
-                {videos.length !== 0 && <div style={{display: 'inline-flex'}}>
+                {props.videos.length !== 0 && <div style={{display: 'inline-flex'}}>
                     {paginatorN > 0 ?
                         <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
                             changePaginatorN('-')
@@ -128,12 +115,12 @@ const Cameras = (props) => {
                         </div>
                     }
                     <div className={width === 1920 ? c1920.cameras : c.cameras}>
-                        {videos.slice(paginatorScale * paginatorN, paginatorScale + paginatorScale * paginatorN)
+                        {props.videos.slice(paginatorScale * paginatorN, paginatorScale + paginatorScale * paginatorN)
                             .map((v, index) =>
-                                <Camera v={v} index={index} paginatorForIndex={paginatorN * paginatorScale} currentVideoStream={currentVideoStream} setCurrentVideo={setCurrentVideo}/>
+                                <Camera v={v} index={index} paginatorForIndex={paginatorN * paginatorScale} currentVideoStream={props.currentVideoStream} setCurrentVideo={setCurrentVideo}/>
                             )}
                     </div>
-                    {videos.slice(paginatorScale * (paginatorN + 1), paginatorScale + paginatorScale * (paginatorN + 1)).length !== 0 ?
+                    {props.videos.slice(paginatorScale * (paginatorN + 1), paginatorScale + paginatorScale * (paginatorN + 1)).length !== 0 ?
                         <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
                             changePaginatorN('+')
                         }}>

@@ -16,14 +16,14 @@ import TabloEditClient from "./components/ForClient/TabloEdit/TabloEditClient";
 import Loading from "./components/Loading/Loading";
 
 
-const CreateGame = React.lazy(() => import('./components/MenuPanel/CreateGame/CreateGame'));
-const SavedGames = React.lazy(() => import('./components/MenuPanel/SavedGames/SavedGames'));
+
+const CreateGamePredoad = React.lazy(() => import('./components/MenuPanel/Preload/CreateGamePreload'));
 const SavedGamesPreload = React.lazy(() => import('./components/MenuPanel/Preload/SavedGamesPreload'));
-const AdminPanel = React.lazy(() => import('./components/ForAdmin/AdminPanel/AdminPanel'));
-const VideoAdmin = React.lazy(() => import('./components/ForAdmin/VideoAdmin/VideoAdmin'));
+const AdminPanelPreload = React.lazy(() => import('./components/ForAdmin/AdminPanel/Preload/AdminPanelPreload'));
+const VideoAdminPreload = React.lazy(() => import('./components/ForAdmin/VideoAdmin/Preload/VideoAdminPreload'));
 const SetDevice = React.lazy(() => import('./components/MenuPanel/SetDevice/SetDevice'));
 const Auth = React.lazy(() => import('./components/MenuPanel/Auth/Auth'));
-const CustomGame = React.lazy(() => import('./components/ForAdmin/AdminPanel/CustomGame/CustomGame'));
+const CustomGamePreload = React.lazy(() => import('./components/ForAdmin/AdminPanel/Preload/CustomGamePreload'));
 const Test = React.lazy(() => import('./components/MenuPanel/Test/Test'));
 const Lag = React.lazy(() => import('./components/MenuPanel/Lag/Lag'));
 const LagClient = React.lazy(() => import('./components/MenuPanel/Lag/LagClient'));
@@ -97,10 +97,6 @@ function App(props) {
         dispatch(getTabloPNG())
     }, [])
 
-    const isFetchingGame = useSelector(
-        state => state.gamesPage.isFetching
-    );
-
 
     return (
         <ConfirmProvider>
@@ -135,19 +131,19 @@ function App(props) {
 
                     <Route path='/createGame' render={() => {
                         return <React.Suspense fallback={<Loading/>}>
-                            <CreateGame/>
+                            <CreateGamePredoad/>
                         </React.Suspense>
                     }}/>
 
                     <Route path='/adminPanel/:gameNumber?' render={() => {
                         return <React.Suspense fallback={<Loading/>}>
-                            <AdminPanel/>
+                            <AdminPanelPreload/>
                         </React.Suspense>
                     }}/>
 
                     <Route path='/videoAdmin/:gameNumber?' render={() => {
                         return <React.Suspense fallback={<Loading/>}>
-                            <VideoAdmin/>
+                            <VideoAdminPreload/>
                         </React.Suspense>
                     }}/>
 
@@ -166,7 +162,7 @@ function App(props) {
 
                     <Route path='/customGame/:gameNumber?' render={() => {
                         return <React.Suspense fallback={<Loading/>}>
-                            <CustomGame/>
+                            <CustomGamePreload/>
                         </React.Suspense>
                     }}/>
 

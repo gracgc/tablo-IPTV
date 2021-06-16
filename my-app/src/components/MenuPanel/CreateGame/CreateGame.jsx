@@ -6,7 +6,7 @@ import {Field, reduxForm, change, stopSubmit} from "redux-form";
 import {Input, InputImg, InputReadOnly} from "../../../common/FormsControls/FormsControls";
 import {required, requiredShort} from "../../../utils/validators";
 import {useDispatch, useSelector} from "react-redux";
-import {createNewGame, getSavedGames} from "../../../redux/games_reducer";
+import {createNewGame, getSavedGames, setSavedGamesAC} from "../../../redux/games_reducer";
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router";
 import {SketchPicker} from 'react-color'
@@ -14,6 +14,7 @@ import {SketchPicker} from 'react-color'
 import * as axios from "axios";
 import logo from "../../ForAdmin/AdminPanel/Info/logoIPTVPORTAL.png";
 import PickColor from "../../PickColor/PickColor";
+import socket from "../../../socket/socket";
 
 
 const CreateGameForm = (props) => {
@@ -276,9 +277,6 @@ const CreateGameReduxForm = reduxForm({form: 'createGame'})(CreateGameForm);
 
 const CreateGame = (props) => {
 
-    const savedGames = useSelector(
-        state => state.gamesPage.savedGames
-    );
 
     let width = window.innerWidth;
 
@@ -301,7 +299,7 @@ const CreateGame = (props) => {
     let [successMessage, setSuccessMessage] = useState(false);
 
 
-    let lastGameNumber = savedGames.length !== 0 ? Math.max.apply(Math, savedGames.map(sg => sg.gameNumber)) : 0;
+    let lastGameNumber = props.savedGames.length !== 0 ? Math.max.apply(Math, props.savedGames.map(sg => sg.gameNumber)) : 0;
 
     let dispatch = useDispatch();
 
@@ -362,7 +360,9 @@ const CreateGame = (props) => {
     }
 
     useEffect(() => {
-        dispatch(getSavedGames());
+        socket.on(`getSavedGames`, games => {
+            dispatch(setSavedGamesAC(games));
+        })
     }, []);
 
 

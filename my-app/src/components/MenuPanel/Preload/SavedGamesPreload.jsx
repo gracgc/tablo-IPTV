@@ -8,40 +8,42 @@ import socket from "../../../socket/socket";
 
 
 
-
 const SavedGamesPreload = (props) => {
+
+    const dispatch = useDispatch();
 
     const isFetchingGame = useSelector(
         state => state.gamesPage.isFetching
     );
 
-    let [isLoading, setIsLoading] = useState(true)
+    const isFetchingApp = useSelector(
+        state => state.appPage.isFetching
+    );
 
-    const dispatch = useDispatch();
+    const savedGames = useSelector(
+        state => state.gamesPage.savedGames
+    );
+
+    let gameNumber = useSelector(
+        state => state.appPage.gameNumber
+    );
+
 
     useEffect(() => {
+
         dispatch(getSavedGames());
         dispatch(getGameNumber())
+
     }, []);
 
-    console.log(isFetchingGame)
-    console.log(isLoading)
-
-    useEffect(() => {
-        if (isFetchingGame === 0) {
-            setIsLoading(false)
-        } else {
-            setIsLoading(true)
-        }
-    }, [isFetchingGame])
 
 
     return (
 
         <div>
-            {isLoading
+            {(isFetchingGame !== 0 || isFetchingApp !== 0)
                 ? <Loading/>
-                : <SavedGames/>
+                : savedGames && gameNumber && <SavedGames savedGames={savedGames} gameNumber={gameNumber}/>
             }
         </div>
     )

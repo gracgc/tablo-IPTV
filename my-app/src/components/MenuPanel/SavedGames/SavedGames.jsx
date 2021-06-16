@@ -18,14 +18,6 @@ const axios = require('axios');
 const SavedGames = (props) => {
 
 
-    const savedGames = useSelector(
-        state => state.gamesPage.savedGames
-    );
-
-    let gameNumber = useSelector(
-        state => state.appPage.gameNumber
-    );
-
     let width = window.innerWidth;
 
     const dispatch = useDispatch();
@@ -51,10 +43,10 @@ const SavedGames = (props) => {
     }, []);
 
 
-    let currentGame = savedGames.find(g => g.gameNumber === gameNumber)
+    let currentGame = props.savedGames.find(g => g.gameNumber === props.gameNumber)
 
 
-    let lastGameNumber = savedGames.length !== 0 ? Math.max.apply(Math, savedGames.map(sg => sg.gameNumber)) : 0;
+    let lastGameNumber = props.savedGames.length !== 0 ? Math.max.apply(Math, props.savedGames.map(sg => sg.gameNumber)) : 0;
 
 
     let createFastGame = async () => {
@@ -127,8 +119,8 @@ const SavedGames = (props) => {
                             </NavLink>
                         </div>}
                         <div className={width === 1920 ? c1920.navbar : c.navbar}>
-                            {savedGames.length !== 0 && savedGames.map(sg => (sg.gameName.toLowerCase().indexOf(searchWord) !== -1) &&
-                                <SavedGame gameNumber={gameNumber} savedGame={sg} savedGames={savedGames}/>)}
+                            {props.savedGames.length !== 0 && props.savedGames.map(sg => (sg.gameName.toLowerCase().indexOf(searchWord) !== -1) &&
+                                <SavedGame gameNumber={props.gameNumber} savedGame={sg} savedGames={props.savedGames}/>)}
                         </div>
 
                     </div>

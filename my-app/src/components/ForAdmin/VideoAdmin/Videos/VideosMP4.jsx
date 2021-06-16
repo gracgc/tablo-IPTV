@@ -21,8 +21,6 @@ const AddVideoMP4 = (props) => {
 
     let width = window.innerWidth;
 
-    // props.videos.find(v => v.videoName === value)
-
 
     return (
 
@@ -68,8 +66,6 @@ const VideosMP4 = (props) => {
 
     let width = window.innerWidth;
 
-    let gameNumber = props.match.params.gameNumber;
-
     const dispatch = useDispatch();
 
     const [paginatorN, setPaginatorN] = useState(0);
@@ -77,17 +73,12 @@ const VideosMP4 = (props) => {
     const paginatorScale = 4;
 
 
-    const videos = useSelector(
-        (state => state.videosPage.videosMP4)
-    );
-
     let [videoMP4, setVideoMP4] = useState();
 
     const [showAddVideoForm, setShowAddVideoForm] = useState(false);
 
 
     useEffect(() => {
-        dispatch(getVideosMP4());
 
         socket.on(`getVideosMP4`, videos => {
             dispatch(setVideosMP4DataAC(videos));
@@ -120,7 +111,7 @@ const VideosMP4 = (props) => {
     };
 
     const onSubmit = (formData) => {
-        let sameName = videos.find(v => v.videoName === formData.videoName)
+        let sameName = props.videosMP4.find(v => v.videoName === formData.videoName)
         if (videoMP4 && !sameName) {
             uploadVideo(formData.videoName);
             dispatch(reset('addVideo'));
@@ -140,7 +131,7 @@ const VideosMP4 = (props) => {
                      onClick={e => setShowAddVideoForm(true)}>
                     +
                 </div>
-                {videos.length !== 0 && <div style={{display: 'inline-flex'}}>
+                {props.videosMP4.length !== 0 && <div style={{display: 'inline-flex'}}>
                     {paginatorN > 0 ?
                         <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
                             changePaginatorN('-')
@@ -152,13 +143,13 @@ const VideosMP4 = (props) => {
                         </div>
                     }
                     <div className={width === 1920 ? c1920.videos : c.videos}>
-                        {videos.slice(paginatorScale * paginatorN, paginatorScale + paginatorScale * paginatorN)
+                        {props.videosMP4.slice(paginatorScale * paginatorN, paginatorScale + paginatorScale * paginatorN)
                             .map((v, index) =>
                                 <VideoMP4 v={v} index={index} setIsMouseDownOverDrop={props.setIsMouseDownOverDrop}
                                           paginatorForIndex={paginatorN * paginatorScale}/>
                             )}
                     </div>
-                    {videos.slice(paginatorScale * (paginatorN + 1), paginatorScale + paginatorScale * (paginatorN + 1)).length !== 0 ?
+                    {props.videosMP4.slice(paginatorScale * (paginatorN + 1), paginatorScale + paginatorScale * (paginatorN + 1)).length !== 0 ?
                         <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
                             changePaginatorN('+')
                         }}>
@@ -170,7 +161,7 @@ const VideosMP4 = (props) => {
                 </div>}
             </div>
             {showAddVideoForm && <AddVideoReduxForm onSubmit={onSubmit} setShowAddVideoForm={setShowAddVideoForm}
-                                                    videoMP4={videoMP4} setVideoMP4={setVideoMP4} videos={videos}/>}
+                                                    videoMP4={videoMP4} setVideoMP4={setVideoMP4} videosMP4={props.videosMP4}/>}
 
         </div>
     )

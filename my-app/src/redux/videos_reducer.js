@@ -6,50 +6,25 @@ const SET_CURRENT_VIDEO_DATA = 'videos/SET_CURRENT_VIDEO_DATA';
 const SET_VIDEO_EDITOR_DATA = 'videos/SET_VIDEO_EDITOR_DATA';
 const SET_VIDEOS_EDITOR = 'videos/SET_VIDEOS_EDITOR';
 const SET_CURRENT_VIDEO_EDITOR_DATA = 'video/SET_CURRENT_VIDEO_EDITOR_DATA';
+const IS_FETCHING = 'video/IS_FETCHING';
 
 
 let initialState = {
-    videos: [
-        {
-            videoName: "ВИДЕО",
-            videoURL: "",
-            videoType: ""
-        }
-    ],
-    currentVideo: {
-        videoName: "ВИДЕО",
-        videoURL: "",
-        videoType: ""
-    },
-    currentVideoStream: {
-        videoName: "ВИДЕО",
-        videoURL: "",
-        videoType: ""
-    },
-    videosMP4: [
-        {
-            videoName: "ВИДЕО",
-            videoURL: "",
-            duration: 0
-        }
-    ],
+    videos: null,
+    currentVideo: null,
+    currentVideoStream: null,
+    videosMP4: null,
     videoEditor: {
         editorData: {
-            duration: 0
+            duration: null
         },
         currentVideo: {
-            n: 1,
-            deletedN: 0
+            n: null,
+            deletedN: null
         },
-        videos: [
-            {
-                videoName: "ВИДЕО",
-                videoURL: "",
-                videoType: "",
-                duration: 10
-            }
-        ]
-    }
+        videos: null
+    },
+    isFetching: 0
 };
 
 const videosReducer = (state = initialState, action) => {
@@ -128,6 +103,13 @@ const videosReducer = (state = initialState, action) => {
                 }
             };
 
+        case IS_FETCHING:
+
+            return {
+                ...state,
+                isFetching: state.isFetching + action.isFetching
+            };
+
 
         default:
             return state;
@@ -140,34 +122,43 @@ export const setCurrentVideoDataAC = (currentVideo) => ({type: SET_CURRENT_VIDEO
 export const setVideoEditorDataAC = (videosData) => ({type: SET_VIDEO_EDITOR_DATA, videosData});
 export const setVideosEditorAC = (videos) => ({type: SET_VIDEOS_EDITOR, videos});
 export const setCurrentVideoEditorDataAC = (currentVideo) => ({type: SET_CURRENT_VIDEO_EDITOR_DATA, currentVideo});
+export const isFetchingAC = (isFetching) => ({type: IS_FETCHING, isFetching});
 
 
 
 export const getVideos = () => async (dispatch) => {
+    dispatch(isFetchingAC(1))
     let response = await videosAPI.getVideos();
     if (response.resultCode !== 10) {
         dispatch(setVideosDataAC(response));
+        dispatch(isFetchingAC(-1))
     }
 };
 export const getVideosMP4 = () => async (dispatch) => {
+    dispatch(isFetchingAC(1))
     let response = await videosAPI.getVideosMP4();
     if (response.resultCode !== 10) {
         dispatch(setVideosMP4DataAC(response));
+        dispatch(isFetchingAC(-1))
     }
 };
 
 
 export const getCurrentVideo = () => async (dispatch) => {
+    dispatch(isFetchingAC(1))
     let response = await videosAPI.getCurrentVideo();
     if (response.resultCode !== 10) {
         dispatch(setCurrentVideoDataAC(response));
+        dispatch(isFetchingAC(-1))
     }
 };
 
 export const getVideoEditor = (gameNumber) => async (dispatch) => {
+    dispatch(isFetchingAC(1))
     let response = await videosAPI.getVideoEditor(gameNumber);
     if (response.resultCode !== 10) {
         dispatch(setVideoEditorDataAC(response));
+        dispatch(isFetchingAC(-1))
     }
 };
 

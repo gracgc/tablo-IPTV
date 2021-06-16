@@ -50,23 +50,12 @@ const Editor = (props) => {
     let [timeDif, setTimeDif] = useState(0);
     let [timeMem, setTimeMem] = useState(0);
 
-    const videosMP4 = useSelector(
-        (state => state.videosPage.videosMP4)
-    );
 
-    const currentVideoStream = useSelector(
-        (state => state.videosPage.currentVideoStream)
-    );
+    let n = props.videoEditor.currentVideo.n;
 
-    const videoEditor = useSelector(
-        (state => state.videosPage.videoEditor)
-    );
+    let deletedN = props.videoEditor.currentVideo.deletedN
 
-    let n = videoEditor.currentVideo.n;
-
-    let deletedN = videoEditor.currentVideo.deletedN
-
-    let allVideos = videoEditor.videos;
+    let allVideos = props.videoEditor.videos;
 
     let videos = allVideos.slice(deletedN, allVideos.length);
 
@@ -77,6 +66,7 @@ const Editor = (props) => {
             let serverPing = Math.round((Date.now() - r.dateClient) / 2);
             let timeSyncServer = r.dateServer - r.dateClient
 
+            console.log(r)
 
             dispatch(setDifAC(timeSyncServer + serverPing + tupit))
             dispatch(setPingAC(serverPing))
@@ -88,8 +78,6 @@ const Editor = (props) => {
             setTimeMem(r.timeData.timeMem);
             setTimeDif(r.timeData.timeMem);
         });
-
-        dispatch(getVideoEditor(gameNumber));
 
 
         socket.on(`getVideoTime${gameNumber}`, time => {
@@ -138,7 +126,7 @@ const Editor = (props) => {
 
     let duration = videos.map(v => v.duration).reduce((sum, current) => sum + current, 0);
 
-    let totalDuration = videoEditor.editorData.duration;
+    let totalDuration = props.videoEditor.editorData.duration;
 
     let deletedDuration = allVideos.slice(0, deletedN).map(v => v.duration).reduce((sum, current) => sum + current, 0);
 
@@ -217,7 +205,7 @@ const Editor = (props) => {
         videosAPI.clearEditorVideos(gameNumber, timeDif).then(r => {
             if (r.resultCode === 0) {
                 if (timeDif !== 0) {
-                    setCurrentVideo(currentVideoStream)
+                    setCurrentVideo(props.currentVideoStream)
                 }
             }
         });
@@ -235,7 +223,7 @@ const Editor = (props) => {
 
         let firstKey = key[0];
 
-        let video = videosMP4.find(d => d.videoName === data[firstKey])
+        let video = props.videosMP4.find(d => d.videoName === data[firstKey])
 
         let videos = allVideos.slice()
 
@@ -254,13 +242,13 @@ const Editor = (props) => {
                     <div>
                         <div style={{display: 'inline-flex'}}>
                             {allVideos.map((v, index) => index >= deletedN && <EditorLine v={v} index={index}
-                                                                                          videoEditor={videoEditor}
+                                                                                          videoEditor={props.videoEditor}
                                                                                           scale={scale}
                                                                                           isRunningServer={isRunningServer}
                                                                                           duration={duration}
                                                                                           videos={videos}
                                                                                           isMouseDownOverDrop={props.isMouseDownOverDrop}
-                                                                                          videosMP4={videosMP4}
+                                                                                          videosMP4={props.videosMP4}
                                                                                           deletedN={deletedN}
                                                                                           allVideos={allVideos}
                                                                                           timedif={timeDif}

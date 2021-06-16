@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import c from './VideoAdmin.module.css'
 import TabloEdit from "../AdminPanel/TabloEdit/TabloEdit";
 import Info from "../AdminPanel/Info/Info";
@@ -15,6 +15,8 @@ const VideoAdmin = (props) => {
 
     let [isMouseDownOverDrop, setIsMouseDownOverDrop] = useState(false)
 
+    let [isSwitch, setIsSwitch] = useState(false)
+
 
     let onDrop = (data) => {
         setIsMouseDownOverDrop(false)
@@ -28,27 +30,28 @@ const VideoAdmin = (props) => {
                 onDrop={(e) => onDrop(e)}
             >
                 <div className={c.videoAdmin__info}>
-                    <Info/>
+                    <Info gameData={props.gameData}/>
                 </div>
                 <div className={c.videoAdmin__editor}>
                     <div>
-                        <Editor isMouseDownOverDrop={isMouseDownOverDrop}/>
+                        <Editor isMouseDownOverDrop={isMouseDownOverDrop} videoEditor={props.videoEditor}
+                                videosMP4={props.videosMP4} currentVideoStream={props.currentVideoStream}/>
                     </div>
                     <div>
-                        <TabloEdit/>
+                        <TabloEdit isSwitch={isSwitch} setIsSwitch={setIsSwitch} teams={props.teams}/>
                     </div>
                 </div>
                 <div className={c.videoAdmin__presetsAndVideos}>
                     <div>
-                        <VideosMP4 setIsMouseDownOverDrop={setIsMouseDownOverDrop}/>
+                        <VideosMP4 setIsMouseDownOverDrop={setIsMouseDownOverDrop} videosMP4={props.videosMP4}/>
                     </div>
                     <div>
-                        <Presets/>
+                        <Presets gameData={props.gameData}/>
                     </div>
                 </div>
                 <div className={c.videoAdmin__camera}>
                     <div>
-                        <Cameras/>
+                        <Cameras videos={props.videos} currentVideoStream={props.currentVideoStream}/>
                     </div>
                 </div>
             </Droppable>

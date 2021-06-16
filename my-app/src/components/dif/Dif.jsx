@@ -23,7 +23,6 @@ const Dif = (props) => {
     }, [])
 
 
-
     const dif = useSelector(
         (state => state.difPage.dif)
     );
@@ -44,9 +43,7 @@ const Dif = (props) => {
 
                 if (serverPing < ping) {
 
-
                     dispatch(setDifAC(timeSyncServer + serverPing + tupit))
-
 
                     dispatch(setPingAC(serverPing))
                 }
@@ -64,7 +61,7 @@ const Dif = (props) => {
             right: '30px',
             color: 'green'
         }}>
-            Dif:{dif} Ping:{ping} Tupit:{tupit}</div>
+            Dif:{dif && dif} Ping:{ping && ping} Tupit:{tupit}</div>
     )
 };
 

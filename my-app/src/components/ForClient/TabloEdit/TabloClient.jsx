@@ -3,7 +3,6 @@ import c from './TabloClient1.module.css'
 import c2 from './TabloClient2.module.css'
 import c3 from './TabloClient3.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {getGame, setPresetAC} from "../../../redux/games_reducer";
 import socket from "../../../socket/socket";
 import classNames from 'classnames'
 import TabloTimer from "./TabloTimer";
@@ -14,39 +13,47 @@ import Summary from "./Summary";
 
 const TabloClient = (props) => {
 
+    const homeTeam = props.teams.find(t => t.teamType === 'home')
+
+    const guestsTeam = props.teams.find(t => t.teamType === 'guests')
+
+    const homeCounter = props.teams.find(t => t.teamType === 'home').counter
+
+    const guestsCounter = props.teams.find(t => t.teamType === 'guests').counter
+
 
 
     return (
         <div className={c.tablo}>
-            {props.preset === 1 &&
+            {props.gameData.preset === 1 &&
             <div className={c.tablo1}>
 
 
                 <div>
                     <TabloTimer gameNumber={props.gameNumber} gameConsLog={props.gameConsLog}
-                                isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={props.preset}/>
+                                isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={props.gameData.preset}/>
                 </div>
 
                 <div>
                     <div className={classNames(c.logo, c.homeLogo)}>
-                        <img src={props.homeTeam.logo} style={{width: 380, height: 380}} alt=""/>
+                        <img src={homeTeam.logo} style={{width: 380, height: 380}} alt=""/>
                     </div>
                     <div className={classNames(c.logo, c.guestsLogo)}>
-                        <img src={props.guestsTeam.logo} style={{width: 380, height: 380}} alt=""/>
+                        <img src={guestsTeam.logo} style={{width: 380, height: 380}} alt=""/>
                     </div>
                 </div>
                 <div>
                     <div className={classNames(c.counter, c.homeTeamCounter)}>
-                        {props.homeCounter}
+                        {homeCounter}
                     </div>
                     <div className={classNames(c.counter, c.guestsTeamCounter)}>
-                        {props.guestsCounter}
+                        {guestsCounter}
                     </div>
                     <div className={classNames(c.name, c.homeTeamName)}>
-                        {props.homeTeam.name}
+                        {homeTeam.name}
                     </div>
                     <div className={classNames(c.name, c.guestsTeamName)}>
-                        {props.guestsTeam.name}
+                        {guestsTeam.name}
                     </div>
                 </div>
                 <div style={{zIndex: -1, position: 'fixed', top: 0}}>
@@ -56,70 +63,70 @@ const TabloClient = (props) => {
             </div>
             }
 
-            {props.preset === 2 &&
+            {props.gameData.preset === 2 &&
             <div className={c2.tablo2}>
                 <div className={classNames(c2.counter2, c2.homeTeam2)}>
-                    {props.homeCounter} <br/>
-                    {props.homeTeam.name.slice(0, 5).toUpperCase()}
+                    {homeCounter} <br/>
+                    {homeTeam.name.slice(0, 5).toUpperCase()}
                 </div>
                 <div className={c2.time2}>
                     <TabloTimer gameNumber={props.gameNumber} gameConsLog={props.gameConsLog}
-                                isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={props.preset}/>
+                                isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={props.gameData.preset}/>
                 </div>
                 <div className={classNames(c2.counter2, c2.guestsTeam2)}>
-                    {props.guestsCounter} <br/>
-                    {props.guestsTeam.name.slice(0, 5).toUpperCase()}
+                    {guestsCounter} <br/>
+                    {guestsTeam.name.slice(0, 5).toUpperCase()}
                 </div>
 
                 <div className={c2.homeLogo}>
-                    <img src={props.homeTeam.logo} style={{width: '180px', height: '180px'}} alt=""/>
+                    <img src={homeTeam.logo} style={{width: '180px', height: '180px'}} alt=""/>
                 </div>
                 <div className={c2.guestsLogo}>
-                    <img src={props.guestsTeam.logo} style={{width: '180px', height: '180px'}} alt=""/>
+                    <img src={guestsTeam.logo} style={{width: '180px', height: '180px'}} alt=""/>
                 </div>
 
             </div>
             }
-            {props.preset === 3 &&
+            {props.gameData.preset === 3 &&
             <div>
             </div>
             }
-            {props.preset === 4 &&
+            {props.gameData.preset === 4 &&
             <div className={c.tablo1}>
                 <div className={c.tablo0}>TABLO</div>
             </div>
             }
-            {props.preset === 5 &&
+            {props.gameData.preset === 5 &&
             <div className={c3.tablo3}>
                 <div className={c3.teamName}>
-                    {props.homeTeam.name} <br/>
-                    {props.homeTeam.logo &&
-                    <img src={props.homeTeam.logo} style={{width: '120px', height: '120px'}} alt=""/>
+                    {homeTeam.name} <br/>
+                    {homeTeam.logo &&
+                    <img src={homeTeam.logo} style={{width: '120px', height: '120px'}} alt=""/>
                     }
                 </div>
                 <div className={c3.gamers}>
-                    {props.homeTeam.gamers.map(g => <div>{g.gamerNumber} {g.fullName}</div>)}
+                    {homeTeam.gamers.map(g => <div>{g.gamerNumber} {g.fullName}</div>)}
                 </div>
 
             </div>
             }
-            {props.preset === 6 &&
+            {props.gameData.preset === 6 &&
             <div className={c3.tablo3}>
                 <div className={c3.teamName}>
-                    {props.guestsTeam.name} <br/>
-                    {props.guestsTeam.logo &&
-                    <img src={props.guestsTeam.logo} style={{width: '120px', height: '120px'}} alt=""/>
+                    {guestsTeam.name} <br/>
+                    {guestsTeam.logo &&
+                    <img src={guestsTeam.logo} style={{width: '120px', height: '120px'}} alt=""/>
                     }
 
                 </div>
                 <div className={c3.gamers}>
-                    {props.guestsTeam.gamers.map(g => <div>{g.gamerNumber} {g.fullName}</div>)}
+                    {guestsTeam.gamers.map(g => <div>{g.gamerNumber} {g.fullName}</div>)}
                 </div>
             </div>
             }
-            {props.preset === 7 &&
+            {props.gameData.preset === 7 &&
             <div className={c3.tablo3}>
-                <Summary homeTeam={props.homeTeam} guestsTeam={props.guestsTeam}/>
+                <Summary homeTeam={homeTeam} guestsTeam={guestsTeam}/>
 
             </div>
             }

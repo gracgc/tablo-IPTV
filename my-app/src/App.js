@@ -12,8 +12,8 @@ import {useHistory} from "react-router";
 import {devicesAPI} from "./api/api";
 import STB from "./components/ForClient/TabloEdit/STB";
 import Tablo0 from "./components/ForClient/TabloEdit/Tablo0";
-import TabloEditClient from "./components/ForClient/TabloEdit/TabloEditClient";
 import Loading from "./components/Loading/Loading";
+import TabloClientPreload from "./components/ForClient/Preload/TabloClientPreload";
 
 
 
@@ -120,7 +120,7 @@ function App(props) {
 
                     <Route exact path='/tabloClient/0' render={() => <Tablo0/>}/>
 
-                    <Route path='/tabloClient/:gameNumber?' render={() => <TabloEditClient/>}/>
+                    <Route path='/tabloClient/:gameNumber?' render={() => <TabloClientPreload/>}/>
 
 
                     <Route path='/menu' render={() => {

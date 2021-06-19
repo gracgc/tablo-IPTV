@@ -51,6 +51,10 @@ const TabloClientPreload = (props) => {
         state => state.appPage.isFetching
     );
 
+    const isFetchingLog = useSelector(
+        state => state.logPage.isFetching
+    );
+
     let [isShowLog, setIsShowLog] = useState(false);
 
     let [isHomeGoalGIF, setIsHomeGoalGIF] = useState(false)
@@ -139,7 +143,7 @@ const TabloClientPreload = (props) => {
                      style={{maxWidth: 1280, maxHeight: 720, width: 1280, height: 720}}/>
             </div>
             }
-            {(isFetchingGame !== 0 || isFetchingTeams !== 0 || isFetchingApp !== 0)
+            {(isFetchingGame !== 0 || isFetchingTeams !== 0 || isFetchingApp !== 0 || isFetchingLog !== 0)
                 ? <div style={{
                     backgroundColor: '#2A2B2B',
                     width: '100vw',

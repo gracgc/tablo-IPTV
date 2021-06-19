@@ -7,6 +7,7 @@ import Loading from "../../../Loading/Loading";
 import AdminPanel from "../AdminPanel";
 import {getTeams} from "../../../../redux/teams_reducer";
 import {getGame, getSavedGames} from "../../../../redux/games_reducer";
+import {getLog} from "../../../../redux/log_reducer";
 
 const AdminPanelPreload = (props) => {
 
@@ -22,6 +23,10 @@ const AdminPanelPreload = (props) => {
         state => state.gamesPage.gameData
     );
 
+    const gameLog = useSelector(
+        state => state.logPage.logData.gameLog
+    );
+
 
     const isFetchingGame = useSelector(
         state => state.gamesPage.isFetching
@@ -31,10 +36,16 @@ const AdminPanelPreload = (props) => {
         state => state.teamsPage.isFetching
     );
 
+    const isFetchingLog = useSelector(
+        state => state.logPage.isFetching
+    );
+
 
 
 
     useEffect(() => {
+
+        dispatch(getLog(gameNumber));
 
         dispatch(getTeams(gameNumber));
 
@@ -47,9 +58,9 @@ const AdminPanelPreload = (props) => {
     return (
 
         <div>
-            {(isFetchingGame !== 0 || isFetchingTeams !== 0)
+            {(isFetchingGame !== 0 || isFetchingTeams !== 0 || isFetchingLog !== 0)
                 ? <Loading/>
-                : teams && gameData && <AdminPanel teams={teams} gameData={gameData}/>
+                : teams && gameData && <AdminPanel teams={teams} gameData={gameData} gameLog={gameLog}/>
             }
         </div>
     )

@@ -1,7 +1,7 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useRef} from 'react'
 import c from './Log.module.css'
 import c1920 from './Log_1920.module.css'
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import LogItem from "./LogItem";
 import {withRouter} from "react-router-dom";
 import {compose} from "redux";
@@ -43,9 +43,6 @@ const Log = (props) => {
     let secondsStopwatch = Math.floor(props.timeMem / 1000) % 60;
     let minutesStopwatch = Math.floor(props.timeMem / (1000 * 60)) + (props.period - 1) * 20;
 
-    const gameLog = useSelector(
-        state => state.logPage.logData.gameLog
-    );
 
     const logEndRef = useRef(null)
 
@@ -53,7 +50,7 @@ const Log = (props) => {
         logEndRef.current.scrollIntoView({ behavior: "auto" })
     }
 
-    useEffect(scrollToBottom, [gameLog]);
+    useEffect(scrollToBottom, [props.gameLog]);
 
 
     const onSubmit = (formData) => {
@@ -66,7 +63,6 @@ const Log = (props) => {
 
 
     useEffect(() => {
-        dispatch(getLog(gameNumber));
         socket.on(`getLog${gameNumber}`, log => {
                 dispatch(setLogDataAC(log))
             }
@@ -78,7 +74,7 @@ const Log = (props) => {
         <div className={width === 1920 ? c1920.log : c.log}>
             <div style={{fontSize: width === 1920 ? "32px" : "20px", marginBottom: "1%"}}>События</div>
             <div className={width === 1920 ? c1920.logWindow : c.logWindow}>
-                {gameLog.map(l => <LogItem gameNumber={gameNumber} key={l.id} id={l.id} logItem={l.item}/>)}
+                {props.gameLog.map(l => <LogItem gameNumber={gameNumber} key={l.id} id={l.id} logItem={l.item}/>)}
                 <div ref={logEndRef} />
             </div>
             <AddLogReduxForm onSubmit={onSubmit}/>

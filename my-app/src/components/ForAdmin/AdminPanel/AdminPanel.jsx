@@ -100,7 +100,7 @@ const AdminPanel = (props) => {
                         <TabloEdit isSwitch={isSwitch} setIsSwitch={setIsSwitch}/>
                     </div>
                     <div>
-                        <Log period={period} timeMem={timeMem}/>
+                        <Log period={period} timeMem={timeMem} gameLog={props.gameLog}/>
                     </div>
                     <div>
                         <AddOptions period={period} isRunningServer={isRunningServer}/>

@@ -8,6 +8,7 @@ const SET_LOG_DATA = 'log/SET_LOG_DATA';
 const ADD_TEMP_TABLO_LOG = 'log/ADD_TEMP_TABLO_LOG';
 const ADD_CONS_TABLO_LOG = 'log/ADD_CONS_TABLO_LOG';
 const DELETE_CONS_TABLO_LOG = 'log/DELETE_CONS_TABLO_LOG';
+const IS_FETCHING = 'log/IS_FETCHING';
 
 let initialState = {
     logData: {
@@ -20,7 +21,8 @@ let initialState = {
                 {item: ""}
             ]
         }
-    }
+    },
+    isFetching: 0
 };
 
 const logReducer = (state = initialState, action) => {
@@ -98,6 +100,13 @@ const logReducer = (state = initialState, action) => {
                 }
             };
 
+        case IS_FETCHING:
+
+            return {
+                ...state,
+                isFetching: state.isFetching + action.isFetching
+            };
+
         default:
             return state;
     }
@@ -110,11 +119,14 @@ export const addTempTabloLogAC = (newLogItem) => ({type: ADD_TEMP_TABLO_LOG, new
 export const addConsTabloLogAC = (gamerId, teamType, newLogItem) => ({type: ADD_CONS_TABLO_LOG,
     payload: {id: gamerId, teamType: teamType, item: newLogItem}});
 export const deleteConsTabloLogAC = (deletedItem) => ({type: DELETE_CONS_TABLO_LOG, deletedItem});
+export const isFetchingAC = (isFetching) => ({type: IS_FETCHING, isFetching});
 
 export const getLog = (gameNumber) => async (dispatch) => {
+    dispatch(isFetchingAC(1))
     let response = await logAPI.getLog(gameNumber);
     if (response.resultCode !== 10) {
         dispatch(setLogDataAC(response));
+        dispatch(isFetchingAC(-1))
     }
 };
 

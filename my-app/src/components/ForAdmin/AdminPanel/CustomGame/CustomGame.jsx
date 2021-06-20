@@ -66,7 +66,7 @@ const CustomGameForm = (props) => {
 
         props.dispatch(change('customGame', 'gameName', props.gameData.gameName));
 
-        if (minutesTimer && secondsTimer) {
+        if (timeMemTimer) {
             props.dispatch(change('customGame', 'min', minutesTimer));
             props.dispatch(change('customGame', 'sec', secondsTimer));
         }

@@ -334,6 +334,9 @@ router.post('/:gameNumber', authMW, cors(), function (req, res) {
         DB.teams.find(t => t.teamType === 'home').logo = `http://${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `http://${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
+        DB.teams.find(t => t.teamType === 'home').goalGIF = `http://${req.get('host')}/api/teams/homeGoalGIF/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').goalGIF = `http://${req.get('host')}/api/teams/guestsGoalGIF/${gameNumber}/${Date.now()}`;
+
         io.to(stadium).emit(`getTeams${gameNumber}`, DB.teams)
 
     } catch (e) {
@@ -379,6 +382,9 @@ router.put('/gamerGoal/:gameNumber', authMW, cors(), function (req, res) {
 
         DB.teams.find(t => t.teamType === 'home').logo = `http://${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `http://${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
+
+        DB.teams.find(t => t.teamType === 'home').goalGIF = `http://${req.get('host')}/api/teams/homeGoalGIF/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').goalGIF = `http://${req.get('host')}/api/teams/guestsGoalGIF/${gameNumber}/${Date.now()}`;
 
         io.to(stadium).emit(`getTeams${gameNumber}`, DB.teams)
 
@@ -427,6 +433,9 @@ router.put('/teamGoal/:gameNumber', authMW, cors(), function (req, res) {
 
         DB.teams.find(t => t.teamType === 'home').logo = `http://${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `http://${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
+
+        DB.teams.find(t => t.teamType === 'home').goalGIF = `http://${req.get('host')}/api/teams/homeGoalGIF/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').goalGIF = `http://${req.get('host')}/api/teams/guestsGoalGIF/${gameNumber}/${Date.now()}`;
 
         io.to(stadium).emit(`getTeams${gameNumber}`, DB.teams);
 
@@ -477,6 +486,9 @@ router.put('/gamerStatus/:gameNumber', authMW, cors(), function (req, res) {
         DB.teams.find(t => t.teamType === 'home').logo = `http://${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `http://${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
 
+        DB.teams.find(t => t.teamType === 'home').goalGIF = `http://${req.get('host')}/api/teams/homeGoalGIF/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').goalGIF = `http://${req.get('host')}/api/teams/guestsGoalGIF/${gameNumber}/${Date.now()}`;
+
         io.to(stadium).emit(`getTeams${gameNumber}`, DB.teams)
 
 
@@ -518,6 +530,9 @@ router.put('/onField/:gameNumber', authMW, cors(), function (req, res) {
 
         DB.teams.find(t => t.teamType === 'home').logo = `http://${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `http://${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
+
+        DB.teams.find(t => t.teamType === 'home').goalGIF = `http://${req.get('host')}/api/teams/homeGoalGIF/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').goalGIF = `http://${req.get('host')}/api/teams/guestsGoalGIF/${gameNumber}/${Date.now()}`;
 
         io.to(stadium).emit(`getTeams${gameNumber}`, DB.teams)
 
@@ -562,6 +577,9 @@ router.put('/penalty/:gameNumber', authMW, cors(), function (req, res) {
 
         DB.teams.find(t => t.teamType === 'home').logo = `http://${req.get('host')}/api/teams/homeLogo/${gameNumber}/${Date.now()}`;
         DB.teams.find(t => t.teamType === 'guests').logo = `http://${req.get('host')}/api/teams/guestsLogo/${gameNumber}/${Date.now()}`;
+
+        DB.teams.find(t => t.teamType === 'home').goalGIF = `http://${req.get('host')}/api/teams/homeGoalGIF/${gameNumber}/${Date.now()}`;
+        DB.teams.find(t => t.teamType === 'guests').goalGIF = `http://${req.get('host')}/api/teams/guestsGoalGIF/${gameNumber}/${Date.now()}`;
 
         io.to(stadium).emit(`getTeams${gameNumber}`, DB.teams)
 

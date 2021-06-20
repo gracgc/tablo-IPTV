@@ -211,7 +211,7 @@ const TabloTimer = (props) => {
 
 
                 <div className={c.consLogHome}>
-                    {props.gameConsLog && props.gameConsLog.filter(gcl => (gcl.item !== '' && gcl.teamType === 'home'))
+                    {timeMemTimer !== 0 && props.gameConsLog.filter(gcl => (gcl.teamType === 'home'))
                         .map((gcl, index) =>
                             <TabloEventClient key={gcl.id}
                                               index={index}
@@ -222,7 +222,7 @@ const TabloTimer = (props) => {
                             />)}
                 </div>
                 <div className={c.consLogGuests}>
-                    {props.gameConsLog && props.gameConsLog.filter(gcl => (gcl.item !== '' && gcl.teamType === 'guests'))
+                    {timeMemTimer !== 0 && props.gameConsLog.filter(gcl => (gcl.teamType === 'guests'))
                         .map((gcl, index) =>
                             <TabloEventClient key={gcl.id}
                                               index={index}

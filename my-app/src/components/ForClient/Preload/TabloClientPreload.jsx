@@ -57,9 +57,7 @@ const TabloClientPreload = (props) => {
 
     let [isShowLog, setIsShowLog] = useState(false);
 
-    let [isHomeGoalGIF, setIsHomeGoalGIF] = useState(false)
 
-    let [isGuestsGoalGIF, setIsGuestsGoalGIF] = useState(false)
 
 
     useEffect(() => {
@@ -97,25 +95,6 @@ const TabloClientPreload = (props) => {
             dispatch(setPresetAC(preset))
         });
 
-        socket.on(`playGoalGIF_home${gameNumber}`, res => {
-
-                setIsHomeGoalGIF(true)
-                setIsGuestsGoalGIF(false)
-                setTimeout(() => {
-                    setIsHomeGoalGIF(false)
-                }, 5000)
-            }
-        );
-
-        socket.on(`playGoalGIF_guests${gameNumber}`, res => {
-                setIsGuestsGoalGIF(true)
-                setIsHomeGoalGIF(false)
-                setTimeout(() => {
-                    setIsGuestsGoalGIF(false)
-                }, 5000)
-            }
-        );
-
         socket.on(`getTempLog${gameNumber}`, log => {
                 dispatch(addTempTabloLogAC(log))
                 setIsShowLog(true);
@@ -128,28 +107,18 @@ const TabloClientPreload = (props) => {
     }, [])
 
 
+
+
     return (
 
         <div>
-            {isHomeGoalGIF &&
-            <div style={{margin: 'auto', maxWidth: 1280, maxHeight: 720, width: 1280, height: 720, zIndex: 1900, position: 'absolute'}}>
-                <img src={teams.find(t => t.teamType === 'home').goalGIF} alt=""
-                     style={{maxWidth: 1280, maxHeight: 720, width: 1280, height: 720}}/>
-            </div>
-            }
-            {isGuestsGoalGIF &&
-            <div style={{margin: 'auto', maxWidth: 1280, maxHeight: 720, width: 1280, height: 720, zIndex: 1900, position: 'absolute'}}>
-                <img src={teams.find(t => t.teamType === 'guests').goalGIF} alt=""
-                     style={{maxWidth: 1280, maxHeight: 720, width: 1280, height: 720}}/>
-            </div>
-            }
             {(isFetchingGame !== 0 || isFetchingTeams !== 0 || isFetchingApp !== 0 || isFetchingLog !== 0)
                 ? <div style={{
                     backgroundColor: '#2A2B2B',
                     width: '100vw',
                     height: '100vh'
                 }}></div>
-                : teams && tabloPNG &&
+                : teams &&
                 <div>
                     <TabloClient isShowLog={isShowLog} gameTempLog={gameTempLog} gameConsLog={gameConsLog}
                                  teams={teams} gameData={gameData}

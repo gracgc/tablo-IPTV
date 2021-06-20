@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import c from './TabloClient1.module.css'
 import c2 from './TabloClient2.module.css'
 import c3 from './TabloClient3.module.css'
@@ -21,10 +21,48 @@ const TabloClient = (props) => {
 
     const guestsCounter = props.teams.find(t => t.teamType === 'guests').counter
 
+    let [isHomeGoalGIF, setIsHomeGoalGIF] = useState(false)
+
+    let [isGuestsGoalGIF, setIsGuestsGoalGIF] = useState(false)
+
+    useEffect(() => {
+        socket.on(`playGoalGIF_home${props.gameNumber}`, res => {
+                setIsHomeGoalGIF(true)
+                setIsGuestsGoalGIF(false)
+                setTimeout(() => {
+                    setIsHomeGoalGIF(false)
+                }, 5000)
+            }
+        );
+
+        socket.on(`playGoalGIF_guests${props.gameNumber}`, res => {
+                setIsGuestsGoalGIF(true)
+                setIsHomeGoalGIF(false)
+                setTimeout(() => {
+                    setIsGuestsGoalGIF(false)
+                }, 5000)
+            }
+        );
+    }, [])
+
+    console.log('render tablo')
 
 
     return (
         <div className={c.tablo}>
+            <div style={{margin: 'auto', maxWidth: 1280, maxHeight: 720, width: 1280, height: 720, zIndex: 1900, position: 'absolute',
+                display: isHomeGoalGIF ? 'block' : 'none'
+            }}>
+                <img src={props.teams.find(t => t.teamType === 'home').goalGIF} alt=""
+                     style={{maxWidth: 1280, maxHeight: 720, width: 1280, height: 720}}/>
+            </div>
+
+            <div style={{margin: 'auto', maxWidth: 1280, maxHeight: 720, width: 1280, height: 720, zIndex: 1900, position: 'absolute',
+                display: isGuestsGoalGIF ? 'block' : 'none'}}>
+                <img src={props.teams.find(t => t.teamType === 'guests').goalGIF} alt=""
+                     style={{maxWidth: 1280, maxHeight: 720, width: 1280, height: 720}}/>
+            </div>
+
             {props.gameData.preset === 1 &&
             <div className={c.tablo1}>
 

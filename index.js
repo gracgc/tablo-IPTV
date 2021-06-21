@@ -49,7 +49,6 @@ let getStadium = (host) => {
 io.on('connection', (socket) => {
     console.log('a user connected');
 
-    console.log(socket.id)
 
     let host = socket.handshake.headers.host
 
@@ -63,9 +62,9 @@ io.on('connection', (socket) => {
     socket.join(stadium);
 
 
-    socket.on('disconnect', () => {
+    socket.on('disconnect', (reason) => {
 
-        console.log('user disconnected');
+        console.log('user disconnected ' + reason);
 
         let data = fs.readFileSync(path.join(__dirname + `/routes/DBs/DB_${stadium}/devices.json`));
         let DB = JSON.parse(data);

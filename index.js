@@ -12,7 +12,7 @@ const app = express();
 const server = require('http').Server(app);
 
 
-const io = require('socket.io')(server, {pingTimeout: 240000});
+const io = require('socket.io')(server, {pingInterval: 5000, pingTimeout: 240000});
 
 
 app.use(function (req, res, next) {

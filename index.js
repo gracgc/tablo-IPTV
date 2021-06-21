@@ -62,37 +62,6 @@ io.on('connection', (socket) => {
 
     app.locals.socket = socket;
 
-    // socket.emit('getStadium', {stadium: stadium})
-
-
-    // socket.on(`addDevice_${requrl}`, res => {
-    //     let data = fs.readFileSync(path.join(__dirname + `/routes/DBs/DB_${stadium}/devices.json`));
-    //     let DB = JSON.parse(data);
-    //
-    //
-    //     if (res.isAuth === false) {
-    //         if (res.pathname.indexOf('tabloClient') !== -1) {
-    //             DB.devices.push({id: socket.id, type: 'Main Tablo', lag: res.lag})
-    //         } else {
-    //             DB.devices.push({id: socket.id, type: 'undefined', lag: res.lag})
-    //         }
-    //     } else {
-    //         if (DB.devices.findIndex(user => user.id === socket.id) !== -1) {
-    //             DB.devices[DB.devices.findIndex(user => user.id === socket.id)].type = 'Admin'
-    //         } else {
-    //             DB.devices.push({id: socket.id, type: 'Admin', lag: res.lag, isLockLag: false})
-    //         }
-    //     }
-    //
-    //     socket.to(stadium).emit(`getDevices`, DB.devices)
-    //
-    //     socket.to(stadium).emit(`getLag${socket.id}`, DB.devices[DB.devices.findIndex(user => user.id === socket.id)].lag)
-    //
-    //
-    //     let json = JSON.stringify(DB);
-    //
-    //     fs.writeFileSync(path.join(__dirname, `/routes/DBs/DB_${stadium}/devices.json`), json, 'utf8');
-    // });
 
     socket.on('disconnect', (reason) => {
         console.log('user disconnected' + ' ' + reason);
@@ -111,13 +80,9 @@ io.on('connection', (socket) => {
         fs.writeFileSync(path.join(__dirname, `/routes/DBs/DB_${stadium}/devices.json`), json, 'utf8');
     });
 
-
-    // socket.on(`setGameNumberStart_${requrl}`, res => {
-    //     let data = fs.readFileSync(path.join(__dirname + `/routes/DBs/DB_${stadium}/game_number.json`));
-    //     let DB = JSON.parse(data);
-    //
-    //     socket.to(stadium).emit(`getGameNumberStart`, DB.gameNumber)
-    // })
+    socket.on("pong", function (data) {
+        console.log(data)
+    });
 
 });
 

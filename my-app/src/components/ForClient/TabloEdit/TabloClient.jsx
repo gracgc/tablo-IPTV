@@ -50,18 +50,18 @@ const TabloClient = (props) => {
 
     return (
         <div className={c.tablo}>
-            <div style={{margin: 'auto', maxWidth: 1280, maxHeight: 720, width: 1280, height: 720, zIndex: 1900, position: 'absolute',
-                display: isHomeGoalGIF ? 'block' : 'none'
-            }}>
-                <img src={props.teams.find(t => t.teamType === 'home').goalGIF} alt=""
-                     style={{maxWidth: 1280, maxHeight: 720, width: 1280, height: 720}}/>
-            </div>
+            {/*<div style={{margin: 'auto', maxWidth: 1280, maxHeight: 720, width: 1280, height: 720, zIndex: 1900, position: 'absolute',*/}
+            {/*    display: isHomeGoalGIF ? 'block' : 'none'*/}
+            {/*}}>*/}
+            {/*    <img src={props.teams.find(t => t.teamType === 'home').goalGIF} alt=""*/}
+            {/*         style={{maxWidth: 1280, maxHeight: 720, width: 1280, height: 720}}/>*/}
+            {/*</div>*/}
 
-            <div style={{margin: 'auto', maxWidth: 1280, maxHeight: 720, width: 1280, height: 720, zIndex: 1900, position: 'absolute',
-                display: isGuestsGoalGIF ? 'block' : 'none'}}>
-                <img src={props.teams.find(t => t.teamType === 'guests').goalGIF} alt=""
-                     style={{maxWidth: 1280, maxHeight: 720, width: 1280, height: 720}}/>
-            </div>
+            {/*<div style={{margin: 'auto', maxWidth: 1280, maxHeight: 720, width: 1280, height: 720, zIndex: 1900, position: 'absolute',*/}
+            {/*    display: isGuestsGoalGIF ? 'block' : 'none'}}>*/}
+            {/*    <img src={props.teams.find(t => t.teamType === 'guests').goalGIF} alt=""*/}
+            {/*         style={{maxWidth: 1280, maxHeight: 720, width: 1280, height: 720}}/>*/}
+            {/*</div>*/}
 
             {props.gameData.preset === 1 &&
             <div className={c.tablo1}>

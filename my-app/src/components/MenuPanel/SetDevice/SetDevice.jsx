@@ -41,7 +41,7 @@ const SetDevice = (props) => {
 
     return (
         <div className={width === 1920 ? c1920.setDevice : c.setDevice}>
-            {devices.length === 0 ? <Loading/> :
+            {/*{devices.length === 0 ? <Loading/> :*/}
                 <div>
                     <div className={width === 1920 ? c1920.menuHeader : c.menuHeader}>
                         <div className={width === 1920 ? c1920.back : c.back}>
@@ -59,7 +59,7 @@ const SetDevice = (props) => {
                         {devices.map(d => <Device id={d.id} type={d.type} lag={d.lag} isLockLag={d.isLockLag}/>)}
                     </div>
                 </div>
-            }
+            {/*}*/}
         </div>
     )
 };

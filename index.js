@@ -6,13 +6,14 @@ const fs = require('fs');
 const uploadFile = require('express-fileupload')
 
 
-
 const app = express();
 
 const server = require('http').Server(app);
 
 
-const io = require('socket.io')(server, {pingInterval: 5000, pingTimeout: 240000});
+const io = require('socket.io')(server,
+    // {pingInterval: 5000, pingTimeout: 240000}
+);
 
 
 app.use(function (req, res, next) {
@@ -45,9 +46,10 @@ let getStadium = (host) => {
 }
 
 
-
 io.on('connection', (socket) => {
     console.log('a user connected');
+
+    console.log(socket.id)
 
     let host = socket.handshake.headers.host
 
@@ -60,11 +62,10 @@ io.on('connection', (socket) => {
 
     socket.join(stadium);
 
-    app.locals.socket = socket;
 
+    socket.on('disconnect', () => {
 
-    socket.on('disconnect', (reason) => {
-        console.log('user disconnected' + ' ' + reason);
+        console.log('user disconnected');
 
         let data = fs.readFileSync(path.join(__dirname + `/routes/DBs/DB_${stadium}/devices.json`));
         let DB = JSON.parse(data);
@@ -80,9 +81,7 @@ io.on('connection', (socket) => {
         fs.writeFileSync(path.join(__dirname, `/routes/DBs/DB_${stadium}/devices.json`), json, 'utf8');
     });
 
-    socket.on("pong", function (data) {
-        console.log(data)
-    });
+    app.locals.socket = socket;
 
 });
 

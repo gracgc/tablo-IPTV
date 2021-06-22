@@ -10,7 +10,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.20.0",
     "classnames": "^2.2.6",
-    "core-js": "^3.15.0",
+    "core-js": "^3.8.1",
     "get-mac-address": "^1.0.0",
     "getmac": "^5.17.0",
     "js-cookie": "^2.2.1",
@@ -35,6 +35,7 @@
     "redux": "^4.0.5",
     "redux-form": "^8.3.6",
     "redux-thunk": "^2.3.0",
+    "regenerator-runtime": "^0.13.7",
     "remove-array-items": "^2.0.1",
     "socket.io-client": "^3.0.3",
     "tablo": "file:..",
@@ -65,5 +66,8 @@
       "last 1 safari version",
       "not dead"
     ]
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.14.5"
   }
 }

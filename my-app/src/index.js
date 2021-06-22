@@ -1,13 +1,18 @@
+import 'react-app-polyfill/ie9';
+import 'react-app-polyfill/stable';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import store from './redux/redux_store';
 
-import 'core-js';
-import 'core-js/es/symbol/species';
-import 'es6-symbol/polyfill'
-import "regenerator-runtime/runtime.js";
-import 'raf/polyfill';
+// import 'core-js';
+// import 'core-js/es/symbol/species';
+// import 'es6-symbol/polyfill'
+// import "regenerator-runtime/runtime.js";
+// import 'raf/polyfill';
+
+
 
 
 

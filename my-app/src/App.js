@@ -18,15 +18,14 @@ import PreLagClient from "./components/MenuPanel/Lag/PreLagClient";
 import PreLag from "./components/MenuPanel/Lag/PreLag";
 import LagClient from "./components/MenuPanel/Lag/LagClient";
 import Lag from "./components/MenuPanel/Lag/Lag";
-import CreateGame from "./components/MenuPanel/CreateGame/CreateGame";
-import SavedGames from "./components/MenuPanel/SavedGames/SavedGames";
-import AdminPanel from "./components/ForAdmin/AdminPanel/AdminPanel";
-import VideoAdmin from "./components/ForAdmin/VideoAdmin/VideoAdmin";
 import SetDevice from "./components/MenuPanel/SetDevice/SetDevice";
-import TabloEditClient from "./components/ForClient/TabloEdit/TabloEditClient";
 import Auth from "./components/MenuPanel/Auth/Auth";
-import CustomGame from "./components/ForAdmin/AdminPanel/CustomGame/CustomGame";
 import Test from "./components/MenuPanel/Test/Test";
+import SavedGamesPreload from "./components/MenuPanel/Preload/SavedGamesPreload";
+import AdminPanelPreload from "./components/ForAdmin/AdminPanel/Preload/AdminPanelPreload";
+import VideoAdminPreload from "./components/ForAdmin/VideoAdmin/Preload/VideoAdminPreload";
+import CustomGamePreload from "./components/ForAdmin/AdminPanel/Preload/CustomGamePreload";
+import CreateGamePredoad from "./components/MenuPanel/Preload/CreateGamePreload";
 
 
 
@@ -121,21 +120,21 @@ function App(props) {
                            render={() => <Redirect to={"/menu"}/>}/>
                     <Route exact path='/adminPanel'
                            render={() => <Redirect to={"/menu"}/>}/>
-                    <Route path='/createGame' render={() => <CreateGame/>}/>
+                    <Route path='/createGame' render={() => <CreateGamePredoad/>}/>
                     <Route exact path='/adminPanel'
-                           render={() => <SavedGames/>}/>
+                           render={() => <SavedGamesPreload/>}/>
                     <Route path='/adminPanel/:gameNumber?'
-                           render={() => <AdminPanel/>}/>
+                           render={() => <AdminPanelPreload/>}/>
                     <Route path='/videoAdmin/:gameNumber?'
-                           render={() => <VideoAdmin/>}/>
-                    <Route path='/menu' render={() => <SavedGames/>}/>
+                           render={() => <VideoAdminPreload/>}/>
+                    <Route path='/menu' render={() => <SavedGamesPreload/>}/>
                     <Route path='/devices' render={() => <SetDevice/>}/>
                     <Route exact path='/tabloClient'
                            render={() => <Tablo0/>}/>
                     <Route exact path='/tabloClient/0' render={() => <Tablo0/>}/>
-                    <Route path='/tabloClient/:gameNumber?' render={() => <TabloEditClient/>}/>
+                    <Route path='/tabloClient/:gameNumber?' render={() => <TabloClientPreload/>}/>
                     <Route path='/auth' render={() => <Auth/>}/>
-                    <Route path='/customGame/:gameNumber?' render={() => <CustomGame/>}/>
+                    <Route path='/customGame/:gameNumber?' render={() => <CustomGamePreload/>}/>
                     <Route path='/test' render={() => <Test/>}/>
                     <Route path='/lag' render={() => <Lag/>}/>
                     <Route path='/lagClient' render={() => <LagClient/>}/>

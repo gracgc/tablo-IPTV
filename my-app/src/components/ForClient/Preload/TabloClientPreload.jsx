@@ -113,13 +113,12 @@ const TabloClientPreload = (props) => {
 
         <div>
             {(isFetchingGame !== 0 || isFetchingTeams !== 0 || isFetchingApp !== 0 || isFetchingLog !== 0)
-                // ? <div style={{
-                //     backgroundColor: '#2A2B2B',
-                //     width: '100vw',
-                //     height: '100vh'
-                // }}></div>
-                // : teams &&
-                &&
+                ? <div style={{
+                    backgroundColor: '#2A2B2B',
+                    width: '1280px',
+                    height: '720px'
+                }}></div>
+                : teams &&
                 <div>
                     <TabloClient isShowLog={isShowLog} gameTempLog={gameTempLog} gameConsLog={gameConsLog}
                                  teams={teams} gameData={gameData}

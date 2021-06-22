@@ -58,7 +58,9 @@
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "ei 9",
+      "ei 11"
     ],
     "development": [
       "ei 9",

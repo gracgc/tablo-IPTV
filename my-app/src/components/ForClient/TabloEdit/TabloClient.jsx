@@ -45,7 +45,7 @@ const TabloClient = (props) => {
         );
     }, [])
 
-    console.log('render tablo')
+
 
 
     return (

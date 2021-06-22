@@ -14,21 +14,34 @@ import STB from "./components/ForClient/TabloEdit/STB";
 import Tablo0 from "./components/ForClient/TabloEdit/Tablo0";
 import Loading from "./components/Loading/Loading";
 import TabloClientPreload from "./components/ForClient/Preload/TabloClientPreload";
+import PreLagClient from "./components/MenuPanel/Lag/PreLagClient";
+import PreLag from "./components/MenuPanel/Lag/PreLag";
+import LagClient from "./components/MenuPanel/Lag/LagClient";
+import Lag from "./components/MenuPanel/Lag/Lag";
+import CreateGame from "./components/MenuPanel/CreateGame/CreateGame";
+import SavedGames from "./components/MenuPanel/SavedGames/SavedGames";
+import AdminPanel from "./components/ForAdmin/AdminPanel/AdminPanel";
+import VideoAdmin from "./components/ForAdmin/VideoAdmin/VideoAdmin";
+import SetDevice from "./components/MenuPanel/SetDevice/SetDevice";
+import TabloEditClient from "./components/ForClient/TabloEdit/TabloEditClient";
+import Auth from "./components/MenuPanel/Auth/Auth";
+import CustomGame from "./components/ForAdmin/AdminPanel/CustomGame/CustomGame";
+import Test from "./components/MenuPanel/Test/Test";
 
 
 
-const CreateGamePredoad = React.lazy(() => import('./components/MenuPanel/Preload/CreateGamePreload'));
-const SavedGamesPreload = React.lazy(() => import('./components/MenuPanel/Preload/SavedGamesPreload'));
-const AdminPanelPreload = React.lazy(() => import('./components/ForAdmin/AdminPanel/Preload/AdminPanelPreload'));
-const VideoAdminPreload = React.lazy(() => import('./components/ForAdmin/VideoAdmin/Preload/VideoAdminPreload'));
-const SetDevice = React.lazy(() => import('./components/MenuPanel/SetDevice/SetDevice'));
-const Auth = React.lazy(() => import('./components/MenuPanel/Auth/Auth'));
-const CustomGamePreload = React.lazy(() => import('./components/ForAdmin/AdminPanel/Preload/CustomGamePreload'));
-const Test = React.lazy(() => import('./components/MenuPanel/Test/Test'));
-const Lag = React.lazy(() => import('./components/MenuPanel/Lag/Lag'));
-const LagClient = React.lazy(() => import('./components/MenuPanel/Lag/LagClient'));
-const PreLag = React.lazy(() => import('./components/MenuPanel/Lag/PreLag'));
-const PreLagClient = React.lazy(() => import('./components/MenuPanel/Lag/PreLagClient'));
+// const CreateGamePredoad = React.lazy(() => import('./components/MenuPanel/Preload/CreateGamePreload'));
+// const SavedGamesPreload = React.lazy(() => import('./components/MenuPanel/Preload/SavedGamesPreload'));
+// const AdminPanelPreload = React.lazy(() => import('./components/ForAdmin/AdminPanel/Preload/AdminPanelPreload'));
+// const VideoAdminPreload = React.lazy(() => import('./components/ForAdmin/VideoAdmin/Preload/VideoAdminPreload'));
+// const SetDevice = React.lazy(() => import('./components/MenuPanel/SetDevice/SetDevice'));
+// const Auth = React.lazy(() => import('./components/MenuPanel/Auth/Auth'));
+// const CustomGamePreload = React.lazy(() => import('./components/ForAdmin/AdminPanel/Preload/CustomGamePreload'));
+// const Test = React.lazy(() => import('./components/MenuPanel/Test/Test'));
+// const Lag = React.lazy(() => import('./components/MenuPanel/Lag/Lag'));
+// const LagClient = React.lazy(() => import('./components/MenuPanel/Lag/LagClient'));
+// const PreLag = React.lazy(() => import('./components/MenuPanel/Lag/PreLag'));
+// const PreLagClient = React.lazy(() => import('./components/MenuPanel/Lag/PreLagClient'));
 
 
 function App(props) {
@@ -103,98 +116,123 @@ function App(props) {
             <div className='app'>
                 <STB/>
                 <Switch>
+
                     <Route exact path='/'
                            render={() => <Redirect to={"/menu"}/>}/>
-
                     <Route exact path='/adminPanel'
                            render={() => <Redirect to={"/menu"}/>}/>
-
-                    <Route exact path='/videoAdmin'
-                           render={() => <Redirect to={"/menu"}/>}/>
-
-                    <Route exact path='/customGame'
-                           render={() => <Redirect to={"/menu"}/>}/>
-
+                    <Route path='/createGame' render={() => <CreateGame/>}/>
+                    <Route exact path='/adminPanel'
+                           render={() => <SavedGames/>}/>
+                    <Route path='/adminPanel/:gameNumber?'
+                           render={() => <AdminPanel/>}/>
+                    <Route path='/videoAdmin/:gameNumber?'
+                           render={() => <VideoAdmin/>}/>
+                    <Route path='/menu' render={() => <SavedGames/>}/>
+                    <Route path='/devices' render={() => <SetDevice/>}/>
                     <Route exact path='/tabloClient'
                            render={() => <Tablo0/>}/>
-
                     <Route exact path='/tabloClient/0' render={() => <Tablo0/>}/>
+                    <Route path='/tabloClient/:gameNumber?' render={() => <TabloEditClient/>}/>
+                    <Route path='/auth' render={() => <Auth/>}/>
+                    <Route path='/customGame/:gameNumber?' render={() => <CustomGame/>}/>
+                    <Route path='/test' render={() => <Test/>}/>
+                    <Route path='/lag' render={() => <Lag/>}/>
+                    <Route path='/lagClient' render={() => <LagClient/>}/>
+                    <Route path='/prelag' render={() => <PreLag/>}/>
+                    <Route path='/prelagClient' render={() => <PreLagClient/>}/>
+                    {/*<Route exact path='/'*/}
+                    {/*       render={() => <Redirect to={"/menu"}/>}/>*/}
 
-                    <Route path='/tabloClient/:gameNumber?' render={() => <TabloClientPreload/>}/>
+                    {/*<Route exact path='/adminPanel'*/}
+                    {/*       render={() => <Redirect to={"/menu"}/>}/>*/}
 
+                    {/*<Route exact path='/videoAdmin'*/}
+                    {/*       render={() => <Redirect to={"/menu"}/>}/>*/}
 
-                    <Route path='/menu' render={() => {
-                        return <React.Suspense fallback={<Loading/>}>
-                            <SavedGamesPreload/>
-                        </React.Suspense>
-                    }}/>
+                    {/*<Route exact path='/customGame'*/}
+                    {/*       render={() => <Redirect to={"/menu"}/>}/>*/}
 
-                    <Route path='/createGame' render={() => {
-                        return <React.Suspense fallback={<Loading/>}>
-                            <CreateGamePredoad/>
-                        </React.Suspense>
-                    }}/>
+                    {/*<Route exact path='/tabloClient'*/}
+                    {/*       render={() => <Tablo0/>}/>*/}
 
-                    <Route path='/adminPanel/:gameNumber?' render={() => {
-                        return <React.Suspense fallback={<Loading/>}>
-                            <AdminPanelPreload/>
-                        </React.Suspense>
-                    }}/>
+                    {/*<Route exact path='/tabloClient/0' render={() => <Tablo0/>}/>*/}
 
-                    <Route path='/videoAdmin/:gameNumber?' render={() => {
-                        return <React.Suspense fallback={<Loading/>}>
-                            <VideoAdminPreload/>
-                        </React.Suspense>
-                    }}/>
-
-                    <Route path='/devices' render={() => {
-                        return <React.Suspense fallback={<Loading/>}>
-                            <SetDevice/>
-                        </React.Suspense>
-                    }}/>
+                    {/*<Route path='/tabloClient/:gameNumber?' render={() => <TabloClientPreload/>}/>*/}
 
 
-                    <Route path='/auth' render={() => {
-                        return <React.Suspense fallback={<Loading/>}>
-                            <Auth/>
-                        </React.Suspense>
-                    }}/>
+                    {/*<Route path='/menu' render={() => {*/}
+                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
+                    {/*        <SavedGamesPreload/>*/}
+                    {/*    </React.Suspense>*/}
+                    {/*}}/>*/}
 
-                    <Route path='/customGame/:gameNumber?' render={() => {
-                        return <React.Suspense fallback={<Loading/>}>
-                            <CustomGamePreload/>
-                        </React.Suspense>
-                    }}/>
+                    {/*<Route path='/createGame' render={() => {*/}
+                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
+                    {/*        <CreateGamePredoad/>*/}
+                    {/*    </React.Suspense>*/}
+                    {/*}}/>*/}
 
-                    <Route path='/test' render={() => {
-                        return <React.Suspense fallback={<Loading/>}>
-                            <Test/>
-                        </React.Suspense>
-                    }}/>
+                    {/*<Route path='/adminPanel/:gameNumber?' render={() => {*/}
+                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
+                    {/*        <AdminPanelPreload/>*/}
+                    {/*    </React.Suspense>*/}
+                    {/*}}/>*/}
 
-                    <Route path='/lag' render={() => {
-                        return <React.Suspense fallback={<Loading/>}>
-                            <Lag/>
-                        </React.Suspense>
-                    }}/>
+                    {/*<Route path='/videoAdmin/:gameNumber?' render={() => {*/}
+                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
+                    {/*        <VideoAdminPreload/>*/}
+                    {/*    </React.Suspense>*/}
+                    {/*}}/>*/}
 
-                    <Route path='/lagClient' render={() => {
-                        return <React.Suspense fallback={<Loading/>}>
-                            <LagClient/>
-                        </React.Suspense>
-                    }}/>
+                    {/*<Route path='/devices' render={() => {*/}
+                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
+                    {/*        <SetDevice/>*/}
+                    {/*    </React.Suspense>*/}
+                    {/*}}/>*/}
 
-                    <Route path='/prelag' render={() => {
-                        return <React.Suspense fallback={<Loading/>}>
-                            <PreLag/>
-                        </React.Suspense>
-                    }}/>
 
-                    <Route path='/prelagClient' render={() => {
-                        return <React.Suspense fallback={<Loading/>}>
-                            <PreLagClient/>
-                        </React.Suspense>
-                    }}/>
+                    {/*<Route path='/auth' render={() => {*/}
+                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
+                    {/*        <Auth/>*/}
+                    {/*    </React.Suspense>*/}
+                    {/*}}/>*/}
+
+                    {/*<Route path='/customGame/:gameNumber?' render={() => {*/}
+                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
+                    {/*        <CustomGamePreload/>*/}
+                    {/*    </React.Suspense>*/}
+                    {/*}}/>*/}
+
+                    {/*<Route path='/test' render={() => {*/}
+                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
+                    {/*        <Test/>*/}
+                    {/*    </React.Suspense>*/}
+                    {/*}}/>*/}
+
+                    {/*<Route path='/lag' render={() => {*/}
+                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
+                    {/*        <Lag/>*/}
+                    {/*    </React.Suspense>*/}
+                    {/*}}/>*/}
+
+                    {/*<Route path='/lagClient' render={() => {*/}
+                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
+                    {/*        <LagClient/>*/}
+                    {/*    </React.Suspense>*/}
+                    {/*}}/>*/}
+
+                    {/*<Route path='/prelag' render={() => {*/}
+                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
+                    {/*        <PreLag/>*/}
+                    {/*    </React.Suspense>*/}
+                    {/*}}/>*/}
+
+                    {/*<Route path='/prelagClient' render={() => {*/}
+                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
+                    {/*        <PreLagClient/>*/}
+                    {/*    </React.Suspense>*/}
+                    {/*}}/>*/}
 
 
                 </Switch>

@@ -12,7 +12,7 @@ const server = require('http').Server(app);
 
 
 const io = require('socket.io')(server,
-    // {pingInterval: 5000, pingTimeout: 240000}
+    {pingInterval: 5000, pingTimeout: 240000}
 );
 
 

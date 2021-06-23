@@ -34,6 +34,8 @@ const SavedGamesPreload = (props) => {
         dispatch(getSavedGames());
         dispatch(getGameNumber())
 
+        console.log(123)
+
     }, []);
 
 
@@ -43,7 +45,7 @@ const SavedGamesPreload = (props) => {
         <div>
             {(isFetchingGame !== 0 || isFetchingApp !== 0)
                 ? <Loading/>
-                : savedGames && gameNumber && <SavedGames savedGames={savedGames} gameNumber={gameNumber}/>
+                : savedGames && <SavedGames savedGames={savedGames} gameNumber={gameNumber}/>
             }
         </div>
     )

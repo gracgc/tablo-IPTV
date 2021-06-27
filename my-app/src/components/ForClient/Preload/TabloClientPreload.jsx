@@ -117,7 +117,7 @@ const TabloClientPreload = (props) => {
                     backgroundColor: '#2A2B2B',
                     width: '1280px',
                     height: '720px'
-                }}>123</div>
+                }}></div>
                 : teams &&
                 <div>
                     <TabloClient isShowLog={isShowLog} gameTempLog={gameTempLog} gameConsLog={gameConsLog}

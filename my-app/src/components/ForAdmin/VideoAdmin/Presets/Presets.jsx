@@ -35,7 +35,7 @@ const Presets = (props) => {
         {preset: 4, name: 'Заглушка'},
         {preset: 5, name: 'Игроки 1'},
         {preset: 6, name: 'Игроки 2'},
-        // {preset: 7, name: 'Сводка матча'},
+        {preset: 7, name: 'Сводка матча'},
     ]
 
 

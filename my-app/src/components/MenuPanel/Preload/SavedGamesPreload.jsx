@@ -34,8 +34,6 @@ const SavedGamesPreload = (props) => {
         dispatch(getSavedGames());
         dispatch(getGameNumber())
 
-        console.log(123)
-
     }, []);
 
 

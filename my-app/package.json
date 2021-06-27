@@ -30,7 +30,7 @@
     "react-redux": "^7.2.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
+    "react-scripts": "3.4.4",
     "react-timer-hook": "^2.0.3",
     "react-video-js-player": "^1.1.1",
     "redux": "^4.0.5",
@@ -63,9 +63,11 @@
       "last 11 ie version"
     ],
     "development": [
+      ">0.1%",
       "last 84 chrome version",
-      "last 84 firefox version",
       "last 84 edge version",
+      "last 84 firefox version",
+      "last 11 ie version",
       "last 1 safari version"
     ]
   },

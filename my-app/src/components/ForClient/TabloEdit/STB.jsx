@@ -6,9 +6,7 @@ import {withRouter} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {
     getCurrentVideo,
-    getVideoEditor,
-    setCurrentVideoDataAC,
-    setCurrentVideoEditorDataAC
+    setCurrentVideoDataAC
 } from "../../../redux/videos_reducer";
 
 
@@ -27,15 +25,10 @@ const STB = (props) => {
 
     useEffect(() => {
         dispatch(getCurrentVideo());
-        // dispatch(getVideoEditor(props.gameNumber))
     }, []);
 
 
     useEffect(() => {
-
-        // socket.on(`getCurrentVideoEditor${props.gameNumber}`, currentVideo => {
-        //     dispatch(setCurrentVideoEditorDataAC(currentVideo));
-        // });
 
         socket.on(`getCurrentVideo`, currentVideo => {
             dispatch(setCurrentVideoDataAC(currentVideo));

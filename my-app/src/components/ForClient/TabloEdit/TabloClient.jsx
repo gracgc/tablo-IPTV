@@ -46,22 +46,22 @@ const TabloClient = (props) => {
     }, [])
 
 
-
-
     return (
         <div className={c.tablo}>
-            {/*<div style={{margin: 'auto', maxWidth: 1280, maxHeight: 720, width: 1280, height: 720, zIndex: 1900, position: 'absolute',*/}
-            {/*    display: isHomeGoalGIF ? 'block' : 'none'*/}
-            {/*}}>*/}
-            {/*    <img src={props.teams.find(t => t.teamType === 'home').goalGIF} alt=""*/}
-            {/*         style={{maxWidth: 1280, maxHeight: 720, width: 1280, height: 720}}/>*/}
-            {/*</div>*/}
 
-            {/*<div style={{margin: 'auto', maxWidth: 1280, maxHeight: 720, width: 1280, height: 720, zIndex: 1900, position: 'absolute',*/}
-            {/*    display: isGuestsGoalGIF ? 'block' : 'none'}}>*/}
-            {/*    <img src={props.teams.find(t => t.teamType === 'guests').goalGIF} alt=""*/}
-            {/*         style={{maxWidth: 1280, maxHeight: 720, width: 1280, height: 720}}/>*/}
-            {/*</div>*/}
+            <img src={props.teams.find(t => t.teamType === 'home').goalGIF} alt=""
+                 style={{
+                     width: 1280, height: 720, zIndex: 1900, position: 'absolute',
+                     display: isHomeGoalGIF ? 'block' : 'none'
+                 }}/>
+
+
+            <img src={props.teams.find(t => t.teamType === 'guests').goalGIF} alt=""
+                 style={{
+                     width: 1280, height: 720, zIndex: 1900, position: 'absolute',
+                     display: isGuestsGoalGIF ? 'block' : 'none'
+                 }}/>
+
 
             {props.gameData.preset === 1 &&
             <div className={c.tablo1}>
@@ -69,7 +69,8 @@ const TabloClient = (props) => {
 
                 <div>
                     <TabloTimer gameNumber={props.gameNumber} gameConsLog={props.gameConsLog}
-                                isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={props.gameData.preset}/>
+                                isShowLog={props.isShowLog} gameTempLog={props.gameTempLog}
+                                preset={props.gameData.preset}/>
                 </div>
 
                 <div>
@@ -109,7 +110,8 @@ const TabloClient = (props) => {
                 </div>
                 <div className={c2.time2}>
                     <TabloTimer gameNumber={props.gameNumber} gameConsLog={props.gameConsLog}
-                                isShowLog={props.isShowLog} gameTempLog={props.gameTempLog} preset={props.gameData.preset}/>
+                                isShowLog={props.isShowLog} gameTempLog={props.gameTempLog}
+                                preset={props.gameData.preset}/>
                 </div>
                 <div className={classNames(c2.counter2, c2.guestsTeam2)}>
                     {guestsCounter} <br/>
@@ -164,7 +166,12 @@ const TabloClient = (props) => {
             }
             {props.gameData.preset === 7 &&
             <div className={c3.tablo3}>
-                <Summary homeTeam={homeTeam} guestsTeam={guestsTeam}/>
+                {homeTeam.gamers.length === 0 || guestsTeam.gamers.length === 0
+                    ? <div>В одной из команд нет игроков</div>
+                    : <Summary homeTeam={homeTeam} guestsTeam={guestsTeam} gameNumber={props.gameNumber} gameConsLog={props.gameConsLog}
+                               isShowLog={props.isShowLog} gameTempLog={props.gameTempLog}
+                               preset={props.gameData.preset}/>
+                }
 
             </div>
             }

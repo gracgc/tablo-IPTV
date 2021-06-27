@@ -11,7 +11,7 @@ const IS_FETCHING = 'videos/IS_FETCHING';
 
 let initialState = {
     videos: null,
-    currentVideo: null,
+    currentVideo: '',
     currentVideoStream: null,
     videosMP4: null,
     videoEditor: {

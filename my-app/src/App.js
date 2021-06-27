@@ -17,19 +17,18 @@ import TabloClientPreload from "./components/ForClient/Preload/TabloClientPreloa
 
 
 
-
-// const CreateGamePredoad = React.lazy(() => import('./components/MenuPanel/Preload/CreateGamePreload'));
-// const SavedGamesPreload = React.lazy(() => import('./components/MenuPanel/Preload/SavedGamesPreload'));
-// const AdminPanelPreload = React.lazy(() => import('./components/ForAdmin/AdminPanel/Preload/AdminPanelPreload'));
-// const VideoAdminPreload = React.lazy(() => import('./components/ForAdmin/VideoAdmin/Preload/VideoAdminPreload'));
-// const SetDevice = React.lazy(() => import('./components/MenuPanel/SetDevice/SetDevice'));
-// const Auth = React.lazy(() => import('./components/MenuPanel/Auth/Auth'));
-// const CustomGamePreload = React.lazy(() => import('./components/ForAdmin/AdminPanel/Preload/CustomGamePreload'));
-// const Test = React.lazy(() => import('./components/MenuPanel/Test/Test'));
-// const Lag = React.lazy(() => import('./components/MenuPanel/Lag/Lag'));
-// const LagClient = React.lazy(() => import('./components/MenuPanel/Lag/LagClient'));
-// const PreLag = React.lazy(() => import('./components/MenuPanel/Lag/PreLag'));
-// const PreLagClient = React.lazy(() => import('./components/MenuPanel/Lag/PreLagClient'));
+const CreateGamePredoad = React.lazy(() => import('./components/MenuPanel/Preload/CreateGamePreload'));
+const SavedGamesPreload = React.lazy(() => import('./components/MenuPanel/Preload/SavedGamesPreload'));
+const AdminPanelPreload = React.lazy(() => import('./components/ForAdmin/AdminPanel/Preload/AdminPanelPreload'));
+const VideoAdminPreload = React.lazy(() => import('./components/ForAdmin/VideoAdmin/Preload/VideoAdminPreload'));
+const SetDevice = React.lazy(() => import('./components/MenuPanel/SetDevice/SetDevice'));
+const Auth = React.lazy(() => import('./components/MenuPanel/Auth/Auth'));
+const CustomGamePreload = React.lazy(() => import('./components/ForAdmin/AdminPanel/Preload/CustomGamePreload'));
+const Test = React.lazy(() => import('./components/MenuPanel/Test/Test'));
+const Lag = React.lazy(() => import('./components/MenuPanel/Lag/Lag'));
+const LagClient = React.lazy(() => import('./components/MenuPanel/Lag/LagClient'));
+const PreLag = React.lazy(() => import('./components/MenuPanel/Lag/PreLag'));
+const PreLagClient = React.lazy(() => import('./components/MenuPanel/Lag/PreLagClient'));
 
 
 function App(props) {
@@ -125,78 +124,78 @@ function App(props) {
                     <Route path='/tabloClient/:gameNumber?' render={() => <TabloClientPreload/>}/>
 
 
-                    {/*<Route path='/menu' render={() => {*/}
-                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
-                    {/*        <SavedGamesPreload/>*/}
-                    {/*    </React.Suspense>*/}
-                    {/*}}/>*/}
+                    <Route path='/menu' render={() => {
+                        return <React.Suspense fallback={<Loading/>}>
+                            <SavedGamesPreload/>
+                        </React.Suspense>
+                    }}/>
 
-                    {/*<Route path='/createGame' render={() => {*/}
-                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
-                    {/*        <CreateGamePredoad/>*/}
-                    {/*    </React.Suspense>*/}
-                    {/*}}/>*/}
+                    <Route path='/createGame' render={() => {
+                        return <React.Suspense fallback={<Loading/>}>
+                            <CreateGamePredoad/>
+                        </React.Suspense>
+                    }}/>
 
-                    {/*<Route path='/adminPanel/:gameNumber?' render={() => {*/}
-                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
-                    {/*        <AdminPanelPreload/>*/}
-                    {/*    </React.Suspense>*/}
-                    {/*}}/>*/}
+                    <Route path='/adminPanel/:gameNumber?' render={() => {
+                        return <React.Suspense fallback={<Loading/>}>
+                            <AdminPanelPreload/>
+                        </React.Suspense>
+                    }}/>
 
-                    {/*<Route path='/videoAdmin/:gameNumber?' render={() => {*/}
-                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
-                    {/*        <VideoAdminPreload/>*/}
-                    {/*    </React.Suspense>*/}
-                    {/*}}/>*/}
+                    <Route path='/videoAdmin/:gameNumber?' render={() => {
+                        return <React.Suspense fallback={<Loading/>}>
+                            <VideoAdminPreload/>
+                        </React.Suspense>
+                    }}/>
 
-                    {/*<Route path='/devices' render={() => {*/}
-                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
-                    {/*        <SetDevice/>*/}
-                    {/*    </React.Suspense>*/}
-                    {/*}}/>*/}
+                    <Route path='/devices' render={() => {
+                        return <React.Suspense fallback={<Loading/>}>
+                            <SetDevice/>
+                        </React.Suspense>
+                    }}/>
 
 
-                    {/*<Route path='/auth' render={() => {*/}
-                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
-                    {/*        <Auth/>*/}
-                    {/*    </React.Suspense>*/}
-                    {/*}}/>*/}
+                    <Route path='/auth' render={() => {
+                        return <React.Suspense fallback={<Loading/>}>
+                            <Auth/>
+                        </React.Suspense>
+                    }}/>
 
-                    {/*<Route path='/customGame/:gameNumber?' render={() => {*/}
-                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
-                    {/*        <CustomGamePreload/>*/}
-                    {/*    </React.Suspense>*/}
-                    {/*}}/>*/}
+                    <Route path='/customGame/:gameNumber?' render={() => {
+                        return <React.Suspense fallback={<Loading/>}>
+                            <CustomGamePreload/>
+                        </React.Suspense>
+                    }}/>
 
-                    {/*<Route path='/test' render={() => {*/}
-                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
-                    {/*        <Test/>*/}
-                    {/*    </React.Suspense>*/}
-                    {/*}}/>*/}
+                    <Route path='/test' render={() => {
+                        return <React.Suspense fallback={<Loading/>}>
+                            <Test/>
+                        </React.Suspense>
+                    }}/>
 
-                    {/*<Route path='/lag' render={() => {*/}
-                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
-                    {/*        <Lag/>*/}
-                    {/*    </React.Suspense>*/}
-                    {/*}}/>*/}
+                    <Route path='/lag' render={() => {
+                        return <React.Suspense fallback={<Loading/>}>
+                            <Lag/>
+                        </React.Suspense>
+                    }}/>
 
-                    {/*<Route path='/lagClient' render={() => {*/}
-                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
-                    {/*        <LagClient/>*/}
-                    {/*    </React.Suspense>*/}
-                    {/*}}/>*/}
+                    <Route path='/lagClient' render={() => {
+                        return <React.Suspense fallback={<Loading/>}>
+                            <LagClient/>
+                        </React.Suspense>
+                    }}/>
 
-                    {/*<Route path='/prelag' render={() => {*/}
-                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
-                    {/*        <PreLag/>*/}
-                    {/*    </React.Suspense>*/}
-                    {/*}}/>*/}
+                    <Route path='/prelag' render={() => {
+                        return <React.Suspense fallback={<Loading/>}>
+                            <PreLag/>
+                        </React.Suspense>
+                    }}/>
 
-                    {/*<Route path='/prelagClient' render={() => {*/}
-                    {/*    return <React.Suspense fallback={<Loading/>}>*/}
-                    {/*        <PreLagClient/>*/}
-                    {/*    </React.Suspense>*/}
-                    {/*}}/>*/}
+                    <Route path='/prelagClient' render={() => {
+                        return <React.Suspense fallback={<Loading/>}>
+                            <PreLagClient/>
+                        </React.Suspense>
+                    }}/>
 
 
                 </Switch>

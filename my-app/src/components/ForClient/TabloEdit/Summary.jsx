@@ -1,15 +1,9 @@
 import React, {useEffect} from 'react'
-import c from './TabloClient1.module.css'
+import c from './Summary.module.css'
 import socket from "../../../socket/socket";
 import {compose} from "redux";
 import {withRouter} from "react-router";
-import {useDispatch, useSelector} from "react-redux";
-import {
-    getCurrentVideo,
-    getVideoEditor,
-    setCurrentVideoDataAC,
-    setCurrentVideoEditorDataAC
-} from "../../../redux/videos_reducer";
+import TabloTimer from "./TabloTimer";
 
 
 const Summary = (props) => {
@@ -20,46 +14,65 @@ const Summary = (props) => {
     let maxHomeGoal = Math.max.apply(null, homeGoals);
     let maxGuestsGoal = Math.max.apply(null, guestGoals);
 
-    let maxHomeGoalsGamer = props.homeTeam.gamers[(homeGoals.indexOf(maxHomeGoal))];
-    let maxGuestsGoalsGamer = props.guestsTeam.gamers[(guestGoals.indexOf(maxGuestsGoal))];
 
-    let bestHomeGamers = []
+    let maxHomeGoalsGamers = props.homeTeam.gamers.filter(g => maxHomeGoal === g.goals);
+    let maxGuestsGoalsGamers = props.guestsTeam.gamers.filter(g => maxGuestsGoal === g.goals);
 
-    let newArr = homeGoals.slice()
-
-    console.log(newArr)
-
-    // for (let i; i !== -1; i = newArr.indexOf(maxHomeGoal)) {
-    //
-    //     let maxHomeGoalsGamer = newArr[(newArr.indexOf(maxHomeGoal))];
-    //
-    //     newArr[(newArr.indexOf(maxHomeGoal))].goals = 0
-    //
-    //
-    //     if (newArr.indexOf(maxHomeGoal) !== -1) {
-    //         bestHomeGamers.push(maxHomeGoalsGamer)
-    //     }
-    //
-    // }
-
-    // while (true) {
-    //
-    //     let maxHomeGoalsGamer = newArr[(newArr.indexOf(maxHomeGoal))];
-    //
-    //     console.log(maxHomeGoalsGamer)
-    //
-    //     if (newArr.indexOf(maxHomeGoal) !== -1) {
-    //         bestHomeGamers.push(maxHomeGoalsGamer)
-    //     } else break
-    // }
-
-    console.log(bestHomeGamers)
 
     return (
         <div>
-            СВОДКА <br/>
-            Лучший игрок {props.homeTeam.name}: {maxHomeGoalsGamer.fullName} {maxHomeGoalsGamer.gamerNumber} забивший {maxHomeGoalsGamer.goals} гола <br/>
-            Лучший игрок {props.guestsTeam.name}: {maxGuestsGoalsGamer.fullName} {maxGuestsGoalsGamer.gamerNumber} забивший {maxGuestsGoalsGamer.goals} гола
+            <div style={{width: 1280, textAlign: 'center', fontSize: 50}}>СВОДКА МАТЧА</div>
+            <br/>
+
+            {maxHomeGoal !== 0 && <div>
+                {maxHomeGoalsGamers.length < 2
+                    ? <div style={{marginLeft: 20}}>
+                        <div style={{fontSize: 22}}>
+                            Лучший игрок
+                            команды {props.homeTeam.name} принесший {maxHomeGoal} {maxHomeGoal === 1 ? 'очко' : 1 < maxHomeGoal < 5 ? 'очка' : 'очков'}
+                        </div>
+
+                        <br/>
+                        {maxHomeGoalsGamers.map(g => <div style={{fontSize: 18}}>{g.gamerNumber} {g.fullName}<br/></div>)}
+                    </div>
+                    : <div style={{marginLeft: 20}}>
+                        <div style={{fontSize: 22}}>
+                            Лучшие игроки
+                            команды {props.homeTeam.name} принесшие {maxHomeGoal} {maxHomeGoal === 1 ? 'очко' : 1 < maxHomeGoal < 5 ? 'очка' : 'очков'}
+                        </div>
+                        <br/>
+                        {maxHomeGoalsGamers.map(g => <div style={{fontSize: 18}}>{g.gamerNumber} {g.fullName}<br/></div>)} <br/>
+                    </div>}
+            </div>}
+
+            {maxGuestsGoal !== 0 && <div>
+                {maxGuestsGoalsGamers.length < 2
+                    ? <div style={{marginLeft: 20}}>
+                        <div style={{fontSize: 22}}>
+                            Лучший игрок
+                            команды {props.guestsTeam.name} принесший {maxGuestsGoal} {maxGuestsGoal === 1 ? 'очко' : 1 < maxGuestsGoal < 5 ? 'очка' : 'очков'}
+                        </div>
+                        <br/>
+                        {maxGuestsGoalsGamers.map(g => <div style={{fontSize: 18}}>{g.gamerNumber} {g.fullName}<br/></div>)}
+                    </div>
+                    : <div style={{marginLeft: 20}}>
+                        <div style={{fontSize: 22}}>
+                            Лучшие игроки
+                            команды {props.guestsTeam.name} принесшие {maxGuestsGoal} {maxGuestsGoal === 1 ? 'очко' : 1 < maxGuestsGoal < 5 ? 'очка' : 'очков'}
+                        </div>
+                        <br/>
+                        {maxGuestsGoalsGamers.map(g => <div style={{fontSize: 18}}>{g.gamerNumber} {g.fullName}<br/></div>)} <br/>
+                    </div>}
+            </div>}
+
+
+
+            <div style={{position: 'absolute', bottom: 20, width: 1280, textAlign: 'center'}}><TabloTimer
+                gameNumber={props.gameNumber} gameConsLog={props.gameConsLog}
+                isShowLog={props.isShowLog} gameTempLog={props.gameTempLog}
+                preset={props.preset}/></div>
+
+            {/*{maxGuestsGoalsGamers.map(g => <div>{g.fullName} <br/></div>)}*/}
         </div>
     )
 };

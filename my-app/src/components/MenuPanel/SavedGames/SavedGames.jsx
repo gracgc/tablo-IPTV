@@ -28,8 +28,6 @@ const SavedGames = (props) => {
 
 
     useEffect(() => {
-        // dispatch(getSavedGames());
-        // dispatch(getGameNumber())
 
         socket.on(`getGameNumber`, gameNumber => {
                 dispatch(setGameNumberAC(gameNumber));

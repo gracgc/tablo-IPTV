@@ -95,16 +95,18 @@ const SavedGames = (props) => {
 
 
     return (
-
         <div className={width === 1920 ? c1920.savedGames : c.savedGames}>
                     <span className={width === 1920 ? c1920.menuTitle : c.menuTitle}>Список игр</span>
                     <div className={width === 1920 ? c1920.iptv : c.iptv}>IPTV PORTAL <br/> TABLO beta</div>
 
                     <div className={width === 1920 ? c1920.menu : c.menu}>
                         <div className={width === 1920 ? c1920.search : c.search}>
-                            Поиск по названию: <input className={width === 1920 ? c1920.searchInput : c.searchInput}
-                                                      type="text"
-                                                      ref={searchGame} onChange={(e) => search()}/>
+                            <div style={width === 1920 ? {fontSize: 32} : {fontSize: 20}}>Поиск по названию </div>
+                            <div>
+                                <input className={width === 1920 ? c1920.searchInput : c.searchInput}
+                                        type="text"
+                                        ref={searchGame} onChange={(e) => search()}/>
+                            </div>
                         </div>
                         {currentGame &&
                         <div className={width === 1920 ? c1920.currentGame : c.currentGame}>
@@ -123,7 +125,6 @@ const SavedGames = (props) => {
 
                     </div>
 
-
                     <NavLink to="/devices">
                         <div className={width === 1920 ? c1920.devicesButton : c.devicesButton}>
                             Назначения устройств
@@ -135,7 +136,6 @@ const SavedGames = (props) => {
                             Создать новую игру
                         </div>
                     </NavLink>
-
 
                     <div className={width === 1920 ? c1920.createFastGameButton : c.createFastGameButton}
                          onClick={(e) => fastGameAlert()}>

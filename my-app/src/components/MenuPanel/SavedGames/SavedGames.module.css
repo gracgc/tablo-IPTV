@@ -12,11 +12,12 @@ a {
 }
 
 .search {
-    font-size: 20px;
+    display: inline-flex;
     margin-bottom: 15px;
 }
 
 .searchInput {
+    margin-left: 16px;
     height: 20px;
     width: 300px;
 }
@@ -37,6 +38,10 @@ a {
     cursor: pointer;
 }
 
+.curentGameMenu:hover {
+    color: #c9d9f5;
+    text-decoration-color: #c9d9f5;
+}
 
 .menu {
     position: absolute;
@@ -78,6 +83,11 @@ a {
     cursor: pointer;
 }
 
+.createGameButton:hover {
+    color: #c9d9f5;
+    text-decoration-color: #c9d9f5;
+}
+
 
 .devicesButton {
     position: absolute;
@@ -92,6 +102,10 @@ a {
     cursor: pointer;
 }
 
+.devicesButton:hover {
+    color: #c9d9f5;
+    text-decoration-color: #c9d9f5;
+}
 
 
 .createFastGameButton {
@@ -105,6 +119,11 @@ a {
     text-decoration-color: #2079A3;
     text-decoration-line: underline;
     cursor: pointer;
+}
+
+.createFastGameButton:hover {
+    color: #c9d9f5;
+    text-decoration-color: #c9d9f5;
 }
 
 
@@ -146,8 +165,11 @@ a {
     text-align: center;
 }
 
-
-
+.navButtonGameNumber:hover {
+    background-color: #c9d9f5;
+    color: black;
+    border: 3px solid black;
+}
 
 .tabloChose {
     display: grid;
@@ -170,6 +192,7 @@ a {
     font-size: 20px;
 }
 
+
 @keyframes blink {
     from {
         color: #ff1717
@@ -189,6 +212,10 @@ a {
     font-size: 18px;
 }
 
+.deleteButton:hover {
+    background: #ff3232;
+}
+
 .editButton {
     margin-top: 5px;
     border: 2px solid black;
@@ -198,4 +225,18 @@ a {
     text-align: center;
     cursor: pointer;
     font-size: 18px;
+}
+
+.editButton:hover {
+    background: #2b8431;
+}
+
+
+.settingsButton {
+    text-align: center;
+    font-size: 24px;
+}
+
+.settingsButton:hover {
+    color: #c9d9f5;
 }

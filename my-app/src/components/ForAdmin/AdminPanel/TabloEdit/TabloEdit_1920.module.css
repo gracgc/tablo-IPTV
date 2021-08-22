@@ -34,11 +34,26 @@
     pointer-events: none;
 }
 
-.gameButtons__Active {
+.gameButtons__Active__Start {
     padding-top: 5px;
     padding-bottom: 5px;
     box-sizing: border-box;
     cursor: pointer;
+}
+
+.gameButtons__Active__Start:hover {
+    background: #2b8431;
+}
+
+.gameButtons__Active__Stop {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.gameButtons__Active__Stop:hover {
+    background: #ff3232;
 }
 
 .gameButtons__stop {

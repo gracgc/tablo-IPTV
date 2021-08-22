@@ -28,6 +28,11 @@
     font-size: 28px;
 }
 
+.backButton:hover {
+    color: #c9d9f5;
+    text-decoration-color: #c9d9f5;
+}
+
 .menuTitle {
     text-align: center;
     font-size: 56px;
@@ -97,4 +102,17 @@
     color: #2079A3;
     text-decoration-line: underline;
     cursor: pointer;
+}
+
+.lagButton:hover {
+    color: #c9d9f5;
+    text-decoration-color: #c9d9f5;
+}
+
+.plusLag:hover {
+    color: green;
+}
+
+.minusLag:hover {
+    color: red;
 }

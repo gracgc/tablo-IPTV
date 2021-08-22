@@ -9,7 +9,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {createNewGame, getSavedGames, setSavedGamesAC} from "../../../redux/games_reducer";
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router";
-import {SketchPicker} from 'react-color'
 
 import * as axios from "axios";
 import logo from "../../ForAdmin/AdminPanel/Info/logoIPTVPORTAL.png";
@@ -75,7 +74,7 @@ const CreateGameForm = (props) => {
                                    validate={[required]}
                                    component={InputReadOnly}/>
                             <div style={{cursor: "pointer"}} onClick={(e) => openGameTypeMenu()}>
-                                <strong style={width === 1920 ? {fontSize: 32} : {fontSize: 18}}>Выбрать игру ▼</strong>
+                                <strong className={width === 1920 ? c1920.chooseGame : c.chooseGame} style={width === 1920 ? {fontSize: 32} : {fontSize: 18}}>Выбрать игру ▼</strong>
                                 {menuIsOpen && props.gameTypes.map(g =>
                                     <div className={width === 1920 ? c1920.gameTypeMenu : c.gameTypeMenu}
                                          onClick={(e) => {
@@ -98,8 +97,6 @@ const CreateGameForm = (props) => {
                                            component={Input}/>
 
                                     <PickColor setColor={props.setColorHome} color={props.colorHome}/>
-
-
                                 </div>
 
                             </div>

@@ -78,8 +78,8 @@ const SavedGame = (props) => {
                     <div className={width === 1920 ? c1920.adminChose : c.adminChose}>
 
                     </div>
-                    <GameMenu showDeleteButton={showDeleteButton} setShowDeleteButton={setShowDeleteButton}/>
 
+                    <GameMenu showDeleteButton={showDeleteButton} setShowDeleteButton={setShowDeleteButton}/>
                 </div>
             </div>
             {showDeleteButton &&

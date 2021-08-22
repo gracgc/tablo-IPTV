@@ -33,3 +33,8 @@
     font-size: 28px;
 }
 
+.backButton:hover {
+    color: #c9d9f5;
+    text-decoration-color: #c9d9f5;
+}
+

@@ -1,13 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {useHistory} from "react-router";
+import React, {useState} from "react";
 import {GithubPicker} from 'react-color'
-import c1920 from "../MenuPanel/CreateGame/CreateGame_1920.module.css";
-import c from "../MenuPanel/CreateGame/CreateGame.module.css";
+import c from '../MenuPanel/CreateGame/CreateGame.module.css'
+import c1920 from '../MenuPanel/CreateGame/CreateGame_1920.module.css'
 
 const PickColor = (props) => {
 
     let width = window.innerWidth;
-
 
     let [isShowColors, setIsShowColors] = useState(false)
 
@@ -15,7 +13,6 @@ const PickColor = (props) => {
         props.setColor(color)
         setIsShowColors(false)
     }
-
 
     return (
         <div>
@@ -25,7 +22,8 @@ const PickColor = (props) => {
                         color={props.color}
                         onChange={color => changeColor(color.hex)}/>
                 </div>
-                : <div onClick={e => setIsShowColors(true)} style={{width: '100%', height: 36, backgroundColor: props.color, cursor: 'pointer'}}>
+                : <div onClick={e => setIsShowColors(true)} style={{width: '100%', height: 36, backgroundColor: props.color, cursor: 'pointer'}}
+                       className={width === 1920 ? c1920.colorPicker : c.colorPicker}>
 
                 </div>
             }

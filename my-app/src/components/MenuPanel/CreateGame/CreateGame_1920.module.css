@@ -28,6 +28,11 @@
     font-size: 28px;
 }
 
+.backButton:hover {
+    color: #c9d9f5;
+    text-decoration-color: #c9d9f5;
+}
+
 a {
     color: black;
     text-decoration: none;
@@ -73,6 +78,11 @@ a {
     cursor: pointer;
     background: #2A2B2B;
     border:none;
+}
+
+.createGameButton:hover {
+    color: #c9d9f5;
+    text-decoration-color: #c9d9f5;
 }
 
 .createGameInputPanel {
@@ -130,6 +140,10 @@ a {
     cursor: pointer;
 }
 
+.addGamerButton:hover {
+    background: #2b8431;
+}
+
 .deleteGamerButton {
     background: red;
     text-align: center;
@@ -140,6 +154,10 @@ a {
     border: 2px solid black;
     font-size: 30px;
     cursor: pointer;
+}
+
+.deleteGamerButton:hover {
+    background: #ff3232;
 }
 
 .homeGamer {
@@ -178,4 +196,13 @@ a {
 
 .gameTypeMenu:hover {
     background-color: #d1d1d1;
+}
+
+.colorPicker:hover {
+    box-sizing: border-box;
+    border: black 2px solid;
+}
+
+.chooseGame:hover {
+    color: #c9d9f5;
 }

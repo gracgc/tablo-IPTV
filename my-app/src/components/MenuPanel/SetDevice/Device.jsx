@@ -85,9 +85,9 @@ const Device = (props) => {
                                 Задать lag
                             </div>
                             <div style={{display: 'inline-flex', marginLeft: 10}}>
-                                <div style={{cursor: 'pointer'}} onClick={e => minusLag()}>-</div>
+                                <div className={width === 1920 ? c1920.minusLag : c.minusLag} style={{cursor: 'pointer'}} onClick={e => minusLag()}>-</div>
                                 <div style={{padding: '0 10px', margin: '0 10px', border: 'solid 1px', width: 60, textAlign: 'center'}}>{lag}</div>
-                                <div style={{cursor: 'pointer'}} onClick={e => plusLag()}>+</div>
+                                <div className={width === 1920 ? c1920.plusLag : c.plusLag} style={{cursor: 'pointer'}} onClick={e => plusLag()}>+</div>
                             </div>
                         </div>
                     </div>

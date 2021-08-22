@@ -30,3 +30,8 @@
     text-decoration-color: #2079A3;
     font-size: 28px;
 }
+
+.customGameButton:hover {
+    color: #c9d9f5;
+    text-decoration-color: #c9d9f5;
+}

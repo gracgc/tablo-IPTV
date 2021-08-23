@@ -107,7 +107,7 @@ const SavedGames = (props) => {
                                         type="text"
                                         ref={searchGame} onChange={(e) => search()}/>
                             </div>
-                        </div>
+                        </div> <br/>
                         {currentGame &&
                         <div className={width === 1920 ? c1920.currentGame : c.currentGame}>
                             Текущая игра: {currentGame.gameName} — {currentGame.gameType}

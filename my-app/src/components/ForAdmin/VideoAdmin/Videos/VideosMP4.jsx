@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react'
-import c from './VideosMP4.module.css'
-import c1920 from './VideosMP4_1920.module.css'
+import React, {useEffect, useState} from 'react';
+import c from './VideosMP4.module.css';
+import c1920 from './VideosMP4_1920.module.css';
+import classNames from 'classnames';
 import {compose} from "redux";
 import {withRouter} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -133,12 +134,12 @@ const VideosMP4 = (props) => {
                 </div>
                 {props.videosMP4.length !== 0 && <div style={{display: 'inline-flex'}}>
                     {paginatorN > 0 ?
-                        <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
+                        <div className={width === 1920 ? classNames(c1920.paginator, c1920.active) : classNames(c.paginator, c.active)} onClick={(e) => {
                             changePaginatorN('-')
                         }}>
                             ←
                         </div> :
-                        <div className={width === 1920 ? c1920.paginator : c.paginator} style={{opacity: '0.5'}}>
+                        <div className={width === 1920 ? classNames(c1920.paginator, c1920.disable) : classNames(c.paginator, c.disable)}>
                             ←
                         </div>
                     }
@@ -150,12 +151,12 @@ const VideosMP4 = (props) => {
                             )}
                     </div>
                     {props.videosMP4.slice(paginatorScale * (paginatorN + 1), paginatorScale + paginatorScale * (paginatorN + 1)).length !== 0 ?
-                        <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
+                        <div className={width === 1920 ? classNames(c1920.paginator, c1920.active) : classNames(c.paginator, c.active)} onClick={(e) => {
                             changePaginatorN('+')
                         }}>
                             →
                         </div> :
-                        <div className={width === 1920 ? c1920.paginator : c.paginator} style={{opacity: '0.5'}}>
+                        <div className={width === 1920 ? classNames(c1920.paginator, c1920.disable) : classNames(c.paginator, c.disable)}>
                             →
                         </div>}
                 </div>}

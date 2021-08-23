@@ -6,12 +6,11 @@
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 20px;
-    margin-left: 20px;
+    margin-left: 5px;
 }
 
 .preset {
     width: 180px;
-    border: #3a5985 2px solid;
     box-sizing: border-box;
     cursor: pointer;
     padding-left: 10px;
@@ -20,20 +19,6 @@
     font-size: 16px;
 }
 
-.currentPreset {
-    width: 180px;
-    border: #3a5985 2px solid;
-    box-sizing: border-box;
-    cursor: pointer;
-    padding-left: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-size: 17px;
-    background: #435373;
-    color: #a4e2ed;
-}
-
 .preset:hover {
-    width: 185px;
-    font-size: 18px;
+    background: #3d4040;
 }

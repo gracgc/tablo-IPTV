@@ -13,6 +13,7 @@ import {Input} from "../../../../common/FormsControls/FormsControls";
 import {requiredShort} from "../../../../utils/validators";
 import ReactHlsPlayer from "react-hls-player";
 import Camera from "./Camera";
+import classNames from "classnames";
 
 
 const AddCamera = (props) => {
@@ -105,12 +106,12 @@ const Cameras = (props) => {
                 </div>
                 {props.videos.length !== 0 && <div style={{display: 'inline-flex'}}>
                     {paginatorN > 0 ?
-                        <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
+                        <div className={width === 1920 ? classNames(c1920.paginator, c1920.active) : classNames(c.paginator, c.active)} onClick={(e) => {
                             changePaginatorN('-')
                         }}>
                             ←
                         </div> :
-                        <div className={width === 1920 ? c1920.paginator : c.paginator} style={{opacity: '0.5'}}>
+                        <div className={width === 1920 ? classNames(c1920.paginator, c1920.disable) : classNames(c.paginator, c.disable)}>
                             ←
                         </div>
                     }
@@ -121,12 +122,12 @@ const Cameras = (props) => {
                             )}
                     </div>
                     {props.videos.slice(paginatorScale * (paginatorN + 1), paginatorScale + paginatorScale * (paginatorN + 1)).length !== 0 ?
-                        <div className={width === 1920 ? c1920.paginator : c.paginator} onClick={(e) => {
+                        <div className={width === 1920 ? classNames(c1920.paginator, c1920.active) : classNames(c.paginator, c.active)} onClick={(e) => {
                             changePaginatorN('+')
                         }}>
                             →
                         </div> :
-                        <div className={width === 1920 ? c1920.paginator : c.paginator} style={{opacity: '0.5'}}>
+                        <div className={width === 1920 ? classNames(c1920.paginator, c1920.disable) : classNames(c.paginator, c.disable)}>
                             →
                         </div>}
                 </div>}

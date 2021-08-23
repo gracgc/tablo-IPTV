@@ -18,12 +18,13 @@ const Camera = (props) => {
 
 
     return (
-        <div style={{position: 'relative'}}
-             onMouseOver={(e) => setShowDeleteButton(true)}
-             onMouseLeave={(e) => setShowDeleteButton(false)}>
+
+
             <div className={width === 1920 ? c1920.camera : c.camera}
                  style={{border: props.currentVideoStream.videoURL === props.v.videoURL && 'forestgreen 4px solid',
                      backgroundColor: props.currentVideoStream.videoURL === props.v.videoURL     && 'darkcyan'}}
+                 onMouseOver={(e) => setShowDeleteButton(true)}
+                 onMouseLeave={(e) => setShowDeleteButton(false)}
                  onClick={(e) => props.setCurrentVideo(props.v)}>
                 <div>
                     {/*<ReactHlsPlayer*/}
@@ -39,15 +40,15 @@ const Camera = (props) => {
                     {props.v.videoName}
                 </div>
 
-
+                {showDeleteButton && props.currentVideoStream.videoURL !== props.v.videoURL &&
+                <div className={width === 1920 ? c1920.deleteVideo : c.deleteVideo} onClick={e => deleteVideoFromList(props.index)}>
+                    ✘
+                </div>
+                }
             </div>
 
-            {showDeleteButton && props.currentVideoStream.videoURL !== props.v.videoURL &&
-            <div className={width === 1920 ? c1920.deleteVideo : c.deleteVideo} onClick={e => deleteVideoFromList(props.index)}>
-                ✘
-            </div>
-            }
-        </div>
+
+
 
 
     )

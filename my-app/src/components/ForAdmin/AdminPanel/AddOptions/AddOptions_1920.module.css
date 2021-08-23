@@ -18,6 +18,11 @@
     font-size: 30px;
 }
 
+.overtimeButton:hover {
+    color: #ffc369;
+    text-decoration-color: #ffc369;
+}
+
 .overtimeButtonDis {
     opacity: 0.5;
     margin-right: 30px;

@@ -84,3 +84,11 @@
 .none {
     display: none;
 }
+
+.onField:hover {
+    color: green;
+}
+
+.onBranch:hover {
+    color: red;
+}

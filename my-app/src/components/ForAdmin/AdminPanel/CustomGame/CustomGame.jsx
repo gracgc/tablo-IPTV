@@ -25,7 +25,6 @@ const CustomGameForm = (props) => {
     let width = window.innerWidth;
 
 
-
     let [period, setPeriod] = useState();
     let [timeMemTimer, setTimeMemTimer] = useState();
 
@@ -240,11 +239,12 @@ const CustomGameForm = (props) => {
                                              addPlayer(props.numberOfAdditionalHomePlayers, props.setNumberOfAdditionalHomePlayers)}>
                                         +
                                     </div>
+                                    {homeTeamGamers.length + props.numberOfAdditionalHomePlayers.length > 0 &&
                                     <div className={width === 1920 ? c1920.deleteGamerButton : c.deleteGamerButton}
                                          onClick={(e) =>
                                              deletePlayer(props.numberOfAdditionalHomePlayers, props.setNumberOfAdditionalHomePlayers)}>
                                         -
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                         </div>
@@ -341,11 +341,13 @@ const CustomGameForm = (props) => {
                                              addPlayer(props.numberOfAdditionalGuestsPlayers, props.setNumberOfAdditionalGuestsPlayers)}>
                                         +
                                     </div>
+                                    {guestsTeamGamers.length + props.numberOfAdditionalGuestsPlayers.length > 0 &&
                                     <div className={width === 1920 ? c1920.deleteGamerButton : c.deleteGamerButton}
-                                         onClick={(e) =>
-                                             deletePlayer(props.numberOfAdditionalGuestsPlayers, props.setNumberOfAdditionalGuestsPlayers)}>
+                                                                         onClick={(e) =>
+                                                                             deletePlayer(props.numberOfAdditionalGuestsPlayers, props.setNumberOfAdditionalGuestsPlayers)}>
                                         -
-                                    </div>
+                                    </div>}
+
                                 </div>
                             </div>
                         </div>

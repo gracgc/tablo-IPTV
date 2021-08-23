@@ -28,6 +28,11 @@
     text-decoration-color: #d18130;
 }
 
+.timeout:hover {
+    color: #ffc369;
+    text-decoration-color: #ffc369;
+}
+
 .timeoutDis {
     opacity: 0.5;
 }
@@ -36,5 +41,27 @@
     margin-top: 15px;
     display: inline-flex;
     height: 30px;
+}
+
+.plusGoal {
+    width: 50px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.plusGoal:hover {
+    color: green;
+}
+
+.minusGoal {
+    width: 50px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.minusGoal:hover {
+    color: red;
 }
 

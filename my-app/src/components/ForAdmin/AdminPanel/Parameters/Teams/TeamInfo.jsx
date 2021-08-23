@@ -88,24 +88,12 @@ const TeamInfo = (props) => {
                         </div>
                         <div className={width === 1920 ? c1920.points : c.points}>
                             Очки:
-                            <div style={{
-                                width: width === 1920 ? 60 : 40,
-                                textAlign: 'center',
-                                fontWeight: 'bold',
-                                color: 'red',
-                                cursor: 'pointer'
-                            }}
+                            <div  className={width === 1920 ? c1920.minusGoal : c.minusGoal}
                                  onClick={(e) => addTeamGoal(props.teamType, '-')}>
                                 −
                             </div>
                             {props.teamCounter}
-                            <div style={{
-                                width: width === 1920 ? 60 : 40,
-                                textAlign: 'center',
-                                fontWeight: 'bold',
-                                color: 'green',
-                                cursor: 'pointer'
-                            }}
+                            <div className={width === 1920 ? c1920.plusGoal : c.plusGoal}
                                  onClick={(e) => addTeamGoal(props.teamType, '+')}>
                                 ＋
                             </div>

@@ -14,6 +14,7 @@ import {
 } from "../../../../redux/videos_reducer";
 import EditorLine from "./EditorLine";
 import {setDifAC, setPingAC} from "../../../../redux/dif_reducer";
+import classNames from "classnames";
 
 
 const Editor = (props) => {
@@ -280,39 +281,35 @@ const Editor = (props) => {
                 <div className={width === 1920 ? c1920.playerButtons : c.playerButtons}>
                     {isRunningServer
                         ? <div style={{display: 'inline-flex'}}>
-                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
-                                 style={{opacity: 0.5}}>
+                            <div className={width === 1920 ? classNames(c1920.playerButton, c1920.disable) : classNames(c.playerButton, c.disable)}>
                                 Старт
                             </div>
-
-                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                            <div className={width === 1920 ? classNames(c1920.playerButton, c1920.stop) : classNames(c.playerButton, c.stop)}
                                  onClick={(e) => stopVideo()}>
                                 Стоп
                             </div>
-                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                            <div className={width === 1920 ? classNames(c1920.playerButton, c1920.clear) : classNames(c.playerButton, c.clear)}
                                  onClick={(e) => clearVideo()}>
                                 Очистить
                             </div>
-                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                            <div className={width === 1920 ? classNames(c1920.playerButton, c1920.next) : classNames(c.playerButton, c.next)}
                                  onClick={(e) => nextVideo()}>
                                 След. видео
                             </div>
                         </div>
                         : <div style={{display: 'inline-flex'}}>
-                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                            <div className={width === 1920 ? classNames(c1920.playerButton, c1920.start) : classNames(c.playerButton, c.start)}
                                  onClick={(e) => startVideo()}>
                                 Старт
                             </div>
-                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
-                                 style={{opacity: 0.5}}>
+                            <div className={width === 1920 ? classNames(c1920.playerButton, c1920.disable) : classNames(c.playerButton, c.disable)}>
                                 Стоп
                             </div>
-                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
+                            <div className={width === 1920 ? classNames(c1920.playerButton, c1920.clear) : classNames(c.playerButton, c.clear)}
                                  onClick={(e) => clearVideo()}>
                                 Очистить
                             </div>
-                            <div className={width === 1920 ? c1920.playerButton : c.playerButton}
-                                 style={{opacity: 0.5}}>
+                            <div className={width === 1920 ? classNames(c1920.playerButton, c1920.disable) : classNames(c.playerButton, c.disable)}>
                                 След. видео
                             </div>
                         </div>

@@ -292,25 +292,25 @@ const TabloEdit = (props) => {
                     <div>
                         {isRunningServer ?
                             <div className={width === 1920 ? c1920.gameButtons : c.gameButtons}>
-                                <div style={{background: 'green'}}
-                                     className={width === 1920 ? c1920.gameButtons__Disabled : c.gameButtons__Disabled}>
+                                <div
+                                     className={width === 1920 ? classNames(c1920.gameButtons__Disabled, c1920.start) : classNames(c.gameButtons__Disabled, c.start)}>
                                     СТАРТ
                                 </div>
-                                <div style={{background: 'red'}}
-                                     className={width === 1920 ? c1920.gameButtons__Active__Stop : c.gameButtons__Active__Stop}
+                                <div
+                                     className={width === 1920 ? classNames(c1920.gameButtons__Active, c1920.stop) : classNames(c.gameButtons__Active, c.stop)}
                                      onClick={(e) => stopGame()}>
                                     СТОП
                                 </div>
                             </div>
                             :
                             <div className={width === 1920 ? c1920.gameButtons : c.gameButtons}>
-                                <div style={{background: 'green'}}
-                                     className={width === 1920 ? c1920.gameButtons__Active__Start : c.gameButtons__Active__Start}
+                                <div
+                                     className={width === 1920 ? classNames(c1920.gameButtons__Active, c1920.start) : classNames(c.gameButtons__Active, c.start)}
                                      onClick={(e) => startGame()}>
                                     СТАРТ
                                 </div>
-                                <div style={{background: 'red'}}
-                                     className={width === 1920 ? c1920.gameButtons__Disabled : c.gameButtons__Disabled}>
+                                <div
+                                     className={width === 1920 ? classNames(c1920.gameButtons__Disabled, c1920.stop) : classNames(c.gameButtons__Disabled, c.stop)}>
                                     СТОП
                                 </div>
                             </div>
@@ -318,13 +318,12 @@ const TabloEdit = (props) => {
                     </div>
                     :
                     <div className={width === 1920 ? c1920.gameButtons : c.gameButtons}>
-                        <div style={{background: 'green'}}
-                             className={width === 1920 ? c1920.gameButtons__Disabled : c.gameButtons__Disabled}>
+                        <div
+                            className={width === 1920 ? classNames(c1920.gameButtons__Disabled, c1920.start) : classNames(c.gameButtons__Disabled, c.start)}>
                             СТАРТ
                         </div>
-                        <div style={{background: 'red'}}
-                             className={classNames(width === 1920 ? c1920.gameButtons__Disabled : c.gameButtons__Disabled, width === 1920
-                                 ? c1920.gameButtons__stop : c.gameButtons__stop)}>
+                        <div
+                            className={width === 1920 ? classNames(c1920.gameButtons__Disabled, c1920.stop) : classNames(c.gameButtons__Disabled, c.stop)}>
                             СТОП
                         </div>
                     </div>

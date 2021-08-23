@@ -66,9 +66,33 @@
 
 .playerButton {
     border: 1px solid;
-    background-color: #8cede5;
+    background-color: #d1fff5;
     margin-right: 15px;
     padding: 3px 10px;
+}
+
+.start:hover {
+    cursor: pointer;
+    background: #c9d9f5;
+}
+
+.stop:hover {
+    cursor: pointer;
+    background: #c9d9f5;
+}
+
+.clear:hover {
+    cursor: pointer;
+    background: #c9d9f5;
+}
+
+.next:hover {
+    cursor: pointer;
+    background: #c9d9f5;
+}
+
+.disable {
+    opacity: 0.5;
 }
 
 .playerTime {
@@ -89,7 +113,11 @@
     position: relative;
     border: 1px solid;
     bottom: 0;
-    background-color: #e0223b;
+    background-color: red;
     font-size: 24px;
     cursor: pointer;
+}
+
+.exitForm:hover {
+    background-color: #ff3232;
 }

@@ -43,8 +43,9 @@ const Presets = (props) => {
         <div className={width === 1920 ? c1920.presets : c.presets}>
             <div className={width === 1920 ? c1920.title : c.title}>Пресеты</div>
             {presets.map(p => <div className={width === 1920 ? c1920.preset : c.preset} style={{
-                background: p.preset === preset && '#435373',
-                color: p.preset === preset && '#a4e2ed'
+                background: p.preset === preset && '#3d4040',
+                borderBottom: p.preset === preset && 'red 5px solid',
+                boxSizing: 'border-box'
             }}
                                    onClick={(e) => {
                                        gameAPI.putPreset(gameNumber, p.preset)

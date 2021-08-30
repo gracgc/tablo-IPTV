@@ -43,7 +43,7 @@
 }
 
 .start:hover {
-    background: #2b8431;
+    background: #48b837;
 }
 
 .stop {
@@ -51,7 +51,7 @@
 }
 
 .stop:hover {
-    background: #ff3232;
+    background: #ff4a4a;
 }
 
 .beepButtons {

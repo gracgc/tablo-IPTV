@@ -22,7 +22,7 @@
 }
 
 .addLogButton:hover {
-    background: #2b8431;
+    background: #48b837;
 }
 
 .logForm {
@@ -46,5 +46,5 @@
 }
 
 .deleteButton:hover {
-    color: #ff3232;
+    color: #ff4a4a;
 }

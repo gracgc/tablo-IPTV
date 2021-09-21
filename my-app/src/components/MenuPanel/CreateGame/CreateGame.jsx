@@ -20,7 +20,6 @@ const CreateGameForm = (props) => {
 
     let width = window.innerWidth;
 
-
     let [menuIsOpen, setMenuIsOpen] = useState(false);
 
     let addPlayer = (team, setTeam) => {
